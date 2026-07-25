@@ -1,7 +1,27 @@
 aid: crm-bonus
+accessModel:
+  pricing: unknown
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Unknown
+  confidence: low
+  source: []
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/crm-bonus.png
 name: CRM Bonus
-description: CRM Bonus is a company surfaced as a portfolio company of bond-capital and added to the API
-  Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  CRM Bonus (CRMBonus) is a Brazilian retail technology platform for customer
+  acquisition, conversion, and loyalty. Its products include Giftback cashback and
+  rewards, the Vale Bonus consumer rewards app connecting brands to over five million
+  shoppers, CRMBack WhatsApp-based e-commerce conversion, and CRMAds retail media on
+  WhatsApp. It integrates with 300+ ERP, point-of-sale, and e-commerce systems
+  including VTEX, Shopify, Linx, TOTVS, Nuvemshop, and PagSeguro. Integration is
+  delivered through partner connectors rather than a public developer API; no public
+  API documentation, developer portal, OpenAPI, or /.well-known discovery surface was
+  found during enrichment.
 url: https://raw.githubusercontent.com/api-evangelist/crm-bonus/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -11,9 +31,17 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-18'
 tags:
 - Company
+- Retail
+- Loyalty
+- Cashback
+- CRM
+- Retail Media
+- E-commerce
+- Brazil
+- WhatsApp
 apis: []
 maintainers:
 - FN: Kin Lane
@@ -21,5 +49,18 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/crm-bonus-domain-security.yml
 - type: Website
   url: https://crmbonus.com.br
+- type: Support
+  url: https://crmbonus.com.br/suporte
+- type: Blog
+  url: https://crmbonus.com.br/blog
+- type: PrivacyPolicy
+  url: https://crmbonus.com.br/politicas/politica-de-privacidade
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

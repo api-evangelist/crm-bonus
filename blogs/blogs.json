@@ -1,0 +1,14 @@
+{
+  "repo": "crm-bonus",
+  "feeds": [
+    {
+      "source": "https://crmbonus.com.br/suporte",
+      "feed_url": "https://crmbonus.com.br/suporte",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    }
+  ],
+  "post_count": 0,
+  "fetched": "2026-07-20T13:31:34Z"
+}
