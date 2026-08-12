@@ -1,0 +1,195 @@
+generated: '2026-08-12'
+method: derived
+source: >-
+  openapi/crm-bonus-oto-data-api-openapi.yml — components.schemas ($ref graph,
+  required-field sets and id-reference field names). Field semantics quoted from
+  the spec's own property descriptions; nothing inferred beyond the field names
+  the provider declares.
+api: Oto Data API
+summary: >-
+  A retail customer-data core. Nine ingested entities orbit the Customer and the
+  Store: transactions (Order -> OrderItem), catalog (Product), staff (Seller),
+  loyalty (Cashback), voice-of-customer (NPS), suppression (ExcludeList) and web
+  behaviour (Oto Tags hits, interactions and identity matches). Every entity is
+  loaded through its own POST endpoint under a `data` array and upserted on its
+  natural key.
+entities:
+- name: Customer
+  endpoint: POST /v1/customers
+  operation_id: post_customers_v1_customers_post
+  primary_key: [customer_id, data_source]
+  identity_fields: [customer_id, document_number, email, mobile_number, username_whatsapp, mkt_cloud_id]
+  extensibility: custom_field_NN
+  note: >-
+    Carries PII by design — CPF/document number, email, mobile, WhatsApp handle,
+    full postal address — plus per-channel permission flags (email_permission,
+    mobile_permission, whatsapp_permission) that encode LGPD consent.
+- name: Store
+  endpoint: POST /v1/stores
+  operation_id: post_stores_v1_stores_post
+  primary_key: [id]
+  identity_fields: [id, cnpj, identity, ecommerce_id, store_vtex]
+  extensibility: custom_field_NN
+- name: Seller
+  endpoint: POST /v1/sellers
+  operation_id: post_sellers_v1_sellers_post
+  primary_key: [id]
+- name: Product
+  endpoint: POST /v1/products
+  operation_id: post_products_v1_products_post
+  primary_key: [sku]
+  identity_fields: [sku, id, ecommerce_id, barcode]
+- name: Order
+  endpoint: POST /v1/orders
+  operation_id: post_orders_v1_orders_post
+  primary_key: [id, store]
+  extensibility: custom_field_NN
+- name: OrderItem
+  endpoint: POST /v1/order_items
+  operation_id: post_order_items_v1_order_items_post
+  primary_key: [id, store, sku, seq]
+- name: Cashback
+  endpoint: POST /v1/cashback
+  operation_id: post_cashback_v1_cashback_post
+  primary_key: [customer_id, order_id, order_store]
+  note: Credit issued against a purchase, with a valid_until expiry and a canceled flag.
+- name: NetPromoterScore
+  endpoint: POST /v1/nps
+  operation_id: post_nps_v1_nps_post
+  primary_key: [id]
+  note: score plus rating_01..rating_10 sub-scores and a free-text comment.
+- name: ExcludeList
+  endpoint: POST /v1/blocked
+  operation_id: post_blocked_v1_blocked_post
+  primary_key: [customer_id]
+  note: Suppression list — customers to exclude from contact.
+- name: TagsHit
+  endpoint: POST /v1/tag_hits
+  operation_id: post_tag_hit_v1_tag_hits_post
+  primary_key: [event_ts, user_id, session_id]
+  note: Oto Tags pageview stream — url, referer, user_agent, utm_* attribution.
+- name: TagsInteraction
+  endpoint: POST /v1/tag_interactions
+  operation_id: post_tag_interaction_v1_tag_interactions_post
+  primary_key: [event_ts, user_id, session_id, type, id]
+- name: TagsMatch
+  endpoint: POST /v1/tag_ids
+  operation_id: post_tags_ids_v1_tag_ids_post
+  primary_key: [event_ts, user_id]
+  note: >-
+    Identity resolution — binds an anonymous Tags user_id to a known customer,
+    accepting hashed identifiers (customer_id_sha256, email_sha256, email_md5)
+    so a brand can match without sending cleartext PII.
+relationships:
+- from: Order
+  to: Customer
+  type: belongs_to
+  via: customer_id
+- from: Order
+  to: Store
+  type: belongs_to
+  via: store
+- from: OrderItem
+  to: Order
+  type: belongs_to
+  via: id
+- from: OrderItem
+  to: Store
+  type: belongs_to
+  via: store
+- from: OrderItem
+  to: Product
+  type: belongs_to
+  via: sku
+- from: OrderItem
+  to: Seller
+  type: belongs_to
+  via: seller_id
+- from: Customer
+  to: Store
+  type: has_one
+  via: pref_store
+  note: preferred store
+- from: Customer
+  to: Seller
+  type: has_one
+  via: pref_seller
+  note: preferred seller
+- from: Seller
+  to: Store
+  type: belongs_to
+  via: store
+- from: Cashback
+  to: Customer
+  type: belongs_to
+  via: customer_id
+- from: Cashback
+  to: Order
+  type: belongs_to
+  via: order_id
+- from: Cashback
+  to: Store
+  type: belongs_to
+  via: order_store
+- from: Cashback
+  to: Seller
+  type: belongs_to
+  via: seller_id
+- from: NetPromoterScore
+  to: Customer
+  type: belongs_to
+  via: customer_id
+- from: NetPromoterScore
+  to: Order
+  type: belongs_to
+  via: order_id
+- from: NetPromoterScore
+  to: Store
+  type: belongs_to
+  via: order_store
+- from: ExcludeList
+  to: Customer
+  type: belongs_to
+  via: customer_id
+- from: TagsInteraction
+  to: Product
+  type: belongs_to
+  via: sku
+- from: TagsInteraction
+  to: TagsHit
+  type: belongs_to
+  via: session_id
+- from: TagsMatch
+  to: Customer
+  type: belongs_to
+  via: customer_id
+- from: TagsMatch
+  to: TagsHit
+  type: belongs_to
+  via: user_id
+enumerations:
+- name: Gender
+  used_by: [Product]
+- name: PaymentType
+  used_by: [Order]
+- name: StoreType
+  used_by: [Store, Order, NetPromoterScore]
+- name: TagType
+  used_by: [TagsInteraction]
+- name: TypePerson
+  used_by: [Customer]
+envelopes:
+  request: '<Entity>PostRequest { data: [<Entity>] }'
+  success: 'SuccessResponse { success, requestId }'
+  error: 'HTTPValidationError { detail: [ValidationError{loc,msg,type}] }'
+counts:
+  entities: 12
+  relationships: 21
+  schemas_in_spec: 34
+gaps:
+- >-
+  No id-prefix scheme is published (ids are caller-supplied natural keys from the
+  integrator's own ERP/POS, not Oto-minted), so there is no prefix table to record.
+- >-
+  There is no read side in the public contract — no GET operation returns any of
+  these entities, so the model is inferred entirely from write payloads.

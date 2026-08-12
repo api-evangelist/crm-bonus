@@ -1,0 +1,27 @@
+generated: '2026-08-12'
+method: searched
+source: >-
+  https://www.crmbonus.com.br/sitemap.xml (full URL inventory, 2026-08-12),
+  https://www.crmbonus.com.br/ navigation, https://www.crmbonus.com.br/precos
+  (404), https://www.otocrm.com.br/
+plan_count: 0
+plans: []
+pricing_model: contact-sales
+currency: null
+note: >-
+  CRM Bonus publishes no pricing of any kind. There is no /precos, /pricing or
+  /planos page — the sitemap carries 200+ URLs covering products, segments,
+  challenges, cases, partners, policies and campaign landing pages, and not one
+  pricing page among them. Every product page terminates in an "Agende uma
+  reunião" (schedule a meeting) call to action rather than a plan table or a
+  sign-up flow. The same holds for Oto CRM (otocrm.com.br) and for the Oto Data
+  API, whose access is granted by support on request rather than purchased. This
+  is an enterprise contact-sales motion, recorded as an explicit zero rather
+  than omitted.
+x-evidence:
+- url: https://www.crmbonus.com.br/precos
+  http_status: 404
+- url: https://www.crmbonus.com.br/sitemap.xml
+  http_status: 200
+- url: https://www.crmbonus.com.br/en
+  http_status: 200

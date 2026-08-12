@@ -1,0 +1,57 @@
+generated: '2026-08-12'
+method: searched
+source: >-
+  https://data-api.otocrm.com.br/redoc — the limits are published verbatim in
+  the OpenAPI info.description ("# Limites") of
+  openapi/crm-bonus-oto-data-api-openapi.yml
+api: Oto Data API
+limit_count: 2
+limits:
+- id: requests-per-minute
+  scope: per-source-ip
+  applies_to: all endpoints
+  window: 1m
+  limit: 200
+  burst: null
+  overflow_behaviour: >-
+    Requests over the limit are first DELAYED (throttled) to hold the caller to
+    the stated pace; sustained excess is eventually rejected.
+  status_on_exhaustion: 429
+  status_text: Too many requests
+  quote: >-
+    "esta API aceita um número máximo de 200 requisições por minuto por IP de
+    origem. As requisições que excederem este limite terão suas respostas
+    atrasadas para que se mantenha o ritmo estipulado, até que eventualmente
+    podem ser barradas com a resposta HTTP/1.1 429 Too many requests."
+- id: records-per-request
+  scope: per-request
+  applies_to: all endpoints (the `data` array of every POST body)
+  window: null
+  limit: 10000
+  unit: records
+  status_on_exhaustion: 413
+  status_text: Payload Too Large
+  quote: >-
+    "São aceitos até 10.000 registros por requisição. Caso a propriedade `data`
+    contenha um número superior de entradas, a requisição será recusada com a
+    resposta HTTP/1.1 413 Payload Too Large."
+response_headers:
+  documented: []
+  observed: []
+  note: >-
+    PROBED, NOT ASSUMED. A live unauthenticated POST to
+    https://data-api.otocrm.com.br/v1/customers on 2026-08-12 returned HTTP 403
+    with no RateLimit-*, X-RateLimit-* or Retry-After header (headers returned:
+    date, content-type, content-length, strict-transport-security,
+    x-xss-protection, cf-cache-status, nel, report-to, server: cloudflare,
+    cf-ray, alt-svc). The docs publish the numbers but the API publishes no
+    runtime rate-limit signal, so an agent cannot read remaining budget from a
+    response — it can only detect exhaustion after a 429. This is the gap worth
+    reporting to the provider.
+x-evidence:
+- url: https://data-api.otocrm.com.br/openapi.json
+  http_status: 200
+  note: limits published in info.description
+- url: https://data-api.otocrm.com.br/v1/customers
+  http_status: 403
+  note: live header probe, POST without credentials

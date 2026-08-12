@@ -1,0 +1,87 @@
+generated: '2026-08-12'
+method: searched
+source: >-
+  npm registry search + registry.npmjs.org metadata endpoints; GitHub org
+  github.com/crmbonus-oficial (org display name "CrmBonus"); PyPI, RubyGems,
+  crates.io, NuGet, Maven Central and pkg.go.dev all probed and empty.
+summary: >-
+  CRM Bonus publishes no server-side client SDK for its APIs in any language.
+  The one clearly first-party published package is a browser web-component
+  library for the CRMChat surface, published to npm under the @crm-bonus scope
+  by the company's own npm accounts. The Oto Data API (the provider's only
+  public OpenAPI) has NO published client library in any registry — integrators
+  call it over plain REST.
+packages:
+- language: javascript
+  registry: npm
+  name: "@crm-bonus/crmchat-components"
+  url: https://www.npmjs.com/package/@crm-bonus/crmchat-components
+  install: npm install @crm-bonus/crmchat-components
+  official: true
+  version: 1.12.16
+  published: '2025-11-07'
+  kind: ui-components
+  repository: https://github.com/crmbonus-oficial/crmchat-components
+  note: >-
+    First-party: the npm maintainer list includes the "crmbonus" and "sec_crm"
+    accounts alongside several named CRMBonus engineers, and the repository
+    resolves to the company's own GitHub org (github.com/crmbonus-oficial,
+    display name "CrmBonus"). 253 published versions since 2024-02-26. This is a
+    front-end component library for the CRMChat conversational-commerce surface,
+    not a client for the Oto Data API. The linked repository itself is not
+    public.
+- language: javascript
+  registry: npm
+  name: crmbonus-component-wake
+  url: https://www.npmjs.com/package/crmbonus-component-wake
+  install: npm install crmbonus-component-wake
+  official: false
+  version: 2.1.41-shoulder
+  published: '2025-09-19'
+  kind: ui-components
+  note: >-
+    Stencil web component for the CRMBonus surface on the Wake e-commerce
+    platform; 184 published versions since 2024-11-18, and release tags carry
+    retail brand names (e.g. "-shoulder"). Marked official:false because it is
+    published by a single individual npm account (darlinson.alves) with no
+    CRMBonus org account on the maintainer list and no repository link back to
+    github.com/crmbonus-oficial — the package still carries the vendored Stencil
+    starter metadata. Consistent with first-party work but not provably so.
+- language: javascript
+  registry: npm
+  name: crmbonus-component
+  url: https://www.npmjs.com/package/crmbonus-component
+  install: npm install crmbonus-component
+  official: false
+  version: 0.0.2
+  published: '2024-11-14'
+  kind: ui-components
+  note: >-
+    Two published versions only (2024-11-05, 2024-11-14), same individual
+    publisher as crmbonus-component-wake, unchanged Stencil starter description
+    and repository URL. Appears to be an abandoned precursor to
+    crmbonus-component-wake. Same official:false reasoning.
+registries_probed:
+- registry: npm
+  result: 3 CRMBonus-named packages found (1 verifiably first-party)
+- registry: pypi
+  result: 404 for crmbonus, crm-bonus, otocrm, oto-crm
+- registry: rubygems
+  result: no CRMBonus/Oto packages
+- registry: crates.io
+  result: no CRMBonus/Oto packages
+- registry: nuget
+  result: no CRMBonus/Oto packages
+- registry: maven-central
+  result: no CRMBonus/Oto packages
+- registry: pkg.go.dev
+  result: no CRMBonus/Oto modules
+gaps:
+- >-
+  No official client library for the Oto Data API (data-api.otocrm.com.br) in
+  any registry, despite a published OpenAPI 3.1.0 that would generate one
+  mechanically.
+- >-
+  No SDK of any kind for the Giftback / Vale Bonus / CRMAds APIs on
+  api.crmbonus.com — those integrations are delivered through 300+ partner
+  connectors rather than a client library.

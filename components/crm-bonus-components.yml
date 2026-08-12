@@ -1,0 +1,52 @@
+generated: '2026-08-12'
+method: searched
+source: >-
+  https://www.npmjs.com/package/@crm-bonus/crmchat-components and
+  registry.npmjs.org metadata; https://github.com/crmbonus-oficial
+summary: >-
+  CRM Bonus ships its customer-facing surfaces as browser web components rather
+  than as server-side SDKs. The one first-party library published to a public
+  registry is the CRMChat component set; a second family targets the Wake
+  e-commerce platform. There is no documented, publicly-referenced embed guide —
+  these are distributed to integration partners, and the packages are the only
+  public evidence of the surface.
+families:
+- name: CRMChat components
+  description: >-
+    Web component library for the CRMChat / Conversational Commerce surface
+    (CRMBonus turns WhatsApp into a sales, recommendation and engagement
+    channel). Distributed as ESM plus a UMD build.
+  loader:
+    registry: npm
+    package: "@crm-bonus/crmchat-components"
+    version: 1.12.16
+    published: '2025-11-07'
+    esm: dist/@crm-bonus/crmchat-components.js
+    umd: dist/@crm-bonus/crmchat-components.umd.cjs
+  official: true
+  note: >-
+    Maintainer list includes the CRMBonus org npm accounts ("crmbonus",
+    "sec_crm"); repository is github.com/crmbonus-oficial/crmchat-components.
+    Individual component/tag names are not published in the registry metadata
+    and the repository is not public, so the element inventory is not recorded
+    here rather than guessed.
+- name: Wake storefront component
+  description: >-
+    Stencil-built web component embedding the CRMBonus offer/cashback surface
+    into storefronts on the Wake (formerly Fbits) e-commerce platform. Release
+    tags are cut per retail brand.
+  loader:
+    registry: npm
+    package: crmbonus-component-wake
+    version: 2.1.41-shoulder
+    published: '2025-09-19'
+    esm: dist/crmbonus-component-wake/crmbonus-component-wake.esm.js
+  official: false
+  note: >-
+    Published by an individual npm account (darlinson.alves), not a CRMBonus org
+    account; consistent with first-party work but not provable from the registry.
+gaps:
+- >-
+  No public documentation page describes how to embed either component family —
+  no script-tag snippet, element reference, or configuration reference was found
+  on crmbonus.com.br or otocrm.com.br.

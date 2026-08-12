@@ -1,0 +1,91 @@
+generated: '2026-08-12'
+method: derived
+source: >-
+  openapi/crm-bonus-oto-data-api-openapi.yml (declared responses + the
+  /auth/login description's documented status codes + the "# Limites" section of
+  info.description), corroborated by live probes of
+  https://data-api.otocrm.com.br on 2026-08-12
+format: fastapi-detail
+rfc9457: false
+envelope:
+  content_type: application/json
+  shape: '{"detail": <string | array>}'
+  note: >-
+    NOT RFC 9457 Problem Details. There is no application/problem+json media
+    type, no `type` URI, no `title` and no per-error code registry — the error
+    identity is carried by the HTTP status plus a free-text (or structured
+    validation) `detail`. Recorded as-is; no problem types were invented to fill
+    the shape.
+problems:
+- status: 403
+  detail: Not authenticated
+  title: Missing or malformed bearer token
+  remediation: >-
+    Send the token issued by Oto/CRMBonus support in the Authorization header as
+    "Bearer <token>", or call POST /auth/login to obtain a JWT.
+  observed: true
+  source_operation: all /v1/* operations (HTTPBearer security requirement)
+  evidence: live POST https://data-api.otocrm.com.br/v1/customers with no credentials -> 403 {"detail":"Not authenticated"}
+- status: 404
+  detail: Not Found
+  title: Unknown path
+  remediation: Check the path against the published spec; the API root itself returns 404.
+  observed: true
+  source_operation: routing
+  evidence: live GET https://data-api.otocrm.com.br/v1/nope -> 404 {"detail":"Not Found"}
+- status: 422
+  title: Validation Error
+  schema: HTTPValidationError
+  detail_shape: '[{"loc": ["body", 0, "customer_id"], "msg": "...", "type": "..."}]'
+  remediation: >-
+    Each entry locates the offending field via `loc` (body -> record index ->
+    field). The docs call this out as a deliberate feature — validation at
+    ingest lets an integrator find bad source data in staging before promoting to
+    production.
+  declared: true
+  source_operation: >-
+    every operation — /auth/login, /v1/blocked, /v1/cashback, /v1/customers,
+    /v1/nps, /v1/orders, /v1/order_items, /v1/products, /v1/sellers, /v1/stores,
+    /v1/tag_hits, /v1/tag_interactions, /v1/tag_ids
+- status: 429
+  title: Too many requests
+  remediation: >-
+    Hold to 200 requests per minute per source IP. Responses are throttled
+    (delayed) before rejection, so a client that respects backpressure normally
+    never sees this. No Retry-After header is returned.
+  declared: true
+  source_operation: all operations
+  source: info.description "# Limites" -> "Limite de requisições"
+- status: 413
+  title: Payload Too Large
+  remediation: >-
+    Split the `data` array into batches of at most 10,000 records.
+  declared: true
+  source_operation: all ingestion operations
+  source: info.description "# Limites" -> "Limite de registros por requisição"
+- status: 401
+  title: Credenciais inválidas
+  remediation: Invalid username or password on POST /auth/login.
+  declared: true
+  source_operation: login_auth_login_post
+  source: documented in the operation description's "Códigos de status"
+- status: 403
+  title: Conta de usuário inativa
+  remediation: The user account exists but is inactive; contact Oto/CRMBonus support.
+  declared: true
+  source_operation: login_auth_login_post
+  source: documented in the operation description's "Códigos de status"
+- status: 500
+  title: Erro interno no servidor por exceção não esperada
+  remediation: Retry; if persistent, check https://status.otocrm.com.br and contact support.
+  declared: true
+  source_operation: login_auth_login_post
+  source: documented in the operation description's "Códigos de status"
+gaps:
+- >-
+  No error-code registry: the 12 ingestion operations declare only 200 and 422
+  in responses[], so every other failure mode above is documented in prose or
+  observed live rather than declared in the contract.
+- >-
+  429 and 413 are published in the description but declared on no operation, so
+  a generated client will not model them.

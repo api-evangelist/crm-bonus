@@ -1,4 +1,4 @@
-generated: '2026-07-18'
+generated: '2026-08-12'
 method: probed
 source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
 hosts:
@@ -8,6 +8,25 @@ hosts:
   cert_expires: Oct 15 14:32:16 2026 GMT
   hsts: true
   hsts_max_age: 31536000
+- host: data-api.otocrm.com.br
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct 23 02:20:41 2026 GMT
+  hsts: true
+  hsts_max_age: 31536000
+  hsts_include_subdomains: true
+  note: >-
+    Corrected by hand after the automated pass recorded hsts: null. The probe's
+    request path returns 404 on this host and the header was missed; a live
+    HEAD on https://data-api.otocrm.com.br/ and on /docs both return
+    "strict-transport-security: max-age=31536000; includeSubDomains"
+    (re-verified 2026-08-12). Fronted by Cloudflare.
+- host: data-api-hmg.otocrm.com.br
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct 23 02:20:41 2026 GMT
+  hsts: null
+  note: staging (homologação) host; HSTS not confirmed.
 domains:
 - domain: crmbonus.com.br
   dnssec: false
@@ -15,3 +34,9 @@ domains:
   spf: true
   dmarc: true
   dmarc_policy: quarantine
+- domain: otocrm.com.br
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: none

@@ -1,0 +1,122 @@
+generated: '2026-08-12'
+method: searched
+source: >-
+  https://data-api.otocrm.com.br/redoc (info.description and per-operation
+  descriptions) +
+  https://ajuda.otocrm.com.br/support/solutions/articles/150000032248-ingest%C3%A3o-de-dados-via-api
+  + live response probes on 2026-08-12
+api: Oto Data API
+summary: >-
+  A narrow, uniform ingestion contract: every operation is a POST that carries a
+  batch under a single `data` array, writes are upsert-by-natural-key, auth is a
+  bearer token issued by support, and the whole surface shares one error envelope
+  and one pair of published limits.
+authentication:
+  style: http-bearer
+  header: Authorization
+  format: "Bearer <token>"
+  issuance: >-
+    Tokens are issued by Oto/CRMBonus support on request; there is no
+    self-service key page. A /auth/login operation exchanges username + password
+    for a JWT with expires_in 3600 seconds.
+  missing_credential_response: '403 {"detail": "Not authenticated"}'
+  see: authentication/crm-bonus-authentication.yml
+idempotency:
+  supported: true
+  mechanism: natural-key upsert
+  key_header: null
+  key_parameter: null
+  description: >-
+    The provider documents retry-safety as a property of the write model rather
+    than as a request header. Every ingestion endpoint is an upsert: "caso um
+    registro com a mesma chave primária exista na base de dados, ele será
+    integralmente substituído pelo registro enviado" — a record whose primary key
+    already exists is replaced IN FULL by the record sent, otherwise it is
+    created. Replaying the same payload therefore converges on the same stored
+    state, which is what an agent needs from idempotency.
+  caveats:
+  - >-
+    Because the replacement is total (not a merge), replaying a PARTIAL payload
+    for an existing key erases fields omitted from the retry. Retry the exact
+    original body, never a trimmed one.
+  - >-
+    There is no Idempotency-Key header, so two DIFFERENT payloads sharing a key
+    are not detected as a duplicate submission — last write wins.
+  dedup_keys:
+  - resource: customers
+    keys: [customer_id, data_source]
+    quote: "Os registros são deduplicados pelas colunas customer_id e data_source."
+  - resource: orders
+    keys: [id, store]
+  - resource: order_items
+    keys: [id, store, sku, seq]
+  - resource: products
+    keys: [sku]
+  - resource: stores
+    keys: [id]
+  - resource: sellers
+    keys: [id]
+  note: >-
+    Only the customers dedup key pair is stated verbatim in the docs; the other
+    rows are the required-field sets declared in the OpenAPI schemas and are
+    marked as such rather than asserted as provider statements.
+batching:
+  style: array-under-data
+  request_shape: '{"data": [ {...}, {...} ]}'
+  max_records_per_request: 10000
+  over_limit_status: 413
+  note: Every one of the 12 ingestion operations takes the same envelope.
+pagination:
+  supported: false
+  note: >-
+    The public surface is write-only (13 POST operations, no GET), so there is
+    nothing to paginate. Read access to the ingested data is through the Oto Web
+    platform and the private API, neither of which is publicly documented.
+field_expansion:
+  supported: false
+sparse_fieldsets:
+  supported: false
+metadata:
+  supported: true
+  mechanism: numbered custom fields
+  description: >-
+    Customers, orders and stores each carry `custom_field_NN` slots
+    ("Os campos adicionais (custom_field_NN) podem ser configurados à parte e
+    utilizados para critérios de segmentação e personalização da plataforma").
+    Slots are configured per account with Oto, not declared in the request.
+request_tracing:
+  request_id_header: null
+  response_field: requestId
+  description: >-
+    Successful responses return a SuccessResponse object carrying `success` and
+    `requestId`. The identifier is issued by the server in the response body;
+    there is no client-supplied correlation header documented.
+versioning:
+  scheme: uri-path
+  current: v1
+  spec_version: 1.3.5
+  note: >-
+    All ingestion paths are prefixed /v1/; /auth/login is unversioned. The
+    OpenAPI info.version (1.3.5) tracks the implementation, not the URL version.
+  see: lifecycle/crm-bonus-lifecycle.yml
+error_envelope:
+  shape: '{"detail": <string | array of ValidationError>}'
+  content_type: application/json
+  problem_json: false
+  rfc9457: false
+  validation_shape: '{"detail": [{"loc": [...], "msg": "...", "type": "..."}]}'
+  note: >-
+    FastAPI-style. `detail` is a plain string for auth/routing failures and an
+    array of ValidationError objects for 422 schema failures. Not RFC 9457 — no
+    application/problem+json, no `type` URI, no `title`.
+  see: errors/crm-bonus-problem-types.yml
+rate_limit_signaling:
+  documented_limits: true
+  runtime_headers: false
+  note: >-
+    Limits are published (200 req/min per source IP; 10,000 records per
+    request) but no RateLimit-*/X-RateLimit-*/Retry-After header is returned, so
+    an agent has no in-band budget signal.
+  see: rate-limits/crm-bonus-rate-limits.yml
+environments:
+  see: sandbox/crm-bonus-sandbox.yml

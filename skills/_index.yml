@@ -1,0 +1,41 @@
+generated: '2026-08-12'
+method: generated
+source: >-
+  Grounded in openapi/crm-bonus-oto-data-api-openapi.yml (every operationId
+  verified verbatim in the spec), plus conventions/crm-bonus-conventions.yml,
+  errors/crm-bonus-problem-types.yml, rate-limits/crm-bonus-rate-limits.yml and
+  sandbox/crm-bonus-sandbox.yml.
+note: >-
+  Authored by API Evangelist, not published by CRM Bonus. No provider-published
+  AGENTS.md or skill file was found on any CRMBonus or Oto host. The three skills
+  mirror the three natural loading phases of the Oto Data API's 13 operations;
+  together they cover all 13.
+skills:
+- file: crm-bonus-load-customer-master-data.md
+  name: Load customer master data into Oto CRM
+  api: openapi/crm-bonus-oto-data-api-openapi.yml
+  operations:
+  - login_auth_login_post
+  - post_customers_v1_customers_post
+  - post_blocked_v1_blocked_post
+- file: crm-bonus-load-transactions-and-catalog.md
+  name: Load transactions and catalog into Oto CRM
+  api: openapi/crm-bonus-oto-data-api-openapi.yml
+  operations:
+  - post_stores_v1_stores_post
+  - post_sellers_v1_sellers_post
+  - post_products_v1_products_post
+  - post_orders_v1_orders_post
+  - post_order_items_v1_order_items_post
+- file: crm-bonus-load-loyalty-and-web-behaviour.md
+  name: Load loyalty, NPS and Oto Tags web behaviour into Oto CRM
+  api: openapi/crm-bonus-oto-data-api-openapi.yml
+  operations:
+  - post_cashback_v1_cashback_post
+  - post_nps_v1_nps_post
+  - post_tag_hit_v1_tag_hits_post
+  - post_tag_interaction_v1_tag_interactions_post
+  - post_tags_ids_v1_tag_ids_post
+coverage:
+  operations_in_spec: 13
+  operations_covered: 13

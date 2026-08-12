@@ -1,37 +1,42 @@
 aid: crm-bonus
 accessModel:
   pricing: unknown
-  onboarding: unknown
+  onboarding: request
   trial: false
   try_now: false
-  public: false
-  label: Unknown
-  confidence: low
-  source: []
-  generated: '2026-07-22'
-  method: derived
+  public: true
+  label: Request Access
+  confidence: medium
+  source:
+  - https://ajuda.otocrm.com.br/support/solutions/articles/150000031734-cadastro-r%C3%A1pido-via-api
+  - https://data-api.otocrm.com.br/redoc
+  generated: '2026-08-12'
+  method: searched
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/crm-bonus.png
 name: CRM Bonus
 description: >-
   CRM Bonus (CRMBonus) is a Brazilian retail technology platform for customer
   acquisition, conversion, and loyalty. Its products include Giftback cashback and
   rewards, the Vale Bonus consumer rewards app connecting brands to over five million
-  shoppers, CRMBack WhatsApp-based e-commerce conversion, and CRMAds retail media on
-  WhatsApp. It integrates with 300+ ERP, point-of-sale, and e-commerce systems
-  including VTEX, Shopify, Linx, TOTVS, Nuvemshop, and PagSeguro. Integration is
-  delivered through partner connectors rather than a public developer API; no public
-  API documentation, developer portal, OpenAPI, or /.well-known discovery surface was
-  found during enrichment.
+  shoppers, CRMBack WhatsApp-based e-commerce conversion, CRMAds retail media on
+  WhatsApp, and Oto CRM — the physical-retail CRM platform CRMBonus acquired outright
+  from WPP in June 2025 and now lists as a first-party retail solution. It integrates
+  with 300+ ERP, point-of-sale, and e-commerce systems including VTEX, Shopify, Linx,
+  TOTVS, Nuvemshop, Wake, and PagSeguro. The publicly documented machine-readable
+  contract is the Oto Data API — an OpenAPI 3.1.0 upsert-ingestion API for customers,
+  orders, order items, products, stores, sellers, cashback, NPS, and Oto Tags events —
+  served at data-api.otocrm.com.br with a public ReDoc/Swagger reference. The Giftback
+  and Vale Bonus APIs on api.crmbonus.com are partner-token gated with no public
+  reference; that host answers HTTP 200 with an "OK!!" envelope for every path,
+  including every /.well-known/* probe, so none of those 200s carry a real document.
 url: https://raw.githubusercontent.com/api-evangelist/crm-bonus/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - bond-capital
-x-tier: stub
-x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-18'
+modified: '2026-08-12'
 tags:
 - Company
 - Retail
@@ -42,25 +47,144 @@ tags:
 - E-commerce
 - Brazil
 - WhatsApp
-apis: []
+- Customer Data
+- Data Ingestion
+- Point of Sale
+apis:
+- name: Oto Data API
+  description: >-
+    REST data-ingestion API for the Oto CRM platform (a CRMBonus retail solution).
+    Thirteen POST operations load customers, orders, order items, products, stores,
+    sellers, cashback credits, NPS responses, exclusion lists, and Oto Tags web
+    events. Records are written upsert-style — a record whose primary key already
+    exists is replaced in full — so a retried load converges on the same state.
+    Authentication is an HTTP bearer token issued by Oto/CRMBonus support; a
+    /auth/login operation exchanges username and password for a 3600-second JWT.
+    Limits are published in the spec description: 200 requests per minute per source
+    IP (HTTP 429) and 10,000 records per request (HTTP 413). Production and a staging
+    (homologação) environment are both declared in servers[].
+  humanURL: https://data-api.otocrm.com.br/redoc
+  baseURL: https://data-api.otocrm.com.br
+  tags:
+  - crm
+  - customer-data
+  - data-ingestion
+  - retail
+  - loyalty
+  - cashback
+  - nps
+  - e-commerce
+  - brazil
+  properties:
+  - type: OpenAPI
+    url: openapi/crm-bonus-oto-data-api-openapi.yml
+  - type: APIReference
+    url: https://data-api.otocrm.com.br/redoc
+  - type: Documentation
+    url: https://ajuda.otocrm.com.br/support/solutions/articles/150000032248-ingest%C3%A3o-de-dados-via-api
+  - type: GettingStarted
+    url: https://ajuda.otocrm.com.br/support/solutions/articles/150000031734-cadastro-r%C3%A1pido-via-api
+  - type: Console
+    url: https://data-api.otocrm.com.br/docs
+  - type: Authentication
+    url: authentication/crm-bonus-authentication.yml
+  - type: Conventions
+    url: conventions/crm-bonus-conventions.yml
+  - type: Idempotency
+    url: conventions/crm-bonus-conventions.yml
+  - type: ErrorCatalog
+    url: errors/crm-bonus-problem-types.yml
+  - type: DataModel
+    url: data-model/crm-bonus-data-model.yml
+  - type: RateLimits
+    url: rate-limits/crm-bonus-rate-limits.yml
+  - type: Sandbox
+    url: sandbox/crm-bonus-sandbox.yml
+  - type: Overlay
+    url: overlays/crm-bonus-oto-data-api-overlay.yaml
+  - type: MCPServer
+    url: mcp/crm-bonus-mcp.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: AgenticAccess
+  url: agentic-access/crm-bonus-agentic-access.yml
 - type: DomainSecurity
   url: security/crm-bonus-domain-security.yml
 - type: Website
   url: https://crmbonus.com.br
 - type: Support
   url: https://crmbonus.com.br/suporte
+- type: HelpCenter
+  url: https://ajuda.otocrm.com.br/support/solutions
 - type: Blog
   url: https://crmbonus.com.br/blog
 - type: PrivacyPolicy
   url: https://crmbonus.com.br/politicas/politica-de-privacidade
+- type: TermsOfService
+  url: https://www.crmbonus.com.br/politicas/aviso-de-privacidade-e-termos-de-uso
+- type: GitHubOrganization
+  url: https://github.com/crmbonus-oficial
+- type: StatusPage
+  url: https://status.otocrm.com.br
+- type: Lifecycle
+  url: lifecycle/crm-bonus-lifecycle.yml
+- type: Packages
+  url: packages/crm-bonus-packages.yml
+- type: SDKs
+  url: packages/crm-bonus-packages.yml
+- type: Components
+  url: components/crm-bonus-components.yml
+- type: Conformance
+  url: conformance/crm-bonus-conformance.yml
+- type: LLMsTxt
+  url: llms/crm-bonus-llms.txt
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Plans
+  url: plans/crm-bonus-plans-pricing.yml
+- type: Documentation
+  url: https://ajuda.otocrm.com.br/support/solutions/articles/150000032248-ingest%C3%A3o-de-dados-via-api
+- type: APIReference
+  url: https://data-api.otocrm.com.br/redoc
+- type: GettingStarted
+  url: https://ajuda.otocrm.com.br/support/solutions/articles/150000031734-cadastro-r%C3%A1pido-via-api
+- type: Authentication
+  url: authentication/crm-bonus-authentication.yml
+- type: Conventions
+  url: conventions/crm-bonus-conventions.yml
+- type: Idempotency
+  url: conventions/crm-bonus-conventions.yml
+- type: ErrorCatalog
+  url: errors/crm-bonus-problem-types.yml
+- type: DataModel
+  url: data-model/crm-bonus-data-model.yml
+- type: RateLimits
+  url: rate-limits/crm-bonus-rate-limits.yml
+- type: Sandbox
+  url: sandbox/crm-bonus-sandbox.yml
+- type: Overlay
+  url: overlays/crm-bonus-oto-data-api-overlay.yaml
+- type: MCPServer
+  url: mcp/crm-bonus-mcp.yml
 x-enrichment:
-  date: '2026-07-19'
-  status: backfilled
+  date: '2026-08-12'
+  status: enriched
+  artifacts_added: 16
   pass: local-v1
-  note: backfilled from .gitignore signal + verified work evidence
+  note: >-
+    Round 2 overturned round 1's "no public developer API" finding. STEP 0b
+    contract discovery on the acquired Oto CRM brand located a live, first-party
+    OpenAPI 3.1.0 (13 operations, 34 schemas) at data-api.otocrm.com.br, plus an
+    Atlassian status page at status.otocrm.com.br with dedicated "API Pública"
+    and "API Privada" components. Ownership verified per STEP 0c: CRMBonus
+    acquired 100% of Oto CRM from WPP in June 2025, lists Oto CRM in its own
+    site navigation under Soluções | Varejo linking to otocrm.com.br, and the
+    Oto help center is titled "Oto CRM | Powered by CRMBonus". No WellKnown,
+    SecurityTxt, AgentCard, Compliance, Security, ChangeLog, Pricing, SignUp or
+    DeveloperPortal pointer is wired — each was probed and genuinely absent. The
+    nine HTTP 200s on api.crmbonus.com/.well-known/* are a soft-200 catch-all
+    and were rejected, not credited.

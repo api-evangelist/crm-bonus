@@ -1,19 +1,103 @@
-generated: '2026-07-18'
+generated: '2026-08-12'
 method: searched
-source: live probes of /.well-known/* on the apis.yml Website host
-host: https://crmbonus.com.br
-documents:
-- path: /.well-known/security.txt
-  status: 404
-- path: /.well-known/openid-configuration
-  status: 404
-- path: /.well-known/oauth-authorization-server
-  status: 404
-- path: /.well-known/api-catalog
-  status: 404
-- path: /.well-known/ai-plugin.json
-  status: 404
+source: >-
+  live probes of /.well-known/* on the apis.yml Website host, the Oto Data API
+  host and its docs/marketing hosts, and the CRMBonus API gateway host
+hosts:
+- host: https://crmbonus.com.br
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+- host: https://data-api.otocrm.com.br
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+- host: https://otocrm.com.br
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+- host: https://ajuda.otocrm.com.br
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+- host: https://api.crmbonus.com
+  soft_200_catch_all: true
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    verdict: not-a-document
+  - path: /.well-known/openid-configuration
+    status: 200
+    verdict: not-a-document
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    verdict: not-a-document
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    verdict: not-a-document
+  - path: /.well-known/api-catalog
+    status: 200
+    verdict: not-a-document
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    verdict: not-a-document
+  - path: /.well-known/agent-card.json
+    status: 200
+    verdict: not-a-document
+  - path: /.well-known/agent.json
+    status: 200
+    verdict: not-a-document
+  - path: /llms.txt
+    status: 200
+    verdict: not-a-document
 notes: >-
-  No /.well-known discovery documents are published on the CRM Bonus host. Absence
-  is a valid, recorded result; no WellKnown/SecurityTxt scoring pointer is wired
-  because no document was found.
+  No /.well-known discovery document is published on any CRM Bonus or Oto CRM
+  host. The nine HTTP 200s recorded on api.crmbonus.com are FALSE POSITIVES and
+  are explicitly rejected: that gateway answers 200 with the identical JSON
+  envelope {"correlation_id":"<uuid>","message":"OK!!"} for every path it is
+  asked for, including paths that cannot exist. A 200 is not evidence of a
+  document. No WellKnown, SecurityTxt, APICatalog or AgentCard pointer is wired,
+  because no host returned a real document at any probed path. Recorded absence
+  is a valid result.

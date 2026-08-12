@@ -42,6 +42,18 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-CRM Bonus is a company surfaced as a portfolio company of bond-capital and added to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+CRM Bonus (CRMBonus) is a Brazilian retail technology platform for customer acquisition, conversion
+and loyalty — Giftback, Vale Bonus, CRMBack, CRMAds, Conversational Commerce, and Oto CRM.
+
+**Public API surface.** The publicly documented machine-readable contract is the **Oto Data API**, an
+OpenAPI 3.1.0 upsert-ingestion API for the Oto CRM platform, served at `https://data-api.otocrm.com.br`
+with a public ReDoc reference. Oto CRM was acquired outright by CRMBonus from WPP in June 2025; it is
+listed as a CRMBonus retail solution in the crmbonus.com.br navigation, and the Oto help center is
+titled "Oto CRM | Powered by CRMBonus".
+
+The Giftback / Vale Bonus / CRMAds APIs on `api.crmbonus.com` are partner-token gated with no public
+reference. That host answers HTTP 200 with an identical `{"correlation_id":"…","message":"OK!!"}`
+envelope for **every** path, so a 200 there is not evidence a document exists — none of those
+responses were credited in this profile.
 
 Backed by: bond-capital — https://crmbonus.com.br

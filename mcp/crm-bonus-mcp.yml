@@ -1,0 +1,118 @@
+generated: '2026-08-12'
+method: derived
+source: openapi/crm-bonus-oto-data-api-openapi.yml
+status: candidate
+summary: >-
+  NOT PUBLISHED BY CRM BONUS. No official hosted or remote Model Context
+  Protocol server was found for CRM Bonus, Oto CRM, or any of their products —
+  searched the provider sites, the help center, the crmbonus-oficial GitHub org,
+  npm, and general web search; the /.well-known probes found no MCP or OAuth
+  discovery document on any provider host. The tool set below is DERIVED from
+  the 13 operations of the provider's own Oto Data API OpenAPI as a proposal for
+  an agent-facing surface. Each tool's real input contract is the requestBody
+  schema named in source_operation.
+server: null
+transport: null
+url: null
+auth:
+  type: http-bearer
+  header: Authorization
+  format: "Bearer <token>"
+  note: >-
+    Support-issued token, or a JWT from POST /auth/login. Any real MCP server
+    over this API would need that credential; there is no OAuth or scope model to
+    bind against.
+candidate_tools:
+- name: ingest_customers
+  description: Upsert a batch of customers (up to 10,000 per call), deduped on customer_id + data_source.
+  source_operation: openapi/crm-bonus-oto-data-api-openapi.yml#post_customers_v1_customers_post
+  maps_to: POST /v1/customers
+  input_schema: CustomersPostRequest
+  consequence: write
+  note: Payload is PII-bearing (CPF, email, mobile, address) — see agentic-access/.
+- name: ingest_orders
+  description: Upsert a batch of orders.
+  source_operation: openapi/crm-bonus-oto-data-api-openapi.yml#post_orders_v1_orders_post
+  maps_to: POST /v1/orders
+  input_schema: OrdersPostRequest
+  consequence: write
+- name: ingest_order_items
+  description: Upsert a batch of order line items.
+  source_operation: openapi/crm-bonus-oto-data-api-openapi.yml#post_order_items_v1_order_items_post
+  maps_to: POST /v1/order_items
+  input_schema: OrderItemsPostRequest
+  consequence: write
+- name: ingest_products
+  description: Upsert a batch of catalog products, keyed on SKU.
+  source_operation: openapi/crm-bonus-oto-data-api-openapi.yml#post_products_v1_products_post
+  maps_to: POST /v1/products
+  input_schema: ProductsPostRequest
+  consequence: write
+- name: ingest_stores
+  description: Upsert a batch of stores.
+  source_operation: openapi/crm-bonus-oto-data-api-openapi.yml#post_stores_v1_stores_post
+  maps_to: POST /v1/stores
+  input_schema: StoresPostRequest
+  consequence: write
+- name: ingest_sellers
+  description: Upsert a batch of sellers (store staff).
+  source_operation: openapi/crm-bonus-oto-data-api-openapi.yml#post_sellers_v1_sellers_post
+  maps_to: POST /v1/sellers
+  input_schema: SellersPostRequest
+  consequence: write
+- name: ingest_cashback
+  description: Upsert cashback credits issued against purchases, with expiry and cancellation flags.
+  source_operation: openapi/crm-bonus-oto-data-api-openapi.yml#post_cashback_v1_cashback_post
+  maps_to: POST /v1/cashback
+  input_schema: CashbackPostRequest
+  consequence: write
+  note: Moves customer-redeemable value; treat as a higher-consequence write.
+- name: ingest_nps
+  description: Upsert NPS responses with sub-ratings and free-text comments.
+  source_operation: openapi/crm-bonus-oto-data-api-openapi.yml#post_nps_v1_nps_post
+  maps_to: POST /v1/nps
+  input_schema: NpsPostRequest
+  consequence: write
+- name: ingest_exclusion_list
+  description: Upsert the suppression list of customers to exclude from contact.
+  source_operation: openapi/crm-bonus-oto-data-api-openapi.yml#post_blocked_v1_blocked_post
+  maps_to: POST /v1/blocked
+  input_schema: ExcludeListPostRequest
+  consequence: write
+  note: >-
+    Consent-bearing. A wrong write here contacts people who opted out — the
+    single most consequential operation on this surface.
+- name: ingest_tag_hits
+  description: Load Oto Tags pageview events (url, referer, user agent, utm_* attribution).
+  source_operation: openapi/crm-bonus-oto-data-api-openapi.yml#post_tag_hit_v1_tag_hits_post
+  maps_to: POST /v1/tag_hits
+  input_schema: TagsHitsPostRequest
+  consequence: write
+- name: ingest_tag_interactions
+  description: Load Oto Tags product interaction events.
+  source_operation: openapi/crm-bonus-oto-data-api-openapi.yml#post_tag_interaction_v1_tag_interactions_post
+  maps_to: POST /v1/tag_interactions
+  input_schema: TagsInteractionsPostRequest
+  consequence: write
+- name: ingest_tag_identities
+  description: Bind anonymous Oto Tags user ids to known customers, including via hashed identifiers.
+  source_operation: openapi/crm-bonus-oto-data-api-openapi.yml#post_tags_ids_v1_tag_ids_post
+  maps_to: POST /v1/tag_ids
+  input_schema: TagsIdsPostRequest
+  consequence: write
+- name: login
+  description: Exchange username and password for a 3600-second JWT access token.
+  source_operation: openapi/crm-bonus-oto-data-api-openapi.yml#login_auth_login_post
+  maps_to: POST /auth/login
+  input_schema: LoginRequest
+  consequence: auth
+  note: Would normally be handled by the MCP server's credential layer, not exposed as a tool.
+coverage:
+  rest_operations: 13
+  candidate_tools: 13
+  unmapped_operations: 0
+note: >-
+  No tool-crosswalk artifact is emitted: a crosswalk records the divergence
+  between a REAL published MCP/GraphQL surface and the REST contract, and CRM
+  Bonus publishes neither. With a 1:1 derived mapping and nothing on the other
+  side to diverge from, a crosswalk would record only itself.

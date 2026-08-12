@@ -1,0 +1,101 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Oto Data API (CRM Bonus)
+  version: 1.0.0
+extends: openapi/crm-bonus-oto-data-api-openapi.yml
+x-generated: '2026-08-12'
+x-method: generated
+x-source: >-
+  Derived from this repo's searched/derived artifacts. Captures API Evangelist
+  enhancements without mutating the provider's harvested document at
+  openapi/_original/crm-bonus-oto-data-api-openapi.json.
+actions:
+- target: $.info
+  description: Attribute the provider and record the artifacts derived from this spec.
+  update:
+    x-provider: CRM Bonus (CRMBonus)
+    x-provider-slug: crm-bonus
+    x-product: Oto CRM
+    x-provenance: >-
+      Oto CRM was acquired outright by CRMBonus from WPP in June 2025 and is
+      listed as a CRMBonus retail solution in the crmbonus.com.br navigation,
+      which links to otocrm.com.br; the Oto help center is branded "Oto CRM |
+      Powered by CRMBonus".
+    x-apievangelist-artifacts:
+      authentication: authentication/crm-bonus-authentication.yml
+      conventions: conventions/crm-bonus-conventions.yml
+      errors: errors/crm-bonus-problem-types.yml
+      data-model: data-model/crm-bonus-data-model.yml
+      rate-limits: rate-limits/crm-bonus-rate-limits.yml
+      sandbox: sandbox/crm-bonus-sandbox.yml
+      lifecycle: lifecycle/crm-bonus-lifecycle.yml
+      conformance: conformance/crm-bonus-conformance.yml
+      skills: skills/_index.yml
+- target: $.info
+  description: >-
+    Surface the two limits the provider publishes in prose inside info.description
+    as machine-readable extensions.
+  update:
+    x-rate-limit:
+      requests_per_minute: 200
+      scope: per-source-ip
+      status_on_exhaustion: 429
+      response_headers: none
+    x-batch-limit:
+      max_records_per_request: 10000
+      envelope_field: data
+      status_on_exhaustion: 413
+- target: $.info
+  description: Record the idempotency contract the provider documents as a write-model property.
+  update:
+    x-idempotency:
+      supported: true
+      mechanism: natural-key-upsert
+      key_header: null
+      note: >-
+        A record whose primary key already exists is replaced in full, so
+        replaying an identical body converges on the same state. Replaying a
+        PARTIAL body erases omitted fields.
+- target: $.servers
+  description: >-
+    Flag the localhost entry left in the published servers[] block so a generated
+    client does not offer it as a selectable environment.
+  update:
+  - url: https://data-api.otocrm.com.br
+    description: Production
+    x-environment: production
+  - url: https://data-api-hmg.otocrm.com.br
+    description: Test
+    x-environment: staging
+    x-note: Homologação — same validation, writes do not persist. Separate credential required.
+  - url: http://localhost:8000
+    description: Test
+    x-environment: development-artifact
+    x-note: >-
+      Not a usable environment for an integrator; present in the provider's
+      published document.
+- target: $.components.securitySchemes.HTTPBearer
+  description: Record how the credential is actually obtained.
+  update:
+    x-issuance: support-issued
+    x-issuance-note: >-
+      Tokens are requested from Oto/CRMBonus support; there is no self-service key
+      page. POST /auth/login also mints a JWT with expires_in 3600.
+    x-missing-credential-status: 403
+- target: $.tags
+  description: >-
+    The published document declares no tags and no operation carries one, so the
+    whole surface renders as a single ungrouped list. Add capability tags.
+  update:
+  - name: Customers
+    description: Customer master data, consent flags and suppression list.
+  - name: Transactions
+    description: Orders, order items and cashback credits.
+  - name: Catalog
+    description: Products, stores and sellers.
+  - name: Experience
+    description: NPS responses.
+  - name: Tags
+    description: Oto Tags web behaviour events and identity resolution.
+  - name: Authentication
+    description: Token issuance.

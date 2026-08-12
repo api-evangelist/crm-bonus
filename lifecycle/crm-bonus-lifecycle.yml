@@ -1,0 +1,72 @@
+generated: '2026-08-12'
+method: searched
+source: >-
+  https://status.otocrm.com.br (Atlassian Statuspage, incl. /api/v2/components.json
+  and /api/v2/incidents.json) + openapi/crm-bonus-oto-data-api-openapi.yml
+versioning:
+  scheme: uri-path
+  current: v1
+  implementation_version: 1.3.5
+  docs: https://data-api.otocrm.com.br/redoc
+  note: >-
+    Ingestion paths are /v1/*; /auth/login is unversioned. info.version tracks
+    the implementation build, not the URL major.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  note: >-
+    No deprecation or sunset policy is published, and no RFC 8594 Sunset /
+    Deprecation header was observed. No operation in the spec carries
+    deprecated: true.
+deprecated_operations: []
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    No SLA or uptime commitment is published publicly. The status page reports
+    100.0% uptime over the trailing 90 days for all five components as of
+    2026-08-12, which is a measurement, not a commitment.
+status_page:
+  url: https://status.otocrm.com.br
+  provider: Atlassian Statuspage
+  page_id: nl0qhbw631nv
+  time_zone: America/Sao_Paulo
+  subscriptions: [email, slack, atom, rss]
+  feeds:
+    atom: https://status.otocrm.com.br/history.atom
+    rss: https://status.otocrm.com.br/history.rss
+    json: https://status.otocrm.com.br/api/v2/status.json
+  components:
+  - name: API Pública
+    description: Endpoints de nossa API pública
+    status: operational
+  - name: API Privada
+    description: Endpoints de API privados utilizados pelo aplicativo e Oto Analytics
+    status: operational
+  - name: Integração de Dados
+    status: operational
+  - name: Plataforma
+    status: operational
+  - name: Oto Tags
+    status: operational
+  incident_history:
+    total_published: 50
+    most_recent: '2025-03-08'
+    most_recent_title: Indisponibilidade da Plataforma Oto
+    note: >-
+      Incidents are published with impact and resolution status; the most recent
+      published incident predates this probe by roughly 17 months.
+changelog:
+  url: null
+  note: >-
+    No dated changelog or release-notes page was found for either the Oto Data
+    API or the CRMBonus products. The Statuspage incident history is an
+    availability record, not a change record, and is not recorded as one.
+x-evidence:
+- url: https://status.otocrm.com.br/api/v2/components.json
+  http_status: 200
+- url: https://status.otocrm.com.br/api/v2/incidents.json
+  http_status: 200
+- url: https://data-api.otocrm.com.br/openapi.json
+  http_status: 200

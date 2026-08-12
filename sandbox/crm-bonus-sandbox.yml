@@ -1,0 +1,65 @@
+generated: '2026-08-12'
+method: searched
+source: >-
+  https://ajuda.otocrm.com.br/support/solutions/articles/150000032248-ingest%C3%A3o-de-dados-via-api
+  + servers[] of openapi/crm-bonus-oto-data-api-openapi.yml + live probe
+api: Oto Data API
+summary: >-
+  Oto publishes a real, separately-hosted staging (homologação) environment for
+  the Data API, declared in the spec's own servers[] block. It is a
+  credentialed-parity sandbox, not an open playground: the same code paths and
+  the same schema validation run, but writes do not affect stored data, and a
+  separate credential is required.
+test_vs_live:
+  separation: separate-host
+  environments:
+  - name: Production
+    url: https://data-api.otocrm.com.br
+    declared_in: openapi servers[]
+    writes_persist: true
+  - name: Test (homologação)
+    url: https://data-api-hmg.otocrm.com.br
+    declared_in: openapi servers[]
+    writes_persist: false
+    reachable: true
+    note: >-
+      Serves the identical OpenAPI document as production (byte-for-byte
+      identical openapi.json, verified 2026-08-12).
+  - name: localhost
+    url: http://localhost:8000
+    declared_in: openapi servers[]
+    note: >-
+      A development entry left in the published servers[] block. Not a usable
+      environment for an integrator; recorded because it is in the contract.
+  key_prefixes: null
+  key_note: >-
+    Credentials are opaque bearer tokens with no documented test/live prefix.
+    "Ambos os ambientes requerem credenciais específicas" — each environment
+    requires its own credential, issued by Oto/CRMBonus support on request.
+  quote: >-
+    "existem dois ambientes distintos: produção e homologação... no ambiente de
+    homologação os dados não são modificados."
+interactive_console:
+  swagger_ui: https://data-api.otocrm.com.br/docs
+  redoc: https://data-api.otocrm.com.br/redoc
+  note: >-
+    Both renderers are served publicly and unauthenticated. Swagger UI at /docs
+    is a real try-it console, but every operation requires a bearer token, so a
+    request cannot be executed without support-issued credentials.
+magic_test_values: []
+test_clocks:
+  supported: false
+fixtures_and_triggers:
+  supported: false
+  note: >-
+    No fixture generator, event-trigger tool, or seeded test dataset is
+    published. The documented testing workflow is to load real source data into
+    homologação and read the 422 validation errors — the docs frame this as the
+    point of the environment: "permitindo aos desenvolvedores responsáveis pela
+    integração identificar rapidamente eventuais problemas na origem dos dados e
+    corrigi-los, antes de migrar para o ambiente de produção."
+x-evidence:
+- url: https://data-api-hmg.otocrm.com.br/openapi.json
+  http_status: 200
+- url: https://data-api.otocrm.com.br/docs
+  http_status: 200

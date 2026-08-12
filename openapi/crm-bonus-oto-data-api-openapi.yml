@@ -1,0 +1,2025 @@
+openapi: 3.1.0
+info:
+  title: Oto Data API
+  description: 'A Data API do Oto permite que você faça cargas de dados
+
+    de forma segura e confiável, utilizando padrões REST e corpos das mensagens em
+
+    formato JSON.
+
+
+    Os registros são inseridos na modalidade _upsert_, isto é, caso um registro
+
+    com a mesma chave primária exista na base de dados, ele será integralmente
+
+    substituído pelo registro enviado. Caso contrário, um novo registro será
+
+    criado na base de dados.
+
+
+    # Limites
+
+
+    Dois limites são aplicados em todos os endpoints desta API: requisições por
+
+    minuto e quantidade máxima de registros por requisição.
+
+
+    ## Limite de requisições
+
+
+    Para garantir a estabilidade e segurança da plataforma, esta API aceita um
+
+    número máximo de **200** requisições por minuto por IP de origem. As
+
+    requisições que excederem este limite terão suas respostas atrasadas para que
+
+    se mantenha o ritmo estipulado, até que eventualmente podem ser barradas com a
+
+    resposta `HTTP/1.1 429 Too many requests`.
+
+
+    ## Limite de registros por requisição
+
+
+    São aceitos até **10.000** registros por requisição. Caso a propriedade `data`
+
+    contenha um número superior de entradas, a requisição será recusada com a
+
+    resposta `HTTP/1.1 413 Payload Too Large`.'
+  version: 1.3.5
+  x-logo:
+    url: https://pmweblabs.s3.amazonaws.com/assets/oto-logo.png
+    href: https://suporte.otocrm.com.br/
+    altText: Oto. Quem conhece, vende.
+paths:
+  /v1/blocked:
+    post:
+      summary: Post Blocked
+      description: 'Lista de clientes bloqueados para audiências e campanhas no
+
+        produto. Enviar sempre toda listagem de contatos que, por escolha
+
+        da marca, devem ser bloqueados.'
+      operationId: post_blocked_v1_blocked_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExcludeListPostRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v1/cashback:
+    post:
+      summary: Post Cashback
+      description: 'Criar ou editar registros de cashback. Os dados deverão ser agregados pelas
+
+        colunas `order_date`, `order_store` e `order_id`, ou seja, apenas uma linha
+
+        (registro) de cashback deve ser emitida por pedido. Recomenda-se enviar todos
+
+        os registros (créditos) disponíveis até o momento da exportação, para que os
+
+        créditos já utilizados sejam desconsiderados. Observe que os créditos serão
+
+        considerados válidos até a data e hora limite especificados no campo
+
+        `valid_until`, a partir de quando serão automaticamente considerados expirados.'
+      operationId: post_cashback_v1_cashback_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CashbackPostRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v1/customers:
+    post:
+      summary: Post Customers
+      description: 'Criar ou editar clientes. Os registros são deduplicados pelas colunas
+
+        `customer_id` e `data_source`. Os campos adicionais (`custom_field_NN`)
+
+        podem ser configurados à parte e utilizados para critérios de segmentação
+
+        e personalização da plataforma.'
+      operationId: post_customers_v1_customers_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomersPostRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v1/nps:
+    post:
+      summary: Post Nps
+      description: 'Criar ou editar avaliações de _net promoter score_. Os registros são
+
+        deduplicados pela coluna `id`. A nota do cliente deve ser entre 1 e 10. Além
+
+        do _score_, o cliente pode avaliar até 10 items adicionais, com notas que
+
+        variam de 1 a 5. Valores nulos ou fora destes intervalos não serão considerados
+
+        nos cálculos das avaliações.'
+      operationId: post_nps_v1_nps_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NpsPostRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v1/orders:
+    post:
+      summary: Post Orders
+      description: 'Criar ou editar pedidos. Os registros são deduplicados pelas colunas
+
+        `date`, `store` e `id`.'
+      operationId: post_orders_v1_orders_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrdersPostRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v1/order_items:
+    post:
+      summary: Post Order Items
+      description: 'Criar ou editar itens pedidos. Os registros são deduplicados pelas colunas
+
+        `date`, `store`, `id` e `sku`.
+
+
+        Observe que os itens deve ser enviados agregados por estas chaves, ou seja, se
+
+        duas unidades do mesmo item (SKU) foram comprados no mesmo pedido/loja/data,
+
+        deve-se enviar apenas um registro, com a quantidade especificada na coluna
+
+        `quantity`.'
+      operationId: post_order_items_v1_order_items_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderItemsPostRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v1/products:
+    post:
+      summary: Post Products
+      description: 'Criar ou editar itens do catálogo de produtos. Os registros são
+
+        deduplicados pela coluna `sku`.'
+      operationId: post_products_v1_products_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductsPostRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v1/sellers:
+    post:
+      summary: Post Sellers
+      description: Criar ou editar vendedores. Os registros são deduplicados pela coluna `id`.
+      operationId: post_sellers_v1_sellers_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SellersPostRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v1/stores:
+    post:
+      summary: Post Stores
+      description: Criar ou editar lojas. Os registros são deduplicados pela coluna `id`.
+      operationId: post_stores_v1_stores_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StoresPostRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v1/tag_hits:
+    post:
+      summary: Post Tag Hit
+      description: Registra evento de navegação no site.
+      operationId: post_tag_hit_v1_tag_hits_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TagsHitsPostRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v1/tag_interactions:
+    post:
+      summary: Post Tag Interaction
+      description: Registra evento de interação com produto, categoria ou transação de compra.
+      operationId: post_tag_interaction_v1_tag_interactions_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TagsInteractionsPostRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v1/tag_ids:
+    post:
+      summary: Post Tags Ids
+      description: Atualiza identificação do usuário
+      operationId: post_tags_ids_v1_tag_ids_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TagsIdsPostRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /auth/login:
+    post:
+      summary: Login
+      description: "Autentica um usuário e retorna um token JWT de acesso.\n\nEste endpoint valida o nome\
+        \ de usuário e a senha informados na collection\n`users` do MongoDB. Caso as credenciais sejam\
+        \ válidas e o usuário esteja ativo,\num token JWT é gerado contendo informações do usuário e suas\
+        \ permissões, com\ntempo de expiração padrão de 60 minutos (3600 segundos).\n\nRegistro de logs:\n\
+        \    - Registra um log de ERRO se o banco de dados não estiver inicializado.\n    - Registra um\
+        \ log de AVISO (WARNING) se as credenciais forem inválidas ou o usuário estiver inativo.\n   \
+        \ - Registra um log de INFO em caso de login bem-sucedido.\n    - Registra um log de ERRO para\
+        \ exceções inesperadas.\n\nArgumentos:\n    data (LoginRequest): Objeto contendo os campos `username`\
+        \ e `password`.\n\nRetorno:\n    TokenResponse: Objeto contendo o `access_token` JWT e o tempo\
+        \ de expiração em segundos.\n\nCódigos de status:\n    200: Autenticação realizada com sucesso.\n\
+        \    401: Credenciais inválidas.\n    403: Conta de usuário inativa.\n    500: Erro interno no\
+        \ servidor por exceção não esperada.\n\nExemplo de requisição:\n    Corpo da requisição:\n   \
+        \ {\n        \"username\": \"joao_silva\",\n        \"password\": \"senhaSegura123\"\n    }\n\n\
+        Exemplo de resposta (200):\n    {\n        \"access_token\": \"<jwt_token_aqui>\",\n        \"\
+        expires_in\": 3600\n    }"
+      operationId: login_auth_login_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    Cashback:
+      properties:
+        customer_id:
+          type: string
+          title: Customer Id
+          description: Identificador único do cliente
+        order_date:
+          type: string
+          format: date
+          title: Order Date
+          description: Data da compra (yyyy-mm-dd)
+        order_id:
+          type: string
+          title: Order Id
+          description: Código do pedido
+        order_store:
+          type: string
+          title: Order Store
+          description: Código da loja da compra
+        seller_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Seller Id
+          description: Código (matrícula) do vendedor da compra
+        credit:
+          type: number
+          title: Credit
+          description: Valor total acumulado
+        canceled:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Canceled
+          description: Desconsidera o registro (crédito) se verdadeiro
+        valid_until:
+          type: string
+          format: date-time
+          title: Valid Until
+          description: "Data e hora de validade (yyyy-mm-dd HH:MM:SS).\n    \nImediatamente após a data\
+            \ e horário especificados o crédito será considerado expirado."
+      type: object
+      required:
+      - customer_id
+      - order_date
+      - order_id
+      - order_store
+      - credit
+      - valid_until
+      title: Cashback
+    CashbackPostRequest:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Cashback'
+          type: array
+          title: Data
+      type: object
+      required:
+      - data
+      title: CashbackPostRequest
+    Customer:
+      properties:
+        customer_id:
+          type: string
+          title: Customer Id
+          description: Identificador único do cliente
+        document_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Document Number
+          description: Documento de identificação (indexado na busca)
+        username_whatsapp:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Username Whatsapp
+          description: Identificador do cliente para mensagens de WhatsApp
+        mkt_cloud_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Mkt Cloud Id
+          description: Identificador do usuário na marketing cloud
+        email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Email
+          description: E-mail do cliente
+        email_permission:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Email Permission
+          description: Permissão para envio de e-mails promocionais
+        mobile_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Mobile Number
+          description: "Telefone celular do cliente, com DDD, DDI e nono dígito.\n\nO WhatsApp só aceita\
+            \ números formatados corretamente, ou seja, para\ntelefones do Brasil, o formato é de formato\
+            \ de 13 dígitos, sendo 2\ndígitos do DDI + 2 dígitos DDD + o dígito 9 + 8 dígitos do telefone.\n\
+            \        "
+        mobile_permission:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Mobile Permission
+          description: Permissão para ligações e SMS promocionais
+        phone_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Phone Number
+          description: Telefone fixo do cliente, com DDD, DDI e nono dígito.
+        whatsapp_permission:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Whatsapp Permission
+          description: Permissão para mensagens promocionais de WhatsApp
+        first_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: First Name
+          description: Primeiro nome do cliente
+        last_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Last Name
+          description: Sobrenome do cliente
+        pref_store:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Pref Store
+          description: Código da loja de preferência (chave estrangeira)
+        pref_seller:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Pref Seller
+          description: Código (matrícula) do vendedor de preferência
+        create_date:
+          type: string
+          format: date
+          title: Create Date
+          description: Data de criação do cadastro (yyyy-mm-dd)
+        country:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Country
+          description: País do cliente
+        state:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: State
+          description: Estado (UF) do cliente
+        city:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: City
+          description: Cidade do cliente
+        zipcode:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Zipcode
+          description: Código postal (CEP) do cliente
+        address:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Address
+          description: Logradouro
+        address_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Address Number
+          description: Número
+        address_complement:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Address Complement
+          description: Complemento do endereço
+        neighborhood:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Neighborhood
+          description: Bairro
+        gender:
+          anyOf:
+          - $ref: '#/components/schemas/Gender'
+          - type: 'null'
+          description: M = Masculino, F = Feminino, O = Outro
+        type_person:
+          anyOf:
+          - $ref: '#/components/schemas/TypePerson'
+          - type: 'null'
+          description: P = Pessoa Física, J = Pessoa Jurídica
+        date_birth:
+          anyOf:
+          - type: string
+            format: date
+          - type: 'null'
+          title: Date Birth
+          description: Data de nascimento do cliente (yyyy-mm-dd)
+        first_order:
+          anyOf:
+          - type: string
+            format: date
+          - type: 'null'
+          title: First Order
+          description: Data da primeira compra do cliente (yyyy-mm-dd)
+        rfv:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Rfv
+          description: Categoria do cliente exibida no Oto
+        data_source:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Data Source
+          description: Código da origem de dados
+        custom_field_01:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 01
+          description: Campo adicional para segmentação
+        custom_field_02:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 02
+          description: Campo adicional para segmentação
+        custom_field_03:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 03
+          description: Campo adicional para segmentação
+        custom_field_04:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 04
+          description: Campo adicional para segmentação
+        custom_field_05:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 05
+          description: Campo adicional para segmentação
+        custom_field_06:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 06
+          description: Campo adicional para segmentação
+        custom_field_07:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 07
+          description: Campo adicional para segmentação
+        custom_field_08:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 08
+          description: Campo adicional para segmentação
+        custom_field_09:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 09
+          description: Campo adicional para segmentação
+        custom_field_10:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 10
+          description: Campo adicional para segmentação
+        custom_field_11:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 11
+          description: Campo adicional para segmentação
+        custom_field_12:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 12
+          description: Campo adicional para segmentação
+        custom_field_13:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 13
+          description: Campo adicional para segmentação
+        custom_field_14:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 14
+          description: Campo adicional para segmentação
+        custom_field_15:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 15
+          description: Campo adicional para segmentação
+        custom_field_16:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 16
+          description: Campo adicional para segmentação
+        custom_field_17:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 17
+          description: Campo adicional para segmentação
+        custom_field_18:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 18
+          description: Campo adicional para segmentação
+        custom_field_19:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 19
+          description: Campo adicional para segmentação
+        custom_field_20:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 20
+          description: Campo adicional para segmentação
+        custom_field_21:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 21
+          description: Campo adicional para segmentação
+        custom_field_22:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 22
+          description: Campo adicional para segmentação
+        custom_field_23:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 23
+          description: Campo adicional para segmentação
+        custom_field_24:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 24
+          description: Campo adicional para segmentação
+        custom_field_25:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 25
+          description: Campo adicional para segmentação
+        custom_field_26:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 26
+          description: Campo adicional para segmentação
+        custom_field_27:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 27
+          description: Campo adicional para segmentação
+        custom_field_28:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 28
+          description: Campo adicional para segmentação
+        custom_field_29:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 29
+          description: Campo adicional para segmentação
+        custom_field_30:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 30
+          description: Campo adicional para segmentação
+        custom_field_31:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 31
+          description: Campo adicional para segmentação
+        custom_field_32:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 32
+          description: Campo adicional para segmentação
+        custom_field_33:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 33
+          description: Campo adicional para segmentação
+        custom_field_34:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 34
+          description: Campo adicional para segmentação
+        custom_field_35:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 35
+          description: Campo adicional para segmentação
+        custom_field_36:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 36
+          description: Campo adicional para segmentação
+        custom_field_37:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 37
+          description: Campo adicional para segmentação
+        custom_field_38:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 38
+          description: Campo adicional para segmentação
+        custom_field_39:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 39
+          description: Campo adicional para segmentação
+        custom_field_40:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 40
+          description: Campo adicional para segmentação
+        custom_field_41:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 41
+          description: Campo adicional para segmentação
+        custom_field_42:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 42
+          description: Campo adicional para segmentação
+        custom_field_43:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 43
+          description: Campo adicional para segmentação
+        custom_field_44:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 44
+          description: Campo adicional para segmentação
+        custom_field_45:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 45
+          description: Campo adicional para segmentação
+        custom_field_46:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 46
+          description: Campo adicional para segmentação
+        custom_field_47:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 47
+          description: Campo adicional para segmentação
+        custom_field_48:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 48
+          description: Campo adicional para segmentação
+        custom_field_49:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 49
+          description: Campo adicional para segmentação
+        custom_field_50:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 50
+          description: Campo adicional para segmentação
+      type: object
+      required:
+      - customer_id
+      - create_date
+      title: Customer
+    CustomersPostRequest:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Customer'
+          type: array
+          title: Data
+      type: object
+      required:
+      - data
+      title: CustomersPostRequest
+    ExcludeList:
+      properties:
+        document_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Document Number
+          description: Documento de identificação
+        customer_id:
+          type: string
+          title: Customer Id
+          description: Identificador único do cliente
+        mkt_cloud_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Mkt Cloud Id
+          description: Identificador do usuário na marketing cloud
+      type: object
+      required:
+      - customer_id
+      title: ExcludeList
+    ExcludeListPostRequest:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/ExcludeList'
+          type: array
+          title: Data
+      type: object
+      required:
+      - data
+      title: ExcludeListPostRequest
+    Gender:
+      type: string
+      enum:
+      - M
+      - F
+      - O
+      title: Gender
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    LoginRequest:
+      properties:
+        username:
+          type: string
+          title: Username
+        password:
+          type: string
+          title: Password
+      type: object
+      required:
+      - username
+      - password
+      title: LoginRequest
+    NetPromoterScore:
+      properties:
+        id:
+          type: integer
+          minimum: 1.0
+          title: Id
+          description: Identificador único da resposta NPS
+        event_ts:
+          type: string
+          format: date-time
+          title: Event Ts
+          description: Data e hora da resposta
+        customer_id:
+          type: string
+          title: Customer Id
+          description: Identificador único do cliente
+        mkt_cloud_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Mkt Cloud Id
+          description: Identificador do usuário na marketing cloud
+        order_date:
+          type: string
+          format: date
+          title: Order Date
+          description: Data da compra (yyyy-mm-dd)
+        order_id:
+          type: string
+          title: Order Id
+          description: Código do pedido
+        order_store:
+          type: string
+          title: Order Store
+          description: Código da loja da compra
+        order_store_type:
+          anyOf:
+          - $ref: '#/components/schemas/StoreType'
+          - type: 'null'
+          description: 'Tipo de loja: E = E-commerce, L = Loja física'
+        order_delivery_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Order Delivery Type
+          description: Tipo de entrega / frete do pedido
+        score:
+          anyOf:
+          - type: integer
+            maximum: 10.0
+            minimum: 1.0
+          - type: 'null'
+          title: Score
+          description: Nota do NPS
+        rating_01:
+          anyOf:
+          - type: integer
+            maximum: 5.0
+            minimum: 1.0
+          - type: 'null'
+          title: Rating 01
+          description: Avaliação do item 1
+        rating_02:
+          anyOf:
+          - type: integer
+            maximum: 5.0
+            minimum: 1.0
+          - type: 'null'
+          title: Rating 02
+          description: Avaliação do item 2
+        rating_03:
+          anyOf:
+          - type: integer
+            maximum: 5.0
+            minimum: 1.0
+          - type: 'null'
+          title: Rating 03
+          description: Avaliação do item 3
+        rating_04:
+          anyOf:
+          - type: integer
+            maximum: 5.0
+            minimum: 1.0
+          - type: 'null'
+          title: Rating 04
+          description: Avaliação do item 4
+        rating_05:
+          anyOf:
+          - type: integer
+            maximum: 5.0
+            minimum: 1.0
+          - type: 'null'
+          title: Rating 05
+          description: Avaliação do item 5
+        rating_06:
+          anyOf:
+          - type: integer
+            maximum: 5.0
+            minimum: 1.0
+          - type: 'null'
+          title: Rating 06
+          description: Avaliação do item 6
+        rating_07:
+          anyOf:
+          - type: integer
+            maximum: 5.0
+            minimum: 1.0
+          - type: 'null'
+          title: Rating 07
+          description: Avaliação do item 7
+        rating_08:
+          anyOf:
+          - type: integer
+            maximum: 5.0
+            minimum: 1.0
+          - type: 'null'
+          title: Rating 08
+          description: Avaliação do item 8
+        rating_09:
+          anyOf:
+          - type: integer
+            maximum: 5.0
+            minimum: 1.0
+          - type: 'null'
+          title: Rating 09
+          description: Avaliação do item 9
+        rating_10:
+          anyOf:
+          - type: integer
+            maximum: 5.0
+            minimum: 1.0
+          - type: 'null'
+          title: Rating 10
+          description: Avaliação do item 10
+        comment:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Comment
+          description: Comentário por escrito do cliente
+      type: object
+      required:
+      - id
+      - event_ts
+      - customer_id
+      - order_date
+      - order_id
+      - order_store
+      title: NetPromoterScore
+    NpsPostRequest:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/NetPromoterScore'
+          type: array
+          title: Data
+      type: object
+      required:
+      - data
+      title: NpsPostRequest
+    Order:
+      properties:
+        customer_id:
+          type: string
+          title: Customer Id
+          description: Identificador único do cliente
+        date:
+          type: string
+          format: date
+          title: Date
+          description: Data da compra (yyyy-mm-dd)
+        date_ts:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Date Ts
+          description: Datatime da compra (yyyy-mm-dd HH:MM:SS)
+        id:
+          type: string
+          title: Id
+          description: Código do pedido
+        store:
+          type: string
+          title: Store
+          description: Código da loja da compra. São caracteres inválidos - pipe, vírgula e ponto e vírgula
+        store_type:
+          anyOf:
+          - $ref: '#/components/schemas/StoreType'
+          - type: 'null'
+          description: 'Tipo de loja: E = E-commerce, L = Loja física'
+        delivery_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Delivery Type
+          description: Tipo de entrega / frete do pedido
+        canceled:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Canceled
+          description: Desconsidera o pedido se verdadeiro
+        status:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Status
+          description: Descrição do status do pedido
+        payment_method:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Payment Method
+          description: Meios de pagamento utilizados, separados por ;
+        payment_type:
+          anyOf:
+          - $ref: '#/components/schemas/PaymentType'
+          - type: 'null'
+          description: 'Tipo de pagamento: V = A vista; P = A prazo'
+        installments:
+          anyOf:
+          - type: integer
+            minimum: 0.0
+          - type: 'null'
+          title: Installments
+          description: Número de parcelas
+        total:
+          type: number
+          title: Total
+          description: Valor total da compra
+        custom_field_01:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 01
+          description: Campo adicional para segmentação
+        custom_field_02:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 02
+          description: Campo adicional para segmentação
+        custom_field_03:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 03
+          description: Campo adicional para segmentação
+        custom_field_04:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 04
+          description: Campo adicional para segmentação
+        custom_field_05:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 05
+          description: Campo adicional para segmentação
+        custom_field_06:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 06
+          description: Campo adicional para segmentação
+        custom_field_07:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 07
+          description: Campo adicional para segmentação
+        custom_field_08:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 08
+          description: Campo adicional para segmentação
+        custom_field_09:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 09
+          description: Campo adicional para segmentação
+        custom_field_10:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 10
+          description: Campo adicional para segmentação
+      type: object
+      required:
+      - customer_id
+      - date
+      - id
+      - store
+      - total
+      title: Order
+    OrderItem:
+      properties:
+        date:
+          type: string
+          format: date
+          title: Date
+          description: Data da compra (yyyy-mm-dd)
+        id:
+          type: string
+          title: Id
+          description: Código do pedido
+        store:
+          type: string
+          title: Store
+          description: Código da loja da compra. São caracteres inválidos - pipe, vírgula e ponto e vírgula
+        seq:
+          anyOf:
+          - type: integer
+            minimum: 0.0
+          - type: 'null'
+          title: Seq
+          description: Código sequencial do item do pedido
+        sku:
+          type: string
+          title: Sku
+          description: Código da unidade de estocagem (SKU)
+        seller_id:
+          type: string
+          title: Seller Id
+          description: Código (matrícula) do vendedor do item
+        quantity:
+          anyOf:
+          - type: integer
+          - type: number
+          title: Quantity
+          description: Quantidade adquirida do produto (negativo = devolução), aceita também valores decimais
+        list_price:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: List Price
+          description: Preço cheio (sem desconto) do item
+        price:
+          type: number
+          title: Price
+          description: Preço pago pelo item
+        order_item_canceled:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Order Item Canceled
+          description: Identificador se o item do pedido foi cancelado. 1 para cancelado, 0 para válido
+      type: object
+      required:
+      - date
+      - id
+      - store
+      - sku
+      - seller_id
+      - quantity
+      - price
+      title: OrderItem
+    OrderItemsPostRequest:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/OrderItem'
+          type: array
+          title: Data
+      type: object
+      required:
+      - data
+      title: OrderItemsPostRequest
+    OrdersPostRequest:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Order'
+          type: array
+          title: Data
+      type: object
+      required:
+      - data
+      title: OrdersPostRequest
+    PaymentType:
+      type: string
+      enum:
+      - V
+      - P
+      title: PaymentType
+    Product:
+      properties:
+        sku:
+          type: string
+          title: Sku
+          description: Código de unidade de estocagem (SKU)
+        id:
+          type: string
+          title: Id
+          description: Agrupador do produto
+        ecommerce_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Ecommerce Id
+          description: Código do produto no E-commerce
+        name:
+          type: string
+          title: Name
+          description: Nome do produto
+        size:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Size
+          description: Tamanho do produto
+        category:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Category
+          description: Categoria do produto
+        subcategory:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Subcategory
+          description: Subcategoria do produto
+        gender:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Gender
+          description: Gênero do produto
+        line:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Line
+          description: Linha / coleção do produto
+        color:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Color
+          description: Cor do produto
+        brand:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Brand
+          description: Marca do produto
+        barcode:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Barcode
+          description: Código de barras
+        image:
+          anyOf:
+          - type: string
+            maxLength: 2083
+            minLength: 1
+            format: uri
+          - type: 'null'
+          title: Image
+          description: URL da imagem do produto
+        url:
+          anyOf:
+          - type: string
+            maxLength: 2083
+            minLength: 1
+            format: uri
+          - type: 'null'
+          title: Url
+          description: URL do produto no e-commerce
+      type: object
+      required:
+      - sku
+      - id
+      - name
+      title: Product
+    ProductsPostRequest:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Product'
+          type: array
+          title: Data
+      type: object
+      required:
+      - data
+      title: ProductsPostRequest
+    Seller:
+      properties:
+        id:
+          type: string
+          title: Id
+          description: Código (matrícula) do vendedor de preferência
+        name:
+          type: string
+          title: Name
+          description: Nome completo do vendedor
+        name_oto:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name Oto
+          description: Nome do vendedor (visível no Oto)
+        store:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Store
+          description: Código da loja do vendedor (chave estrangeira). São caracteres inválidos - pipe,
+            vírgula e ponto e vírgula
+        disabled:
+          anyOf:
+          - type: string
+            format: date
+          - type: 'null'
+          title: Disabled
+          description: Data que o vendedor foi desligado (yyyy-mm-dd)
+      type: object
+      required:
+      - id
+      - name
+      title: Seller
+    SellersPostRequest:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Seller'
+          type: array
+          title: Data
+      type: object
+      required:
+      - data
+      title: SellersPostRequest
+    Store:
+      properties:
+        id:
+          type: string
+          title: Id
+          description: Chave primária (código) da loja. São caracteres inválidos - pipe, vírgula e ponto
+            e vírgula
+        name:
+          type: string
+          title: Name
+          description: Nome da loja
+        name_oto:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name Oto
+          description: Nome amigável da loja (visível no Oto)
+        type:
+          anyOf:
+          - $ref: '#/components/schemas/StoreType'
+          - type: 'null'
+          description: 'Tipo de loja: E = E-commerce, L = Loja física'
+        email:
+          anyOf:
+          - type: string
+            format: email
+          - type: 'null'
+          title: Email
+          description: E-mail principal da loja (para envio de senha)
+        cluster:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Cluster
+          description: Cluster da loja
+        country:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Country
+          description: País da loja
+        state:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: State
+          description: Estado (UF) da loja
+        city:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: City
+          description: Cidade da loja
+        status:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Status
+          description: Loja ativa
+        store_vtex:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Store Vtex
+          description: Identificador da loja na plataforma VTEX
+        cnpj:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Cnpj
+          description: Cnpj da loja
+        identity:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Identity
+          description: 'Identidade da loja (Loja propria ou Franquia). Preencher: F para Franquia e P
+            para Loja Própria'
+        ecommerce_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Ecommerce Id
+          description: Identificador da loja na plataforma de e-commerce
+        custom_field_01:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 01
+          description: Campo adicional para segmentação
+        custom_field_02:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 02
+          description: Campo adicional para segmentação
+        custom_field_03:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 03
+          description: Campo adicional para segmentação
+        custom_field_04:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 04
+          description: Campo adicional para segmentação
+        custom_field_05:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 05
+          description: Campo adicional para segmentação
+        custom_field_06:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 06
+          description: Campo adicional para segmentação
+        custom_field_07:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 07
+          description: Campo adicional para segmentação
+        custom_field_08:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 08
+          description: Campo adicional para segmentação
+        custom_field_09:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 09
+          description: Campo adicional para segmentação
+        custom_field_10:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Field 10
+          description: Campo adicional para segmentação
+      type: object
+      required:
+      - id
+      - name
+      title: Store
+    StoreType:
+      type: string
+      enum:
+      - E
+      - L
+      title: StoreType
+    StoresPostRequest:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Store'
+          type: array
+          title: Data
+      type: object
+      required:
+      - data
+      title: StoresPostRequest
+    SuccessResponse:
+      properties:
+        success:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Success
+        requestId:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Requestid
+      type: object
+      title: SuccessResponse
+    TagType:
+      type: string
+      enum:
+      - N
+      - D
+      - C
+      - K
+      - P
+      - T
+      title: TagType
+    TagsHit:
+      properties:
+        event_ts:
+          type: string
+          format: date-time
+          title: Event Ts
+          description: Data e hora do evento
+        user_id:
+          type: integer
+          minimum: 1.0
+          title: User Id
+          description: Identificador único do usuário
+        session_id:
+          type: integer
+          minimum: 1.0
+          title: Session Id
+          description: Identificador único da sessão
+        url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Url
+          description: Endereço (URL) navegada
+        referer:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Referer
+          description: Página de referência
+        user_agent:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Agent
+          description: User-Agent (browser) da requisição
+        utm_source:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Utm Source
+          description: Origem de origem da requisição
+        utm_medium:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Utm Medium
+          description: Mídia de origem da requisição
+        utm_campaign:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Utm Campaign
+          description: Campanha de origem da requisição
+      type: object
+      required:
+      - event_ts
+      - user_id
+      - session_id
+      title: TagsHit
+    TagsHitsPostRequest:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/TagsHit'
+          type: array
+          title: Data
+      type: object
+      required:
+      - data
+      title: TagsHitsPostRequest
+    TagsIdsPostRequest:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/TagsMatch'
+          type: array
+          title: Data
+      type: object
+      required:
+      - data
+      title: TagsIdsPostRequest
+    TagsInteraction:
+      properties:
+        event_ts:
+          type: string
+          format: date-time
+          title: Event Ts
+          description: Data e hora do evento
+        user_id:
+          type: integer
+          minimum: 1.0
+          title: User Id
+          description: Identificador único do usuário
+        session_id:
+          type: integer
+          minimum: 1.0
+          title: Session Id
+          description: Identificador único da sessão
+        type:
+          $ref: '#/components/schemas/TagType'
+          description: "Tipo de evento: N = Navegação de categoria;\n        D = Página de detalhe de\
+            \ produto; C = Produto adicionado ao\n        carrinho; K = Checkout; P = Produtos comprados;\n\
+            \        T = Transação de compra"
+        id:
+          type: string
+          title: Id
+          description: "Agrupador do produto (detalhe, carrinho e\n        checkout), código do pedido\
+            \ (transação) ou categoria (navegação)"
+        sku:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Sku
+          description: Código de unidade de estocagem do produto (SKU)
+        price:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Price
+          description: Preço unitário do item ou valor total do pedido
+          default: 0
+      type: object
+      required:
+      - event_ts
+      - user_id
+      - session_id
+      - type
+      - id
+      title: TagsInteraction
+    TagsInteractionsPostRequest:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/TagsInteraction'
+          type: array
+          title: Data
+      type: object
+      required:
+      - data
+      title: TagsInteractionsPostRequest
+    TagsMatch:
+      properties:
+        event_ts:
+          type: string
+          format: date-time
+          title: Event Ts
+          description: Data e hora do evento
+        user_id:
+          type: integer
+          minimum: 1.0
+          title: User Id
+          description: Identificador único do usuário
+        mkt_cloud_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Mkt Cloud Id
+          description: Identificador do usuário na marketing cloud
+        customer_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Customer Id
+          description: Customer ID
+        customer_id_sha256:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Customer Id Sha256
+          description: Hash SHA-256 do customer ID
+        email_sha256:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Email Sha256
+          description: Hash SHA-256 do e-mail do cliente normalizado
+        email_md5:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Email Md5
+          description: Hash MD5 do e-mail do cliente normalizado
+      type: object
+      required:
+      - event_ts
+      - user_id
+      title: TagsMatch
+    TokenResponse:
+      properties:
+        access_token:
+          type: string
+          title: Access Token
+        expires_in:
+          type: integer
+          title: Expires In
+      type: object
+      required:
+      - access_token
+      - expires_in
+      title: TokenResponse
+    TypePerson:
+      type: string
+      enum:
+      - P
+      - J
+      title: TypePerson
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      scheme: bearer
+      description: "Você deverá enviar sua chave privada\nno cabeçalho HTTP `Authorization`, com o padrão\
+        \ `Bearer <token>`. Exemplo:\n\n```\nGET / HTTP/1.1\nHost: data-api.otocrm.com.br\nAuthorization:\
+        \ Bearer abcdef123456\n```\n    "
+servers:
+- url: https://data-api.otocrm.com.br
+  description: Production
+- url: https://data-api-hmg.otocrm.com.br
+  description: Test
+- url: http://localhost:8000
+  description: Test
