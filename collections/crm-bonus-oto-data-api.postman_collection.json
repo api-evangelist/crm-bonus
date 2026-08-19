@@ -1,0 +1,2090 @@
+{
+  "item": [
+    {
+      "id": "ea5c2f8d-e1d2-4bd8-8093-0e5565ddfa85",
+      "name": "Post Blocked",
+      "request": {
+        "name": "Post Blocked",
+        "description": {
+          "content": "Lista de clientes bloqueados para audiências e campanhas no\nproduto. Enviar sempre toda listagem de contatos que, por escolha\nda marca, devem ser bloqueados.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "v1",
+            "blocked"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{bearerToken}}"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"data\": [\n    {\n      \"customer_id\": \"<string>\",\n      \"document_number\": \"<string>\",\n      \"mkt_cloud_id\": \"<string>\"\n    },\n    {\n      \"customer_id\": \"<string>\",\n      \"document_number\": \"<string>\",\n      \"mkt_cloud_id\": \"<string>\"\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "beb13dda-daee-44a4-a152-6c771f79bfd3",
+          "name": "Successful Response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "blocked"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": [\n    {\n      \"customer_id\": \"string\",\n      \"document_number\": \"string\",\n      \"mkt_cloud_id\": \"string\"\n    },\n    {\n      \"customer_id\": \"string\",\n      \"document_number\": \"string\",\n      \"mkt_cloud_id\": \"string\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"success\": true,\n  \"requestId\": \"56c5d910-1c92-848b-fb75-e47743216b27\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "73446d0a-ccd1-4d9e-9de1-073498d949e4",
+          "name": "Validation Error",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "blocked"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": [\n    {\n      \"customer_id\": \"string\",\n      \"document_number\": \"string\",\n      \"mkt_cloud_id\": \"string\"\n    },\n    {\n      \"customer_id\": \"string\",\n      \"document_number\": \"string\",\n      \"mkt_cloud_id\": \"string\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "32aef72a-b1f0-4661-889c-e4d757c3c5e3",
+      "name": "Post Cashback",
+      "request": {
+        "name": "Post Cashback",
+        "description": {
+          "content": "Criar ou editar registros de cashback. Os dados deverão ser agregados pelas\ncolunas `order_date`, `order_store` e `order_id`, ou seja, apenas uma linha\n(registro) de cashback deve ser emitida por pedido. Recomenda-se enviar todos\nos registros (créditos) disponíveis até o momento da exportação, para que os\ncréditos já utilizados sejam desconsiderados. Observe que os créditos serão\nconsiderados válidos até a data e hora limite especificados no campo\n`valid_until`, a partir de quando serão automaticamente considerados expirados.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "v1",
+            "cashback"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{bearerToken}}"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"data\": [\n    {\n      \"customer_id\": \"<string>\",\n      \"order_date\": \"<date>\",\n      \"order_id\": \"<string>\",\n      \"order_store\": \"<string>\",\n      \"credit\": \"<number>\",\n      \"valid_until\": \"<dateTime>\",\n      \"seller_id\": \"<string>\",\n      \"canceled\": \"<boolean>\"\n    },\n    {\n      \"customer_id\": \"<string>\",\n      \"order_date\": \"<date>\",\n      \"order_id\": \"<string>\",\n      \"order_store\": \"<string>\",\n      \"credit\": \"<number>\",\n      \"valid_until\": \"<dateTime>\",\n      \"seller_id\": \"<string>\",\n      \"canceled\": \"<boolean>\"\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "5d01808f-af3c-4f83-b865-e6749b918030",
+          "name": "Successful Response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "cashback"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": [\n    {\n      \"customer_id\": \"string\",\n      \"order_date\": \"2001-06-14\",\n      \"order_id\": \"string\",\n      \"order_store\": \"string\",\n      \"credit\": 8923.718302527685,\n      \"valid_until\": \"1952-11-10T01:11:10.357Z\",\n      \"seller_id\": \"string\",\n      \"canceled\": false\n    },\n    {\n      \"customer_id\": \"string\",\n      \"order_date\": \"1974-11-10\",\n      \"order_id\": \"string\",\n      \"order_store\": \"string\",\n      \"credit\": 518.4547674511908,\n      \"valid_until\": \"1983-07-23T16:22:18.615Z\",\n      \"seller_id\": \"string\",\n      \"canceled\": false\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"success\": true,\n  \"requestId\": \"56c5d910-1c92-848b-fb75-e47743216b27\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "058e8722-4211-4d8b-b7a4-ee8b7ef419a1",
+          "name": "Validation Error",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "cashback"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": [\n    {\n      \"customer_id\": \"string\",\n      \"order_date\": \"2001-06-14\",\n      \"order_id\": \"string\",\n      \"order_store\": \"string\",\n      \"credit\": 8923.718302527685,\n      \"valid_until\": \"1952-11-10T01:11:10.357Z\",\n      \"seller_id\": \"string\",\n      \"canceled\": false\n    },\n    {\n      \"customer_id\": \"string\",\n      \"order_date\": \"1974-11-10\",\n      \"order_id\": \"string\",\n      \"order_store\": \"string\",\n      \"credit\": 518.4547674511908,\n      \"valid_until\": \"1983-07-23T16:22:18.615Z\",\n      \"seller_id\": \"string\",\n      \"canceled\": false\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "a2ec69aa-ea40-4aae-9d1d-b2edd9793dd6",
+      "name": "Post Customers",
+      "request": {
+        "name": "Post Customers",
+        "description": {
+          "content": "Criar ou editar clientes. Os registros são deduplicados pelas colunas\n`customer_id` e `data_source`. Os campos adicionais (`custom_field_NN`)\npodem ser configurados à parte e utilizados para critérios de segmentação\ne personalização da plataforma.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "v1",
+            "customers"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{bearerToken}}"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"data\": [\n    {\n      \"customer_id\": \"<string>\",\n      \"create_date\": \"<date>\",\n      \"document_number\": \"<string>\",\n      \"username_whatsapp\": \"<string>\",\n      \"mkt_cloud_id\": \"<string>\",\n      \"email\": \"<string>\",\n      \"email_permission\": \"<boolean>\",\n      \"mobile_number\": \"<string>\",\n      \"mobile_permission\": \"<boolean>\",\n      \"phone_number\": \"<string>\",\n      \"whatsapp_permission\": \"<boolean>\",\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\",\n      \"pref_store\": \"<string>\",\n      \"pref_seller\": \"<string>\",\n      \"country\": \"<string>\",\n      \"state\": \"<string>\",\n      \"city\": \"<string>\",\n      \"zipcode\": \"<string>\",\n      \"address\": \"<string>\",\n      \"address_number\": \"<string>\",\n      \"address_complement\": \"<string>\",\n      \"neighborhood\": \"<string>\",\n      \"gender\": \"<string>\",\n      \"type_person\": \"<string>\",\n      \"date_birth\": \"<date>\",\n      \"first_order\": \"<date>\",\n      \"rfv\": \"<string>\",\n      \"data_source\": \"<string>\",\n      \"custom_field_01\": \"<string>\",\n      \"custom_field_02\": \"<string>\",\n      \"custom_field_03\": \"<string>\",\n      \"custom_field_04\": \"<string>\",\n      \"custom_field_05\": \"<string>\",\n      \"custom_field_06\": \"<string>\",\n      \"custom_field_07\": \"<string>\",\n      \"custom_field_08\": \"<string>\",\n      \"custom_field_09\": \"<string>\",\n      \"custom_field_10\": \"<string>\",\n      \"custom_field_11\": \"<string>\",\n      \"custom_field_12\": \"<string>\",\n      \"custom_field_13\": \"<string>\",\n      \"custom_field_14\": \"<string>\",\n      \"custom_field_15\": \"<string>\",\n      \"custom_field_16\": \"<string>\",\n      \"custom_field_17\": \"<string>\",\n      \"custom_field_18\": \"<string>\",\n      \"custom_field_19\": \"<string>\",\n      \"custom_field_20\": \"<string>\",\n      \"custom_field_21\": \"<string>\",\n      \"custom_field_22\": \"<string>\",\n      \"custom_field_23\": \"<string>\",\n      \"custom_field_24\": \"<string>\",\n      \"custom_field_25\": \"<string>\",\n      \"custom_field_26\": \"<string>\",\n      \"custom_field_27\": \"<string>\",\n      \"custom_field_28\": \"<string>\",\n      \"custom_field_29\": \"<string>\",\n      \"custom_field_30\": \"<string>\",\n      \"custom_field_31\": \"<string>\",\n      \"custom_field_32\": \"<string>\",\n      \"custom_field_33\": \"<string>\",\n      \"custom_field_34\": \"<string>\",\n      \"custom_field_35\": \"<string>\",\n      \"custom_field_36\": \"<string>\",\n      \"custom_field_37\": \"<string>\",\n      \"custom_field_38\": \"<string>\",\n      \"custom_field_39\": \"<string>\",\n      \"custom_field_40\": \"<string>\",\n      \"custom_field_41\": \"<string>\",\n      \"custom_field_42\": \"<string>\",\n      \"custom_field_43\": \"<string>\",\n      \"custom_field_44\": \"<string>\",\n      \"custom_field_45\": \"<string>\",\n      \"custom_field_46\": \"<string>\",\n      \"custom_field_47\": \"<string>\",\n      \"custom_field_48\": \"<string>\",\n      \"custom_field_49\": \"<string>\",\n      \"custom_field_50\": \"<string>\"\n    },\n    {\n      \"customer_id\": \"<string>\",\n      \"create_date\": \"<date>\",\n      \"document_number\": \"<string>\",\n      \"username_whatsapp\": \"<string>\",\n      \"mkt_cloud_id\": \"<string>\",\n      \"email\": \"<string>\",\n      \"email_permission\": \"<boolean>\",\n      \"mobile_number\": \"<string>\",\n      \"mobile_permission\": \"<boolean>\",\n      \"phone_number\": \"<string>\",\n      \"whatsapp_permission\": \"<boolean>\",\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\",\n      \"pref_store\": \"<string>\",\n      \"pref_seller\": \"<string>\",\n      \"country\": \"<string>\",\n      \"state\": \"<string>\",\n      \"city\": \"<string>\",\n      \"zipcode\": \"<string>\",\n      \"address\": \"<string>\",\n      \"address_number\": \"<string>\",\n      \"address_complement\": \"<string>\",\n      \"neighborhood\": \"<string>\",\n      \"gender\": \"<string>\",\n      \"type_person\": \"<string>\",\n      \"date_birth\": \"<date>\",\n      \"first_order\": \"<date>\",\n      \"rfv\": \"<string>\",\n      \"data_source\": \"<string>\",\n      \"custom_field_01\": \"<string>\",\n      \"custom_field_02\": \"<string>\",\n      \"custom_field_03\": \"<string>\",\n      \"custom_field_04\": \"<string>\",\n      \"custom_field_05\": \"<string>\",\n      \"custom_field_06\": \"<string>\",\n      \"custom_field_07\": \"<string>\",\n      \"custom_field_08\": \"<string>\",\n      \"custom_field_09\": \"<string>\",\n      \"custom_field_10\": \"<string>\",\n      \"custom_field_11\": \"<string>\",\n      \"custom_field_12\": \"<string>\",\n      \"custom_field_13\": \"<string>\",\n      \"custom_field_14\": \"<string>\",\n      \"custom_field_15\": \"<string>\",\n      \"custom_field_16\": \"<string>\",\n      \"custom_field_17\": \"<string>\",\n      \"custom_field_18\": \"<string>\",\n      \"custom_field_19\": \"<string>\",\n      \"custom_field_20\": \"<string>\",\n      \"custom_field_21\": \"<string>\",\n      \"custom_field_22\": \"<string>\",\n      \"custom_field_23\": \"<string>\",\n      \"custom_field_24\": \"<string>\",\n      \"custom_field_25\": \"<string>\",\n      \"custom_field_26\": \"<string>\",\n      \"custom_field_27\": \"<string>\",\n      \"custom_field_28\": \"<string>\",\n      \"custom_field_29\": \"<string>\",\n      \"custom_field_30\": \"<string>\",\n      \"custom_field_31\": \"<string>\",\n      \"custom_field_32\": \"<string>\",\n      \"custom_field_33\": \"<string>\",\n      \"custom_field_34\": \"<string>\",\n      \"custom_field_35\": \"<string>\",\n      \"custom_field_36\": \"<string>\",\n      \"custom_field_37\": \"<string>\",\n      \"custom_field_38\": \"<string>\",\n      \"custom_field_39\": \"<string>\",\n      \"custom_field_40\": \"<string>\",\n      \"custom_field_41\": \"<string>\",\n      \"custom_field_42\": \"<string>\",\n      \"custom_field_43\": \"<string>\",\n      \"custom_field_44\": \"<string>\",\n      \"custom_field_45\": \"<string>\",\n      \"custom_field_46\": \"<string>\",\n      \"custom_field_47\": \"<string>\",\n      \"custom_field_48\": \"<string>\",\n      \"custom_field_49\": \"<string>\",\n      \"custom_field_50\": \"<string>\"\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "4f37f043-eced-45b9-95d0-8b1d6a5afbff",
+          "name": "Successful Response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "customers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": [\n    {\n      \"customer_id\": \"string\",\n      \"create_date\": \"2015-08-17\",\n      \"document_number\": \"string\",\n      \"username_whatsapp\": \"string\",\n      \"mkt_cloud_id\": \"string\",\n      \"email\": \"string\",\n      \"email_permission\": false,\n      \"mobile_number\": \"string\",\n      \"mobile_permission\": true,\n      \"phone_number\": \"string\",\n      \"whatsapp_permission\": false,\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"pref_store\": \"string\",\n      \"pref_seller\": \"string\",\n      \"country\": \"string\",\n      \"state\": \"string\",\n      \"city\": \"string\",\n      \"zipcode\": \"string\",\n      \"address\": \"string\",\n      \"address_number\": \"string\",\n      \"address_complement\": \"string\",\n      \"neighborhood\": \"string\",\n      \"gender\": \"F\",\n      \"type_person\": \"P\",\n      \"date_birth\": \"1956-07-09\",\n      \"first_order\": \"2014-09-11\",\n      \"rfv\": \"string\",\n      \"data_source\": \"string\",\n      \"custom_field_01\": \"string\",\n      \"custom_field_02\": \"string\",\n      \"custom_field_03\": \"string\",\n      \"custom_field_04\": \"string\",\n      \"custom_field_05\": \"string\",\n      \"custom_field_06\": \"string\",\n      \"custom_field_07\": \"string\",\n      \"custom_field_08\": \"string\",\n      \"custom_field_09\": \"string\",\n      \"custom_field_10\": \"string\",\n      \"custom_field_11\": \"string\",\n      \"custom_field_12\": \"string\",\n      \"custom_field_13\": \"string\",\n      \"custom_field_14\": \"string\",\n      \"custom_field_15\": \"string\",\n      \"custom_field_16\": \"string\",\n      \"custom_field_17\": \"string\",\n      \"custom_field_18\": \"string\",\n      \"custom_field_19\": \"string\",\n      \"custom_field_20\": \"string\",\n      \"custom_field_21\": \"string\",\n      \"custom_field_22\": \"string\",\n      \"custom_field_23\": \"string\",\n      \"custom_field_24\": \"string\",\n      \"custom_field_25\": \"string\",\n      \"custom_field_26\": \"string\",\n      \"custom_field_27\": \"string\",\n      \"custom_field_28\": \"string\",\n      \"custom_field_29\": \"string\",\n      \"custom_field_30\": \"string\",\n      \"custom_field_31\": \"string\",\n      \"custom_field_32\": \"string\",\n      \"custom_field_33\": \"string\",\n      \"custom_field_34\": \"string\",\n      \"custom_field_35\": \"string\",\n      \"custom_field_36\": \"string\",\n      \"custom_field_37\": \"string\",\n      \"custom_field_38\": \"string\",\n      \"custom_field_39\": \"string\",\n      \"custom_field_40\": \"string\",\n      \"custom_field_41\": \"string\",\n      \"custom_field_42\": \"string\",\n      \"custom_field_43\": \"string\",\n      \"custom_field_44\": \"string\",\n      \"custom_field_45\": \"string\",\n      \"custom_field_46\": \"string\",\n      \"custom_field_47\": \"string\",\n      \"custom_field_48\": \"string\",\n      \"custom_field_49\": \"string\",\n      \"custom_field_50\": \"string\"\n    },\n    {\n      \"customer_id\": \"string\",\n      \"create_date\": \"1956-08-31\",\n      \"document_number\": \"string\",\n      \"username_whatsapp\": \"string\",\n      \"mkt_cloud_id\": \"string\",\n      \"email\": \"string\",\n      \"email_permission\": false,\n      \"mobile_number\": \"string\",\n      \"mobile_permission\": false,\n      \"phone_number\": \"string\",\n      \"whatsapp_permission\": true,\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"pref_store\": \"string\",\n      \"pref_seller\": \"string\",\n      \"country\": \"string\",\n      \"state\": \"string\",\n      \"city\": \"string\",\n      \"zipcode\": \"string\",\n      \"address\": \"string\",\n      \"address_number\": \"string\",\n      \"address_complement\": \"string\",\n      \"neighborhood\": \"string\",\n      \"gender\": \"O\",\n      \"type_person\": \"J\",\n      \"date_birth\": \"1986-04-06\",\n      \"first_order\": \"2020-01-06\",\n      \"rfv\": \"string\",\n      \"data_source\": \"string\",\n      \"custom_field_01\": \"string\",\n      \"custom_field_02\": \"string\",\n      \"custom_field_03\": \"string\",\n      \"custom_field_04\": \"string\",\n      \"custom_field_05\": \"string\",\n      \"custom_field_06\": \"string\",\n      \"custom_field_07\": \"string\",\n      \"custom_field_08\": \"string\",\n      \"custom_field_09\": \"string\",\n      \"custom_field_10\": \"string\",\n      \"custom_field_11\": \"string\",\n      \"custom_field_12\": \"string\",\n      \"custom_field_13\": \"string\",\n      \"custom_field_14\": \"string\",\n      \"custom_field_15\": \"string\",\n      \"custom_field_16\": \"string\",\n      \"custom_field_17\": \"string\",\n      \"custom_field_18\": \"string\",\n      \"custom_field_19\": \"string\",\n      \"custom_field_20\": \"string\",\n      \"custom_field_21\": \"string\",\n      \"custom_field_22\": \"string\",\n      \"custom_field_23\": \"string\",\n      \"custom_field_24\": \"string\",\n      \"custom_field_25\": \"string\",\n      \"custom_field_26\": \"string\",\n      \"custom_field_27\": \"string\",\n      \"custom_field_28\": \"string\",\n      \"custom_field_29\": \"string\",\n      \"custom_field_30\": \"string\",\n      \"custom_field_31\": \"string\",\n      \"custom_field_32\": \"string\",\n      \"custom_field_33\": \"string\",\n      \"custom_field_34\": \"string\",\n      \"custom_field_35\": \"string\",\n      \"custom_field_36\": \"string\",\n      \"custom_field_37\": \"string\",\n      \"custom_field_38\": \"string\",\n      \"custom_field_39\": \"string\",\n      \"custom_field_40\": \"string\",\n      \"custom_field_41\": \"string\",\n      \"custom_field_42\": \"string\",\n      \"custom_field_43\": \"string\",\n      \"custom_field_44\": \"string\",\n      \"custom_field_45\": \"string\",\n      \"custom_field_46\": \"string\",\n      \"custom_field_47\": \"string\",\n      \"custom_field_48\": \"string\",\n      \"custom_field_49\": \"string\",\n      \"custom_field_50\": \"string\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"success\": true,\n  \"requestId\": \"56c5d910-1c92-848b-fb75-e47743216b27\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "ebb4976c-d569-47c2-a2b1-d904ea1b04f4",
+          "name": "Validation Error",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "customers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": [\n    {\n      \"customer_id\": \"string\",\n      \"create_date\": \"2015-08-17\",\n      \"document_number\": \"string\",\n      \"username_whatsapp\": \"string\",\n      \"mkt_cloud_id\": \"string\",\n      \"email\": \"string\",\n      \"email_permission\": false,\n      \"mobile_number\": \"string\",\n      \"mobile_permission\": true,\n      \"phone_number\": \"string\",\n      \"whatsapp_permission\": false,\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"pref_store\": \"string\",\n      \"pref_seller\": \"string\",\n      \"country\": \"string\",\n      \"state\": \"string\",\n      \"city\": \"string\",\n      \"zipcode\": \"string\",\n      \"address\": \"string\",\n      \"address_number\": \"string\",\n      \"address_complement\": \"string\",\n      \"neighborhood\": \"string\",\n      \"gender\": \"F\",\n      \"type_person\": \"P\",\n      \"date_birth\": \"1956-07-09\",\n      \"first_order\": \"2014-09-11\",\n      \"rfv\": \"string\",\n      \"data_source\": \"string\",\n      \"custom_field_01\": \"string\",\n      \"custom_field_02\": \"string\",\n      \"custom_field_03\": \"string\",\n      \"custom_field_04\": \"string\",\n      \"custom_field_05\": \"string\",\n      \"custom_field_06\": \"string\",\n      \"custom_field_07\": \"string\",\n      \"custom_field_08\": \"string\",\n      \"custom_field_09\": \"string\",\n      \"custom_field_10\": \"string\",\n      \"custom_field_11\": \"string\",\n      \"custom_field_12\": \"string\",\n      \"custom_field_13\": \"string\",\n      \"custom_field_14\": \"string\",\n      \"custom_field_15\": \"string\",\n      \"custom_field_16\": \"string\",\n      \"custom_field_17\": \"string\",\n      \"custom_field_18\": \"string\",\n      \"custom_field_19\": \"string\",\n      \"custom_field_20\": \"string\",\n      \"custom_field_21\": \"string\",\n      \"custom_field_22\": \"string\",\n      \"custom_field_23\": \"string\",\n      \"custom_field_24\": \"string\",\n      \"custom_field_25\": \"string\",\n      \"custom_field_26\": \"string\",\n      \"custom_field_27\": \"string\",\n      \"custom_field_28\": \"string\",\n      \"custom_field_29\": \"string\",\n      \"custom_field_30\": \"string\",\n      \"custom_field_31\": \"string\",\n      \"custom_field_32\": \"string\",\n      \"custom_field_33\": \"string\",\n      \"custom_field_34\": \"string\",\n      \"custom_field_35\": \"string\",\n      \"custom_field_36\": \"string\",\n      \"custom_field_37\": \"string\",\n      \"custom_field_38\": \"string\",\n      \"custom_field_39\": \"string\",\n      \"custom_field_40\": \"string\",\n      \"custom_field_41\": \"string\",\n      \"custom_field_42\": \"string\",\n      \"custom_field_43\": \"string\",\n      \"custom_field_44\": \"string\",\n      \"custom_field_45\": \"string\",\n      \"custom_field_46\": \"string\",\n      \"custom_field_47\": \"string\",\n      \"custom_field_48\": \"string\",\n      \"custom_field_49\": \"string\",\n      \"custom_field_50\": \"string\"\n    },\n    {\n      \"customer_id\": \"string\",\n      \"create_date\": \"1956-08-31\",\n      \"document_number\": \"string\",\n      \"username_whatsapp\": \"string\",\n      \"mkt_cloud_id\": \"string\",\n      \"email\": \"string\",\n      \"email_permission\": false,\n      \"mobile_number\": \"string\",\n      \"mobile_permission\": false,\n      \"phone_number\": \"string\",\n      \"whatsapp_permission\": true,\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"pref_store\": \"string\",\n      \"pref_seller\": \"string\",\n      \"country\": \"string\",\n      \"state\": \"string\",\n      \"city\": \"string\",\n      \"zipcode\": \"string\",\n      \"address\": \"string\",\n      \"address_number\": \"string\",\n      \"address_complement\": \"string\",\n      \"neighborhood\": \"string\",\n      \"gender\": \"O\",\n      \"type_person\": \"J\",\n      \"date_birth\": \"1986-04-06\",\n      \"first_order\": \"2020-01-06\",\n      \"rfv\": \"string\",\n      \"data_source\": \"string\",\n      \"custom_field_01\": \"string\",\n      \"custom_field_02\": \"string\",\n      \"custom_field_03\": \"string\",\n      \"custom_field_04\": \"string\",\n      \"custom_field_05\": \"string\",\n      \"custom_field_06\": \"string\",\n      \"custom_field_07\": \"string\",\n      \"custom_field_08\": \"string\",\n      \"custom_field_09\": \"string\",\n      \"custom_field_10\": \"string\",\n      \"custom_field_11\": \"string\",\n      \"custom_field_12\": \"string\",\n      \"custom_field_13\": \"string\",\n      \"custom_field_14\": \"string\",\n      \"custom_field_15\": \"string\",\n      \"custom_field_16\": \"string\",\n      \"custom_field_17\": \"string\",\n      \"custom_field_18\": \"string\",\n      \"custom_field_19\": \"string\",\n      \"custom_field_20\": \"string\",\n      \"custom_field_21\": \"string\",\n      \"custom_field_22\": \"string\",\n      \"custom_field_23\": \"string\",\n      \"custom_field_24\": \"string\",\n      \"custom_field_25\": \"string\",\n      \"custom_field_26\": \"string\",\n      \"custom_field_27\": \"string\",\n      \"custom_field_28\": \"string\",\n      \"custom_field_29\": \"string\",\n      \"custom_field_30\": \"string\",\n      \"custom_field_31\": \"string\",\n      \"custom_field_32\": \"string\",\n      \"custom_field_33\": \"string\",\n      \"custom_field_34\": \"string\",\n      \"custom_field_35\": \"string\",\n      \"custom_field_36\": \"string\",\n      \"custom_field_37\": \"string\",\n      \"custom_field_38\": \"string\",\n      \"custom_field_39\": \"string\",\n      \"custom_field_40\": \"string\",\n      \"custom_field_41\": \"string\",\n      \"custom_field_42\": \"string\",\n      \"custom_field_43\": \"string\",\n      \"custom_field_44\": \"string\",\n      \"custom_field_45\": \"string\",\n      \"custom_field_46\": \"string\",\n      \"custom_field_47\": \"string\",\n      \"custom_field_48\": \"string\",\n      \"custom_field_49\": \"string\",\n      \"custom_field_50\": \"string\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "ad83f3e7-0141-4f41-ac2d-c2db9d10fb6b",
+      "name": "Post Nps",
+      "request": {
+        "name": "Post Nps",
+        "description": {
+          "content": "Criar ou editar avaliações de _net promoter score_. Os registros são\ndeduplicados pela coluna `id`. A nota do cliente deve ser entre 1 e 10. Além\ndo _score_, o cliente pode avaliar até 10 items adicionais, com notas que\nvariam de 1 a 5. Valores nulos ou fora destes intervalos não serão considerados\nnos cálculos das avaliações.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "v1",
+            "nps"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{bearerToken}}"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"data\": [\n    {\n      \"id\": \"<integer>\",\n      \"event_ts\": \"<dateTime>\",\n      \"customer_id\": \"<string>\",\n      \"order_date\": \"<date>\",\n      \"order_id\": \"<string>\",\n      \"order_store\": \"<string>\",\n      \"mkt_cloud_id\": \"<string>\",\n      \"order_store_type\": \"<string>\",\n      \"order_delivery_type\": \"<string>\",\n      \"score\": \"<integer>\",\n      \"rating_01\": \"<integer>\",\n      \"rating_02\": \"<integer>\",\n      \"rating_03\": \"<integer>\",\n      \"rating_04\": \"<integer>\",\n      \"rating_05\": \"<integer>\",\n      \"rating_06\": \"<integer>\",\n      \"rating_07\": \"<integer>\",\n      \"rating_08\": \"<integer>\",\n      \"rating_09\": \"<integer>\",\n      \"rating_10\": \"<integer>\",\n      \"comment\": \"<string>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"event_ts\": \"<dateTime>\",\n      \"customer_id\": \"<string>\",\n      \"order_date\": \"<date>\",\n      \"order_id\": \"<string>\",\n      \"order_store\": \"<string>\",\n      \"mkt_cloud_id\": \"<string>\",\n      \"order_store_type\": \"<string>\",\n      \"order_delivery_type\": \"<string>\",\n      \"score\": \"<integer>\",\n      \"rating_01\": \"<integer>\",\n      \"rating_02\": \"<integer>\",\n      \"rating_03\": \"<integer>\",\n      \"rating_04\": \"<integer>\",\n      \"rating_05\": \"<integer>\",\n      \"rating_06\": \"<integer>\",\n      \"rating_07\": \"<integer>\",\n      \"rating_08\": \"<integer>\",\n      \"rating_09\": \"<integer>\",\n      \"rating_10\": \"<integer>\",\n      \"comment\": \"<string>\"\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "c2673e03-2555-4ecb-89c1-387862c7864b",
+          "name": "Successful Response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "nps"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": [\n    {\n      \"id\": 7599,\n      \"event_ts\": \"2016-02-01T17:15:54.039Z\",\n      \"customer_id\": \"string\",\n      \"order_date\": \"1988-09-23\",\n      \"order_id\": \"string\",\n      \"order_store\": \"string\",\n      \"mkt_cloud_id\": \"string\",\n      \"order_store_type\": \"L\",\n      \"order_delivery_type\": \"string\",\n      \"score\": 2,\n      \"rating_01\": 3,\n      \"rating_02\": 3,\n      \"rating_03\": 3,\n      \"rating_04\": 2,\n      \"rating_05\": 2,\n      \"rating_06\": 3,\n      \"rating_07\": 4,\n      \"rating_08\": 2,\n      \"rating_09\": 3,\n      \"rating_10\": 1,\n      \"comment\": \"string\"\n    },\n    {\n      \"id\": 7649,\n      \"event_ts\": \"1984-02-19T06:58:28.717Z\",\n      \"customer_id\": \"string\",\n      \"order_date\": \"1963-04-14\",\n      \"order_id\": \"string\",\n      \"order_store\": \"string\",\n      \"mkt_cloud_id\": \"string\",\n      \"order_store_type\": \"E\",\n      \"order_delivery_type\": \"string\",\n      \"score\": 4,\n      \"rating_01\": 4,\n      \"rating_02\": 4,\n      \"rating_03\": 3,\n      \"rating_04\": 4,\n      \"rating_05\": 3,\n      \"rating_06\": 4,\n      \"rating_07\": 3,\n      \"rating_08\": 4,\n      \"rating_09\": 3,\n      \"rating_10\": 3,\n      \"comment\": \"string\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"success\": true,\n  \"requestId\": \"56c5d910-1c92-848b-fb75-e47743216b27\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "159b0b26-ce60-430e-a437-a45034aea5e3",
+          "name": "Validation Error",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "nps"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": [\n    {\n      \"id\": 7599,\n      \"event_ts\": \"2016-02-01T17:15:54.039Z\",\n      \"customer_id\": \"string\",\n      \"order_date\": \"1988-09-23\",\n      \"order_id\": \"string\",\n      \"order_store\": \"string\",\n      \"mkt_cloud_id\": \"string\",\n      \"order_store_type\": \"L\",\n      \"order_delivery_type\": \"string\",\n      \"score\": 2,\n      \"rating_01\": 3,\n      \"rating_02\": 3,\n      \"rating_03\": 3,\n      \"rating_04\": 2,\n      \"rating_05\": 2,\n      \"rating_06\": 3,\n      \"rating_07\": 4,\n      \"rating_08\": 2,\n      \"rating_09\": 3,\n      \"rating_10\": 1,\n      \"comment\": \"string\"\n    },\n    {\n      \"id\": 7649,\n      \"event_ts\": \"1984-02-19T06:58:28.717Z\",\n      \"customer_id\": \"string\",\n      \"order_date\": \"1963-04-14\",\n      \"order_id\": \"string\",\n      \"order_store\": \"string\",\n      \"mkt_cloud_id\": \"string\",\n      \"order_store_type\": \"E\",\n      \"order_delivery_type\": \"string\",\n      \"score\": 4,\n      \"rating_01\": 4,\n      \"rating_02\": 4,\n      \"rating_03\": 3,\n      \"rating_04\": 4,\n      \"rating_05\": 3,\n      \"rating_06\": 4,\n      \"rating_07\": 3,\n      \"rating_08\": 4,\n      \"rating_09\": 3,\n      \"rating_10\": 3,\n      \"comment\": \"string\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "0cb86ea3-8409-4aa4-a851-ebdb3db9b2b0",
+      "name": "Post Orders",
+      "request": {
+        "name": "Post Orders",
+        "description": {
+          "content": "Criar ou editar pedidos. Os registros são deduplicados pelas colunas\n`date`, `store` e `id`.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "v1",
+            "orders"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{bearerToken}}"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"data\": [\n    {\n      \"customer_id\": \"<string>\",\n      \"date\": \"<date>\",\n      \"id\": \"<string>\",\n      \"store\": \"<string>\",\n      \"total\": \"<number>\",\n      \"date_ts\": \"<dateTime>\",\n      \"store_type\": \"<string>\",\n      \"delivery_type\": \"<string>\",\n      \"canceled\": \"<boolean>\",\n      \"status\": \"<string>\",\n      \"payment_method\": \"<string>\",\n      \"payment_type\": \"<string>\",\n      \"installments\": \"<integer>\",\n      \"custom_field_01\": \"<string>\",\n      \"custom_field_02\": \"<string>\",\n      \"custom_field_03\": \"<string>\",\n      \"custom_field_04\": \"<string>\",\n      \"custom_field_05\": \"<string>\",\n      \"custom_field_06\": \"<string>\",\n      \"custom_field_07\": \"<string>\",\n      \"custom_field_08\": \"<string>\",\n      \"custom_field_09\": \"<string>\",\n      \"custom_field_10\": \"<string>\"\n    },\n    {\n      \"customer_id\": \"<string>\",\n      \"date\": \"<date>\",\n      \"id\": \"<string>\",\n      \"store\": \"<string>\",\n      \"total\": \"<number>\",\n      \"date_ts\": \"<dateTime>\",\n      \"store_type\": \"<string>\",\n      \"delivery_type\": \"<string>\",\n      \"canceled\": \"<boolean>\",\n      \"status\": \"<string>\",\n      \"payment_method\": \"<string>\",\n      \"payment_type\": \"<string>\",\n      \"installments\": \"<integer>\",\n      \"custom_field_01\": \"<string>\",\n      \"custom_field_02\": \"<string>\",\n      \"custom_field_03\": \"<string>\",\n      \"custom_field_04\": \"<string>\",\n      \"custom_field_05\": \"<string>\",\n      \"custom_field_06\": \"<string>\",\n      \"custom_field_07\": \"<string>\",\n      \"custom_field_08\": \"<string>\",\n      \"custom_field_09\": \"<string>\",\n      \"custom_field_10\": \"<string>\"\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "66e82c14-167e-4a61-a784-2837cbb7d1ed",
+          "name": "Successful Response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "orders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": [\n    {\n      \"customer_id\": \"string\",\n      \"date\": \"1972-02-02\",\n      \"id\": \"string\",\n      \"store\": \"string\",\n      \"total\": 8098.649641530817,\n      \"date_ts\": \"1965-04-15T13:13:51.944Z\",\n      \"store_type\": \"E\",\n      \"delivery_type\": \"string\",\n      \"canceled\": true,\n      \"status\": \"string\",\n      \"payment_method\": \"string\",\n      \"payment_type\": \"P\",\n      \"installments\": 2944,\n      \"custom_field_01\": \"string\",\n      \"custom_field_02\": \"string\",\n      \"custom_field_03\": \"string\",\n      \"custom_field_04\": \"string\",\n      \"custom_field_05\": \"string\",\n      \"custom_field_06\": \"string\",\n      \"custom_field_07\": \"string\",\n      \"custom_field_08\": \"string\",\n      \"custom_field_09\": \"string\",\n      \"custom_field_10\": \"string\"\n    },\n    {\n      \"customer_id\": \"string\",\n      \"date\": \"1989-01-07\",\n      \"id\": \"string\",\n      \"store\": \"string\",\n      \"total\": 6635.76552651584,\n      \"date_ts\": \"1952-10-05T11:14:40.019Z\",\n      \"store_type\": \"L\",\n      \"delivery_type\": \"string\",\n      \"canceled\": true,\n      \"status\": \"string\",\n      \"payment_method\": \"string\",\n      \"payment_type\": \"P\",\n      \"installments\": 5705,\n      \"custom_field_01\": \"string\",\n      \"custom_field_02\": \"string\",\n      \"custom_field_03\": \"string\",\n      \"custom_field_04\": \"string\",\n      \"custom_field_05\": \"string\",\n      \"custom_field_06\": \"string\",\n      \"custom_field_07\": \"string\",\n      \"custom_field_08\": \"string\",\n      \"custom_field_09\": \"string\",\n      \"custom_field_10\": \"string\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"success\": true,\n  \"requestId\": \"56c5d910-1c92-848b-fb75-e47743216b27\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "35012e6c-2416-45f5-ba3e-55ac60e9fe64",
+          "name": "Validation Error",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "orders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": [\n    {\n      \"customer_id\": \"string\",\n      \"date\": \"1972-02-02\",\n      \"id\": \"string\",\n      \"store\": \"string\",\n      \"total\": 8098.649641530817,\n      \"date_ts\": \"1965-04-15T13:13:51.944Z\",\n      \"store_type\": \"E\",\n      \"delivery_type\": \"string\",\n      \"canceled\": true,\n      \"status\": \"string\",\n      \"payment_method\": \"string\",\n      \"payment_type\": \"P\",\n      \"installments\": 2944,\n      \"custom_field_01\": \"string\",\n      \"custom_field_02\": \"string\",\n      \"custom_field_03\": \"string\",\n      \"custom_field_04\": \"string\",\n      \"custom_field_05\": \"string\",\n      \"custom_field_06\": \"string\",\n      \"custom_field_07\": \"string\",\n      \"custom_field_08\": \"string\",\n      \"custom_field_09\": \"string\",\n      \"custom_field_10\": \"string\"\n    },\n    {\n      \"customer_id\": \"string\",\n      \"date\": \"1989-01-07\",\n      \"id\": \"string\",\n      \"store\": \"string\",\n      \"total\": 6635.76552651584,\n      \"date_ts\": \"1952-10-05T11:14:40.019Z\",\n      \"store_type\": \"L\",\n      \"delivery_type\": \"string\",\n      \"canceled\": true,\n      \"status\": \"string\",\n      \"payment_method\": \"string\",\n      \"payment_type\": \"P\",\n      \"installments\": 5705,\n      \"custom_field_01\": \"string\",\n      \"custom_field_02\": \"string\",\n      \"custom_field_03\": \"string\",\n      \"custom_field_04\": \"string\",\n      \"custom_field_05\": \"string\",\n      \"custom_field_06\": \"string\",\n      \"custom_field_07\": \"string\",\n      \"custom_field_08\": \"string\",\n      \"custom_field_09\": \"string\",\n      \"custom_field_10\": \"string\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "be8ac1f7-bb5a-458e-9fdc-01dfe8bd7997",
+      "name": "Post Order Items",
+      "request": {
+        "name": "Post Order Items",
+        "description": {
+          "content": "Criar ou editar itens pedidos. Os registros são deduplicados pelas colunas\n`date`, `store`, `id` e `sku`.\n\nObserve que os itens deve ser enviados agregados por estas chaves, ou seja, se\nduas unidades do mesmo item (SKU) foram comprados no mesmo pedido/loja/data,\ndeve-se enviar apenas um registro, com a quantidade especificada na coluna\n`quantity`.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "v1",
+            "order_items"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{bearerToken}}"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"data\": [\n    {\n      \"date\": \"<date>\",\n      \"id\": \"<string>\",\n      \"store\": \"<string>\",\n      \"sku\": \"<string>\",\n      \"seller_id\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"price\": \"<number>\",\n      \"seq\": \"<integer>\",\n      \"list_price\": \"<number>\",\n      \"order_item_canceled\": \"<integer>\"\n    },\n    {\n      \"date\": \"<date>\",\n      \"id\": \"<string>\",\n      \"store\": \"<string>\",\n      \"sku\": \"<string>\",\n      \"seller_id\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"price\": \"<number>\",\n      \"seq\": \"<integer>\",\n      \"list_price\": \"<number>\",\n      \"order_item_canceled\": \"<integer>\"\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "c30444cb-4908-4dc2-a8d0-4f4762444044",
+          "name": "Successful Response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "order_items"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": [\n    {\n      \"date\": \"1966-08-11\",\n      \"id\": \"string\",\n      \"store\": \"string\",\n      \"sku\": \"string\",\n      \"seller_id\": \"string\",\n      \"quantity\": 7500,\n      \"price\": 3225.1888264949403,\n      \"seq\": 9469,\n      \"list_price\": 824.3891487543298,\n      \"order_item_canceled\": 4822\n    },\n    {\n      \"date\": \"1953-09-04\",\n      \"id\": \"string\",\n      \"store\": \"string\",\n      \"sku\": \"string\",\n      \"seller_id\": \"string\",\n      \"quantity\": 7420,\n      \"price\": 5879.548490758668,\n      \"seq\": 1358,\n      \"list_price\": 2912.353167940499,\n      \"order_item_canceled\": 8708\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"success\": true,\n  \"requestId\": \"56c5d910-1c92-848b-fb75-e47743216b27\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "02b305ee-e1e3-48fd-b965-cd5a7e42ed0d",
+          "name": "Validation Error",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "order_items"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": [\n    {\n      \"date\": \"1966-08-11\",\n      \"id\": \"string\",\n      \"store\": \"string\",\n      \"sku\": \"string\",\n      \"seller_id\": \"string\",\n      \"quantity\": 7500,\n      \"price\": 3225.1888264949403,\n      \"seq\": 9469,\n      \"list_price\": 824.3891487543298,\n      \"order_item_canceled\": 4822\n    },\n    {\n      \"date\": \"1953-09-04\",\n      \"id\": \"string\",\n      \"store\": \"string\",\n      \"sku\": \"string\",\n      \"seller_id\": \"string\",\n      \"quantity\": 7420,\n      \"price\": 5879.548490758668,\n      \"seq\": 1358,\n      \"list_price\": 2912.353167940499,\n      \"order_item_canceled\": 8708\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "f1bc4f9f-b39d-47d9-ad7b-a11acc7a5ced",
+      "name": "Post Products",
+      "request": {
+        "name": "Post Products",
+        "description": {
+          "content": "Criar ou editar itens do catálogo de produtos. Os registros são\ndeduplicados pela coluna `sku`.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "v1",
+            "products"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{bearerToken}}"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"data\": [\n    {\n      \"sku\": \"<string>\",\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"ecommerce_id\": \"<string>\",\n      \"size\": \"<string>\",\n      \"category\": \"<string>\",\n      \"subcategory\": \"<string>\",\n      \"gender\": \"<string>\",\n      \"line\": \"<string>\",\n      \"color\": \"<string>\",\n      \"brand\": \"<string>\",\n      \"barcode\": \"<string>\",\n      \"image\": \"<uri>\",\n      \"url\": \"<uri>\"\n    },\n    {\n      \"sku\": \"<string>\",\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"ecommerce_id\": \"<string>\",\n      \"size\": \"<string>\",\n      \"category\": \"<string>\",\n      \"subcategory\": \"<string>\",\n      \"gender\": \"<string>\",\n      \"line\": \"<string>\",\n      \"color\": \"<string>\",\n      \"brand\": \"<string>\",\n      \"barcode\": \"<string>\",\n      \"image\": \"<uri>\",\n      \"url\": \"<uri>\"\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "28f8fec1-180f-465d-8ecf-e9b4735c64fe",
+          "name": "Successful Response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "products"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": [\n    {\n      \"sku\": \"string\",\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"ecommerce_id\": \"string\",\n      \"size\": \"string\",\n      \"category\": \"string\",\n      \"subcategory\": \"string\",\n      \"gender\": \"string\",\n      \"line\": \"string\",\n      \"color\": \"string\",\n      \"brand\": \"string\",\n      \"barcode\": \"string\",\n      \"image\": \"http://myiZeBBSUrbKBTeRYRfrzGJhpthUxWPWF.opuypkMuAN6+t9\",\n      \"url\": \"https://U.ixxNohWyaYUK0xjNH+29D1UQVyVKy-DybGO22lP-Zs3EJeh-QfTPN\"\n    },\n    {\n      \"sku\": \"string\",\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"ecommerce_id\": \"string\",\n      \"size\": \"string\",\n      \"category\": \"string\",\n      \"subcategory\": \"string\",\n      \"gender\": \"string\",\n      \"line\": \"string\",\n      \"color\": \"string\",\n      \"brand\": \"string\",\n      \"barcode\": \"string\",\n      \"image\": \"https://iMgOYSHyhbUZ.mlqcd6wKiDBIYuZc1yTZ11xGeFMcD8gosqk,Y.joXVbFXohFypjSHVto4CFq\",\n      \"url\": \"http://GOalENRNLustclhGZzIWAKANTnI.asoP2JMqUAsgP.V1kGZWDl0K2GjXWxxkKDIgtCp0w-ce\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"success\": true,\n  \"requestId\": \"56c5d910-1c92-848b-fb75-e47743216b27\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "a178e35c-6659-4824-9719-f2e5ec9ce414",
+          "name": "Validation Error",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "products"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": [\n    {\n      \"sku\": \"string\",\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"ecommerce_id\": \"string\",\n      \"size\": \"string\",\n      \"category\": \"string\",\n      \"subcategory\": \"string\",\n      \"gender\": \"string\",\n      \"line\": \"string\",\n      \"color\": \"string\",\n      \"brand\": \"string\",\n      \"barcode\": \"string\",\n      \"image\": \"http://myiZeBBSUrbKBTeRYRfrzGJhpthUxWPWF.opuypkMuAN6+t9\",\n      \"url\": \"https://U.ixxNohWyaYUK0xjNH+29D1UQVyVKy-DybGO22lP-Zs3EJeh-QfTPN\"\n    },\n    {\n      \"sku\": \"string\",\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"ecommerce_id\": \"string\",\n      \"size\": \"string\",\n      \"category\": \"string\",\n      \"subcategory\": \"string\",\n      \"gender\": \"string\",\n      \"line\": \"string\",\n      \"color\": \"string\",\n      \"brand\": \"string\",\n      \"barcode\": \"string\",\n      \"image\": \"https://iMgOYSHyhbUZ.mlqcd6wKiDBIYuZc1yTZ11xGeFMcD8gosqk,Y.joXVbFXohFypjSHVto4CFq\",\n      \"url\": \"http://GOalENRNLustclhGZzIWAKANTnI.asoP2JMqUAsgP.V1kGZWDl0K2GjXWxxkKDIgtCp0w-ce\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "fe5eaf9e-a0cb-4a7a-8028-2478161b156b",
+      "name": "Post Sellers",
+      "request": {
+        "name": "Post Sellers",
+        "description": {
+          "content": "Criar ou editar vendedores. Os registros são deduplicados pela coluna `id`.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "v1",
+            "sellers"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{bearerToken}}"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"data\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"name_oto\": \"<string>\",\n      \"store\": \"<string>\",\n      \"disabled\": \"<date>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"name_oto\": \"<string>\",\n      \"store\": \"<string>\",\n      \"disabled\": \"<date>\"\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "6b9f1d94-5143-4f00-ac48-b4055fc94491",
+          "name": "Successful Response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "sellers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"name_oto\": \"string\",\n      \"store\": \"string\",\n      \"disabled\": \"2000-03-18\"\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"name_oto\": \"string\",\n      \"store\": \"string\",\n      \"disabled\": \"2016-02-18\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"success\": true,\n  \"requestId\": \"56c5d910-1c92-848b-fb75-e47743216b27\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "5ba1d609-acdf-4a3d-9d82-9d1950ceb21c",
+          "name": "Validation Error",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "sellers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"name_oto\": \"string\",\n      \"store\": \"string\",\n      \"disabled\": \"2000-03-18\"\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"name_oto\": \"string\",\n      \"store\": \"string\",\n      \"disabled\": \"2016-02-18\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "c1575a81-3a97-45d0-9fa9-cf79f98daf89",
+      "name": "Post Stores",
+      "request": {
+        "name": "Post Stores",
+        "description": {
+          "content": "Criar ou editar lojas. Os registros são deduplicados pela coluna `id`.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "v1",
+            "stores"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{bearerToken}}"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"data\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"name_oto\": \"<string>\",\n      \"type\": \"<string>\",\n      \"email\": \"<email>\",\n      \"cluster\": \"<string>\",\n      \"country\": \"<string>\",\n      \"state\": \"<string>\",\n      \"city\": \"<string>\",\n      \"status\": \"<boolean>\",\n      \"store_vtex\": \"<string>\",\n      \"cnpj\": \"<string>\",\n      \"identity\": \"<string>\",\n      \"ecommerce_id\": \"<string>\",\n      \"custom_field_01\": \"<string>\",\n      \"custom_field_02\": \"<string>\",\n      \"custom_field_03\": \"<string>\",\n      \"custom_field_04\": \"<string>\",\n      \"custom_field_05\": \"<string>\",\n      \"custom_field_06\": \"<string>\",\n      \"custom_field_07\": \"<string>\",\n      \"custom_field_08\": \"<string>\",\n      \"custom_field_09\": \"<string>\",\n      \"custom_field_10\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"name_oto\": \"<string>\",\n      \"type\": \"<string>\",\n      \"email\": \"<email>\",\n      \"cluster\": \"<string>\",\n      \"country\": \"<string>\",\n      \"state\": \"<string>\",\n      \"city\": \"<string>\",\n      \"status\": \"<boolean>\",\n      \"store_vtex\": \"<string>\",\n      \"cnpj\": \"<string>\",\n      \"identity\": \"<string>\",\n      \"ecommerce_id\": \"<string>\",\n      \"custom_field_01\": \"<string>\",\n      \"custom_field_02\": \"<string>\",\n      \"custom_field_03\": \"<string>\",\n      \"custom_field_04\": \"<string>\",\n      \"custom_field_05\": \"<string>\",\n      \"custom_field_06\": \"<string>\",\n      \"custom_field_07\": \"<string>\",\n      \"custom_field_08\": \"<string>\",\n      \"custom_field_09\": \"<string>\",\n      \"custom_field_10\": \"<string>\"\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "d4c4bdb0-6428-442f-952e-2e826736c641",
+          "name": "Successful Response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "stores"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"name_oto\": \"string\",\n      \"type\": \"E\",\n      \"email\": \"YSA7A@FzsOcQLSqqmTFiCUtoOaWRLpK.agw\",\n      \"cluster\": \"string\",\n      \"country\": \"string\",\n      \"state\": \"string\",\n      \"city\": \"string\",\n      \"status\": true,\n      \"store_vtex\": \"string\",\n      \"cnpj\": \"string\",\n      \"identity\": \"string\",\n      \"ecommerce_id\": \"string\",\n      \"custom_field_01\": \"string\",\n      \"custom_field_02\": \"string\",\n      \"custom_field_03\": \"string\",\n      \"custom_field_04\": \"string\",\n      \"custom_field_05\": \"string\",\n      \"custom_field_06\": \"string\",\n      \"custom_field_07\": \"string\",\n      \"custom_field_08\": \"string\",\n      \"custom_field_09\": \"string\",\n      \"custom_field_10\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"name_oto\": \"string\",\n      \"type\": \"L\",\n      \"email\": \"Ag2rwW@YThEQ.ke\",\n      \"cluster\": \"string\",\n      \"country\": \"string\",\n      \"state\": \"string\",\n      \"city\": \"string\",\n      \"status\": true,\n      \"store_vtex\": \"string\",\n      \"cnpj\": \"string\",\n      \"identity\": \"string\",\n      \"ecommerce_id\": \"string\",\n      \"custom_field_01\": \"string\",\n      \"custom_field_02\": \"string\",\n      \"custom_field_03\": \"string\",\n      \"custom_field_04\": \"string\",\n      \"custom_field_05\": \"string\",\n      \"custom_field_06\": \"string\",\n      \"custom_field_07\": \"string\",\n      \"custom_field_08\": \"string\",\n      \"custom_field_09\": \"string\",\n      \"custom_field_10\": \"string\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"success\": true,\n  \"requestId\": \"56c5d910-1c92-848b-fb75-e47743216b27\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "c1b737db-8c69-445c-a314-551de492009b",
+          "name": "Validation Error",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "stores"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"name_oto\": \"string\",\n      \"type\": \"E\",\n      \"email\": \"YSA7A@FzsOcQLSqqmTFiCUtoOaWRLpK.agw\",\n      \"cluster\": \"string\",\n      \"country\": \"string\",\n      \"state\": \"string\",\n      \"city\": \"string\",\n      \"status\": true,\n      \"store_vtex\": \"string\",\n      \"cnpj\": \"string\",\n      \"identity\": \"string\",\n      \"ecommerce_id\": \"string\",\n      \"custom_field_01\": \"string\",\n      \"custom_field_02\": \"string\",\n      \"custom_field_03\": \"string\",\n      \"custom_field_04\": \"string\",\n      \"custom_field_05\": \"string\",\n      \"custom_field_06\": \"string\",\n      \"custom_field_07\": \"string\",\n      \"custom_field_08\": \"string\",\n      \"custom_field_09\": \"string\",\n      \"custom_field_10\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"name_oto\": \"string\",\n      \"type\": \"L\",\n      \"email\": \"Ag2rwW@YThEQ.ke\",\n      \"cluster\": \"string\",\n      \"country\": \"string\",\n      \"state\": \"string\",\n      \"city\": \"string\",\n      \"status\": true,\n      \"store_vtex\": \"string\",\n      \"cnpj\": \"string\",\n      \"identity\": \"string\",\n      \"ecommerce_id\": \"string\",\n      \"custom_field_01\": \"string\",\n      \"custom_field_02\": \"string\",\n      \"custom_field_03\": \"string\",\n      \"custom_field_04\": \"string\",\n      \"custom_field_05\": \"string\",\n      \"custom_field_06\": \"string\",\n      \"custom_field_07\": \"string\",\n      \"custom_field_08\": \"string\",\n      \"custom_field_09\": \"string\",\n      \"custom_field_10\": \"string\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "dd9c0b23-54c3-4d85-9a9c-7b80561e17e3",
+      "name": "Post Tag Hit",
+      "request": {
+        "name": "Post Tag Hit",
+        "description": {
+          "content": "Registra evento de navegação no site.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "v1",
+            "tag_hits"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{bearerToken}}"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"data\": [\n    {\n      \"event_ts\": \"<dateTime>\",\n      \"user_id\": \"<integer>\",\n      \"session_id\": \"<integer>\",\n      \"url\": \"<string>\",\n      \"referer\": \"<string>\",\n      \"user_agent\": \"<string>\",\n      \"utm_source\": \"<string>\",\n      \"utm_medium\": \"<string>\",\n      \"utm_campaign\": \"<string>\"\n    },\n    {\n      \"event_ts\": \"<dateTime>\",\n      \"user_id\": \"<integer>\",\n      \"session_id\": \"<integer>\",\n      \"url\": \"<string>\",\n      \"referer\": \"<string>\",\n      \"user_agent\": \"<string>\",\n      \"utm_source\": \"<string>\",\n      \"utm_medium\": \"<string>\",\n      \"utm_campaign\": \"<string>\"\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "41dd52b5-a0af-4bf0-9b63-40109aa178ab",
+          "name": "Successful Response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "tag_hits"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": [\n    {\n      \"event_ts\": \"2010-03-30T12:54:44.160Z\",\n      \"user_id\": 5574,\n      \"session_id\": 4856,\n      \"url\": \"string\",\n      \"referer\": \"string\",\n      \"user_agent\": \"string\",\n      \"utm_source\": \"string\",\n      \"utm_medium\": \"string\",\n      \"utm_campaign\": \"string\"\n    },\n    {\n      \"event_ts\": \"1968-04-04T06:08:39.403Z\",\n      \"user_id\": 8006,\n      \"session_id\": 5899,\n      \"url\": \"string\",\n      \"referer\": \"string\",\n      \"user_agent\": \"string\",\n      \"utm_source\": \"string\",\n      \"utm_medium\": \"string\",\n      \"utm_campaign\": \"string\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"success\": true,\n  \"requestId\": \"56c5d910-1c92-848b-fb75-e47743216b27\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "8daa66d1-dfc3-463f-a909-5f2a533d0a2b",
+          "name": "Validation Error",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "tag_hits"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": [\n    {\n      \"event_ts\": \"2010-03-30T12:54:44.160Z\",\n      \"user_id\": 5574,\n      \"session_id\": 4856,\n      \"url\": \"string\",\n      \"referer\": \"string\",\n      \"user_agent\": \"string\",\n      \"utm_source\": \"string\",\n      \"utm_medium\": \"string\",\n      \"utm_campaign\": \"string\"\n    },\n    {\n      \"event_ts\": \"1968-04-04T06:08:39.403Z\",\n      \"user_id\": 8006,\n      \"session_id\": 5899,\n      \"url\": \"string\",\n      \"referer\": \"string\",\n      \"user_agent\": \"string\",\n      \"utm_source\": \"string\",\n      \"utm_medium\": \"string\",\n      \"utm_campaign\": \"string\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "b4928001-59ba-400f-aada-463b181944d2",
+      "name": "Post Tag Interaction",
+      "request": {
+        "name": "Post Tag Interaction",
+        "description": {
+          "content": "Registra evento de interação com produto, categoria ou transação de compra.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "v1",
+            "tag_interactions"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{bearerToken}}"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"data\": [\n    {\n      \"event_ts\": \"<dateTime>\",\n      \"user_id\": \"<integer>\",\n      \"session_id\": \"<integer>\",\n      \"type\": \"<string>\",\n      \"id\": \"<string>\",\n      \"sku\": \"<string>\",\n      \"price\": \"<number>\"\n    },\n    {\n      \"event_ts\": \"<dateTime>\",\n      \"user_id\": \"<integer>\",\n      \"session_id\": \"<integer>\",\n      \"type\": \"<string>\",\n      \"id\": \"<string>\",\n      \"sku\": \"<string>\",\n      \"price\": \"<number>\"\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "5ce4ec4a-222e-43b2-a182-4d4c0188e3c3",
+          "name": "Successful Response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "tag_interactions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": [\n    {\n      \"event_ts\": \"2025-07-09T05:15:19.914Z\",\n      \"user_id\": 6543,\n      \"session_id\": 5936,\n      \"type\": \"D\",\n      \"id\": \"string\",\n      \"sku\": \"string\",\n      \"price\": 3020.2179426324137\n    },\n    {\n      \"event_ts\": \"2008-02-22T10:23:10.447Z\",\n      \"user_id\": 1343,\n      \"session_id\": 4206,\n      \"type\": \"C\",\n      \"id\": \"string\",\n      \"sku\": \"string\",\n      \"price\": 1845.8835365895443\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"success\": true,\n  \"requestId\": \"56c5d910-1c92-848b-fb75-e47743216b27\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "35e0e164-3f2b-4525-947a-31826002690f",
+          "name": "Validation Error",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "tag_interactions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": [\n    {\n      \"event_ts\": \"2025-07-09T05:15:19.914Z\",\n      \"user_id\": 6543,\n      \"session_id\": 5936,\n      \"type\": \"D\",\n      \"id\": \"string\",\n      \"sku\": \"string\",\n      \"price\": 3020.2179426324137\n    },\n    {\n      \"event_ts\": \"2008-02-22T10:23:10.447Z\",\n      \"user_id\": 1343,\n      \"session_id\": 4206,\n      \"type\": \"C\",\n      \"id\": \"string\",\n      \"sku\": \"string\",\n      \"price\": 1845.8835365895443\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "eed291f4-56c2-45b9-92f0-136273fe9041",
+      "name": "Post Tags Ids",
+      "request": {
+        "name": "Post Tags Ids",
+        "description": {
+          "content": "Atualiza identificação do usuário",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "v1",
+            "tag_ids"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{bearerToken}}"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"data\": [\n    {\n      \"event_ts\": \"<dateTime>\",\n      \"user_id\": \"<integer>\",\n      \"mkt_cloud_id\": \"<string>\",\n      \"customer_id\": \"<string>\",\n      \"customer_id_sha256\": \"<string>\",\n      \"email_sha256\": \"<string>\",\n      \"email_md5\": \"<string>\"\n    },\n    {\n      \"event_ts\": \"<dateTime>\",\n      \"user_id\": \"<integer>\",\n      \"mkt_cloud_id\": \"<string>\",\n      \"customer_id\": \"<string>\",\n      \"customer_id_sha256\": \"<string>\",\n      \"email_sha256\": \"<string>\",\n      \"email_md5\": \"<string>\"\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "7fb58690-a2d4-40cb-ab77-f32ab815bc67",
+          "name": "Successful Response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "tag_ids"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": [\n    {\n      \"event_ts\": \"2007-02-03T16:34:31.763Z\",\n      \"user_id\": 2772,\n      \"mkt_cloud_id\": \"string\",\n      \"customer_id\": \"string\",\n      \"customer_id_sha256\": \"string\",\n      \"email_sha256\": \"string\",\n      \"email_md5\": \"string\"\n    },\n    {\n      \"event_ts\": \"1979-01-28T14:37:47.726Z\",\n      \"user_id\": 4559,\n      \"mkt_cloud_id\": \"string\",\n      \"customer_id\": \"string\",\n      \"customer_id_sha256\": \"string\",\n      \"email_sha256\": \"string\",\n      \"email_md5\": \"string\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"success\": true,\n  \"requestId\": \"56c5d910-1c92-848b-fb75-e47743216b27\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "26c82590-4c2b-47d9-b97e-5caee63babcd",
+          "name": "Validation Error",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "tag_ids"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": [\n    {\n      \"event_ts\": \"2007-02-03T16:34:31.763Z\",\n      \"user_id\": 2772,\n      \"mkt_cloud_id\": \"string\",\n      \"customer_id\": \"string\",\n      \"customer_id_sha256\": \"string\",\n      \"email_sha256\": \"string\",\n      \"email_md5\": \"string\"\n    },\n    {\n      \"event_ts\": \"1979-01-28T14:37:47.726Z\",\n      \"user_id\": 4559,\n      \"mkt_cloud_id\": \"string\",\n      \"customer_id\": \"string\",\n      \"customer_id_sha256\": \"string\",\n      \"email_sha256\": \"string\",\n      \"email_md5\": \"string\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "3813939f-459a-4d91-8246-aad48147809d",
+      "name": "Login",
+      "request": {
+        "name": "Login",
+        "description": {
+          "content": "Autentica um usuário e retorna um token JWT de acesso.\n\nEste endpoint valida o nome de usuário e a senha informados na collection\n`users` do MongoDB. Caso as credenciais sejam válidas e o usuário esteja ativo,\num token JWT é gerado contendo informações do usuário e suas permissões, com\ntempo de expiração padrão de 60 minutos (3600 segundos).\n\nRegistro de logs:\n    - Registra um log de ERRO se o banco de dados não estiver inicializado.\n    - Registra um log de AVISO (WARNING) se as credenciais forem inválidas ou o usuário estiver inativo.\n    - Registra um log de INFO em caso de login bem-sucedido.\n    - Registra um log de ERRO para exceções inesperadas.\n\nArgumentos:\n    data (LoginRequest): Objeto contendo os campos `username` e `password`.\n\nRetorno:\n    TokenResponse: Objeto contendo o `access_token` JWT e o tempo de expiração em segundos.\n\nCódigos de status:\n    200: Autenticação realizada com sucesso.\n    401: Credenciais inválidas.\n    403: Conta de usuário inativa.\n    500: Erro interno no servidor por exceção não esperada.\n\nExemplo de requisição:\n    Corpo da requisição:\n    {\n        \"username\": \"joao_silva\",\n        \"password\": \"senhaSegura123\"\n    }\n\nExemplo de resposta (200):\n    {\n        \"access_token\": \"<jwt_token_aqui>\",\n        \"expires_in\": 3600\n    }",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "auth",
+            "login"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "2a3aa27b-e6c8-4703-9573-5ca43aff35b0",
+          "name": "Successful Response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "auth",
+                "login"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"access_token\": \"string\",\n  \"expires_in\": 4474\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "78f38e57-3e51-405d-a2f0-8c379923f437",
+          "name": "Validation Error",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "auth",
+                "login"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://data-api.otocrm.com.br",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "65110a73-6997-40ea-8b38-ed666736570f",
+    "name": "Oto Data API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "A Data API do Oto permite que você faça cargas de dados\nde forma segura e confiável, utilizando padrões REST e corpos das mensagens em\nformato JSON.\n\nOs registros são inseridos na modalidade _upsert_, isto é, caso um registro\ncom a mesma chave primária exista na base de dados, ele será integralmente\nsubstituído pelo registro enviado. Caso contrário, um novo registro será\ncriado na base de dados.\n\n# Limites\n\nDois limites são aplicados em todos os endpoints desta API: requisições por\nminuto e quantidade máxima de registros por requisição.\n\n## Limite de requisições\n\nPara garantir a estabilidade e segurança da plataforma, esta API aceita um\nnúmero máximo de **200** requisições por minuto por IP de origem. As\nrequisições que excederem este limite terão suas respostas atrasadas para que\nse mantenha o ritmo estipulado, até que eventualmente podem ser barradas com a\nresposta `HTTP/1.1 429 Too many requests`.\n\n## Limite de registros por requisição\n\nSão aceitos até **10.000** registros por requisição. Caso a propriedade `data`\ncontenha um número superior de entradas, a requisição será recusada com a\nresposta `HTTP/1.1 413 Payload Too Large`.",
+      "type": "text/plain"
+    }
+  }
+}

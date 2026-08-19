@@ -1,0 +1,253 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Oto Data API",
+    "version": "1.3.5"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Post Blocked",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://data-api.otocrm.com.br/v1/blocked",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        },
+        "auth": {
+          "type": "bearer",
+          "token": "{{bearerToken}}"
+        }
+      },
+      "docs": "Lista de clientes bloqueados para audiências e campanhas no\nproduto. Enviar sempre toda listagem de contatos que, por escolha\nda marca, devem ser bloqueados."
+    },
+    {
+      "info": {
+        "name": "Post Cashback",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://data-api.otocrm.com.br/v1/cashback",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        },
+        "auth": {
+          "type": "bearer",
+          "token": "{{bearerToken}}"
+        }
+      },
+      "docs": "Criar ou editar registros de cashback. Os dados deverão ser agregados pelas\ncolunas `order_date`, `order_store` e `order_id`, ou seja, apenas uma linha\n(registro) de cashback deve ser emitida por pedido. Recomenda-se enviar todos\nos registros (créditos) disponíveis até o momento da exportação, para que os\ncréditos já utilizados sejam desconsiderados. Observe que os créditos serão\nconsiderados válidos até a data e hora limite especificados no campo\n`valid_until`, a partir de quando serão automati"
+    },
+    {
+      "info": {
+        "name": "Post Customers",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://data-api.otocrm.com.br/v1/customers",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        },
+        "auth": {
+          "type": "bearer",
+          "token": "{{bearerToken}}"
+        }
+      },
+      "docs": "Criar ou editar clientes. Os registros são deduplicados pelas colunas\n`customer_id` e `data_source`. Os campos adicionais (`custom_field_NN`)\npodem ser configurados à parte e utilizados para critérios de segmentação\ne personalização da plataforma."
+    },
+    {
+      "info": {
+        "name": "Post Nps",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://data-api.otocrm.com.br/v1/nps",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        },
+        "auth": {
+          "type": "bearer",
+          "token": "{{bearerToken}}"
+        }
+      },
+      "docs": "Criar ou editar avaliações de _net promoter score_. Os registros são\ndeduplicados pela coluna `id`. A nota do cliente deve ser entre 1 e 10. Além\ndo _score_, o cliente pode avaliar até 10 items adicionais, com notas que\nvariam de 1 a 5. Valores nulos ou fora destes intervalos não serão considerados\nnos cálculos das avaliações."
+    },
+    {
+      "info": {
+        "name": "Post Orders",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://data-api.otocrm.com.br/v1/orders",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        },
+        "auth": {
+          "type": "bearer",
+          "token": "{{bearerToken}}"
+        }
+      },
+      "docs": "Criar ou editar pedidos. Os registros são deduplicados pelas colunas\n`date`, `store` e `id`."
+    },
+    {
+      "info": {
+        "name": "Post Order Items",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://data-api.otocrm.com.br/v1/order_items",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        },
+        "auth": {
+          "type": "bearer",
+          "token": "{{bearerToken}}"
+        }
+      },
+      "docs": "Criar ou editar itens pedidos. Os registros são deduplicados pelas colunas\n`date`, `store`, `id` e `sku`.\n\nObserve que os itens deve ser enviados agregados por estas chaves, ou seja, se\nduas unidades do mesmo item (SKU) foram comprados no mesmo pedido/loja/data,\ndeve-se enviar apenas um registro, com a quantidade especificada na coluna\n`quantity`."
+    },
+    {
+      "info": {
+        "name": "Post Products",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://data-api.otocrm.com.br/v1/products",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        },
+        "auth": {
+          "type": "bearer",
+          "token": "{{bearerToken}}"
+        }
+      },
+      "docs": "Criar ou editar itens do catálogo de produtos. Os registros são\ndeduplicados pela coluna `sku`."
+    },
+    {
+      "info": {
+        "name": "Post Sellers",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://data-api.otocrm.com.br/v1/sellers",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        },
+        "auth": {
+          "type": "bearer",
+          "token": "{{bearerToken}}"
+        }
+      },
+      "docs": "Criar ou editar vendedores. Os registros são deduplicados pela coluna `id`."
+    },
+    {
+      "info": {
+        "name": "Post Stores",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://data-api.otocrm.com.br/v1/stores",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        },
+        "auth": {
+          "type": "bearer",
+          "token": "{{bearerToken}}"
+        }
+      },
+      "docs": "Criar ou editar lojas. Os registros são deduplicados pela coluna `id`."
+    },
+    {
+      "info": {
+        "name": "Post Tag Hit",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://data-api.otocrm.com.br/v1/tag_hits",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        },
+        "auth": {
+          "type": "bearer",
+          "token": "{{bearerToken}}"
+        }
+      },
+      "docs": "Registra evento de navegação no site."
+    },
+    {
+      "info": {
+        "name": "Post Tag Interaction",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://data-api.otocrm.com.br/v1/tag_interactions",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        },
+        "auth": {
+          "type": "bearer",
+          "token": "{{bearerToken}}"
+        }
+      },
+      "docs": "Registra evento de interação com produto, categoria ou transação de compra."
+    },
+    {
+      "info": {
+        "name": "Post Tags Ids",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://data-api.otocrm.com.br/v1/tag_ids",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        },
+        "auth": {
+          "type": "bearer",
+          "token": "{{bearerToken}}"
+        }
+      },
+      "docs": "Atualiza identificação do usuário"
+    },
+    {
+      "info": {
+        "name": "Login",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://data-api.otocrm.com.br/auth/login",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Autentica um usuário e retorna um token JWT de acesso.\n\nEste endpoint valida o nome de usuário e a senha informados na collection\n`users` do MongoDB. Caso as credenciais sejam válidas e o usuário esteja ativo,\num token JWT é gerado contendo informações do usuário e suas permissões, com\ntempo de expiração padrão de 60 minutos (3600 segundos).\n\nRegistro de logs:\n    - Registra um log de ERRO se o banco de dados não estiver inicializado.\n    - Registra um log de AVISO (WARNING) se as credenciais fo"
+    }
+  ],
+  "bundled": true
+}
