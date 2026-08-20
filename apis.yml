@@ -44,6 +44,19 @@ tags:
 - Cashback
 - CRM
 - Retail Media
+- E-Commerce
+- Brazil
+- WhatsApp
+- Customer Data
+- Data Ingestion
+- Point-of-Sale
+tags_raw:
+- Company
+- Retail
+- Loyalty
+- Cashback
+- CRM
+- Retail Media
 - E-commerce
 - Brazil
 - WhatsApp
@@ -66,6 +79,16 @@ apis:
   humanURL: https://data-api.otocrm.com.br/redoc
   baseURL: https://data-api.otocrm.com.br
   tags:
+  - CRM
+  - Customer Data
+  - Data Ingestion
+  - Retail
+  - Loyalty
+  - Cashback
+  - NPS
+  - E-Commerce
+  - Brazil
+  tags_raw:
   - crm
   - customer-data
   - data-ingestion
