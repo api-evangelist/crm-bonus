@@ -64,49 +64,24 @@ tags_raw:
 - Data Ingestion
 - Point of Sale
 apis:
-- name: Oto Data API
-  description: >-
-    REST data-ingestion API for the Oto CRM platform (a CRMBonus retail solution).
-    Thirteen POST operations load customers, orders, order items, products, stores,
-    sellers, cashback credits, NPS responses, exclusion lists, and Oto Tags web
-    events. Records are written upsert-style — a record whose primary key already
-    exists is replaced in full — so a retried load converges on the same state.
-    Authentication is an HTTP bearer token issued by Oto/CRMBonus support; a
-    /auth/login operation exchanges username and password for a 3600-second JWT.
-    Limits are published in the spec description: 200 requests per minute per source
-    IP (HTTP 429) and 10,000 records per request (HTTP 413). Production and a staging
-    (homologação) environment are both declared in servers[].
+- aid: crm-bonus:crm-bonus-auth-api
+  name: CRM Bonus Auth API
+  description: The Auth API from CRM Bonus — 1 operation(s) for auth.
   humanURL: https://data-api.otocrm.com.br/redoc
   baseURL: https://data-api.otocrm.com.br
   tags:
-  - CRM
-  - Customer Data
-  - Data Ingestion
-  - Retail
-  - Loyalty
-  - Cashback
-  - NPS
-  - E-Commerce
-  - Brazil
-  tags_raw:
-  - crm
-  - customer-data
-  - data-ingestion
-  - retail
-  - loyalty
-  - cashback
-  - nps
-  - e-commerce
-  - brazil
+  - Auth
   properties:
   - type: OpenAPI
-    url: openapi/crm-bonus-oto-data-api-openapi.yml
+    url: openapi/crm-bonus-auth-api-openapi.yml
   - type: APIReference
     url: https://data-api.otocrm.com.br/redoc
   - type: Documentation
-    url: https://ajuda.otocrm.com.br/support/solutions/articles/150000032248-ingest%C3%A3o-de-dados-via-api
+    url: >-
+      https://ajuda.otocrm.com.br/support/solutions/articles/150000032248-ingest%C3%A3o-de-dados-via-api
   - type: GettingStarted
-    url: https://ajuda.otocrm.com.br/support/solutions/articles/150000031734-cadastro-r%C3%A1pido-via-api
+    url: >-
+      https://ajuda.otocrm.com.br/support/solutions/articles/150000031734-cadastro-r%C3%A1pido-via-api
   - type: Console
     url: https://data-api.otocrm.com.br/docs
   - type: Authentication
@@ -123,10 +98,414 @@ apis:
     url: rate-limits/crm-bonus-rate-limits.yml
   - type: Sandbox
     url: sandbox/crm-bonus-sandbox.yml
-  - type: Overlay
-    url: overlays/crm-bonus-oto-data-api-overlay.yaml
-  - type: MCPServer
-    url: mcp/crm-bonus-mcp.yml
+- aid: crm-bonus:crm-bonus-blocked-api
+  name: CRM Bonus Blocked API
+  description: The Blocked API from CRM Bonus — 1 operation(s) for blocked.
+  humanURL: https://data-api.otocrm.com.br/redoc
+  baseURL: https://data-api.otocrm.com.br
+  tags:
+  - Blocked
+  properties:
+  - type: OpenAPI
+    url: openapi/crm-bonus-blocked-api-openapi.yml
+  - type: APIReference
+    url: https://data-api.otocrm.com.br/redoc
+  - type: Documentation
+    url: >-
+      https://ajuda.otocrm.com.br/support/solutions/articles/150000032248-ingest%C3%A3o-de-dados-via-api
+  - type: GettingStarted
+    url: >-
+      https://ajuda.otocrm.com.br/support/solutions/articles/150000031734-cadastro-r%C3%A1pido-via-api
+  - type: Console
+    url: https://data-api.otocrm.com.br/docs
+  - type: Authentication
+    url: authentication/crm-bonus-authentication.yml
+  - type: Conventions
+    url: conventions/crm-bonus-conventions.yml
+  - type: Idempotency
+    url: conventions/crm-bonus-conventions.yml
+  - type: ErrorCatalog
+    url: errors/crm-bonus-problem-types.yml
+  - type: DataModel
+    url: data-model/crm-bonus-data-model.yml
+  - type: RateLimits
+    url: rate-limits/crm-bonus-rate-limits.yml
+  - type: Sandbox
+    url: sandbox/crm-bonus-sandbox.yml
+- aid: crm-bonus:crm-bonus-cashback-api
+  name: CRM Bonus Cashback API
+  description: The Cashback API from CRM Bonus — 1 operation(s) for cashback.
+  humanURL: https://data-api.otocrm.com.br/redoc
+  baseURL: https://data-api.otocrm.com.br
+  tags:
+  - Cashback
+  properties:
+  - type: OpenAPI
+    url: openapi/crm-bonus-cashback-api-openapi.yml
+  - type: APIReference
+    url: https://data-api.otocrm.com.br/redoc
+  - type: Documentation
+    url: >-
+      https://ajuda.otocrm.com.br/support/solutions/articles/150000032248-ingest%C3%A3o-de-dados-via-api
+  - type: GettingStarted
+    url: >-
+      https://ajuda.otocrm.com.br/support/solutions/articles/150000031734-cadastro-r%C3%A1pido-via-api
+  - type: Console
+    url: https://data-api.otocrm.com.br/docs
+  - type: Authentication
+    url: authentication/crm-bonus-authentication.yml
+  - type: Conventions
+    url: conventions/crm-bonus-conventions.yml
+  - type: Idempotency
+    url: conventions/crm-bonus-conventions.yml
+  - type: ErrorCatalog
+    url: errors/crm-bonus-problem-types.yml
+  - type: DataModel
+    url: data-model/crm-bonus-data-model.yml
+  - type: RateLimits
+    url: rate-limits/crm-bonus-rate-limits.yml
+  - type: Sandbox
+    url: sandbox/crm-bonus-sandbox.yml
+- aid: crm-bonus:crm-bonus-customers-api
+  name: CRM Bonus Customers API
+  description: The Customers API from CRM Bonus — 1 operation(s) for customers.
+  humanURL: https://data-api.otocrm.com.br/redoc
+  baseURL: https://data-api.otocrm.com.br
+  tags:
+  - Customers
+  properties:
+  - type: OpenAPI
+    url: openapi/crm-bonus-customers-api-openapi.yml
+  - type: APIReference
+    url: https://data-api.otocrm.com.br/redoc
+  - type: Documentation
+    url: >-
+      https://ajuda.otocrm.com.br/support/solutions/articles/150000032248-ingest%C3%A3o-de-dados-via-api
+  - type: GettingStarted
+    url: >-
+      https://ajuda.otocrm.com.br/support/solutions/articles/150000031734-cadastro-r%C3%A1pido-via-api
+  - type: Console
+    url: https://data-api.otocrm.com.br/docs
+  - type: Authentication
+    url: authentication/crm-bonus-authentication.yml
+  - type: Conventions
+    url: conventions/crm-bonus-conventions.yml
+  - type: Idempotency
+    url: conventions/crm-bonus-conventions.yml
+  - type: ErrorCatalog
+    url: errors/crm-bonus-problem-types.yml
+  - type: DataModel
+    url: data-model/crm-bonus-data-model.yml
+  - type: RateLimits
+    url: rate-limits/crm-bonus-rate-limits.yml
+  - type: Sandbox
+    url: sandbox/crm-bonus-sandbox.yml
+- aid: crm-bonus:crm-bonus-nps-api
+  name: CRM Bonus Nps API
+  description: The Nps API from CRM Bonus — 1 operation(s) for nps.
+  humanURL: https://data-api.otocrm.com.br/redoc
+  baseURL: https://data-api.otocrm.com.br
+  tags:
+  - Nps
+  properties:
+  - type: OpenAPI
+    url: openapi/crm-bonus-nps-api-openapi.yml
+  - type: APIReference
+    url: https://data-api.otocrm.com.br/redoc
+  - type: Documentation
+    url: >-
+      https://ajuda.otocrm.com.br/support/solutions/articles/150000032248-ingest%C3%A3o-de-dados-via-api
+  - type: GettingStarted
+    url: >-
+      https://ajuda.otocrm.com.br/support/solutions/articles/150000031734-cadastro-r%C3%A1pido-via-api
+  - type: Console
+    url: https://data-api.otocrm.com.br/docs
+  - type: Authentication
+    url: authentication/crm-bonus-authentication.yml
+  - type: Conventions
+    url: conventions/crm-bonus-conventions.yml
+  - type: Idempotency
+    url: conventions/crm-bonus-conventions.yml
+  - type: ErrorCatalog
+    url: errors/crm-bonus-problem-types.yml
+  - type: DataModel
+    url: data-model/crm-bonus-data-model.yml
+  - type: RateLimits
+    url: rate-limits/crm-bonus-rate-limits.yml
+  - type: Sandbox
+    url: sandbox/crm-bonus-sandbox.yml
+- aid: crm-bonus:crm-bonus-order-items-api
+  name: CRM Bonus Order Items API
+  description: The Order Items API from CRM Bonus — 1 operation(s) for order items.
+  humanURL: https://data-api.otocrm.com.br/redoc
+  baseURL: https://data-api.otocrm.com.br
+  tags:
+  - Order Items
+  properties:
+  - type: OpenAPI
+    url: openapi/crm-bonus-order-items-api-openapi.yml
+  - type: APIReference
+    url: https://data-api.otocrm.com.br/redoc
+  - type: Documentation
+    url: >-
+      https://ajuda.otocrm.com.br/support/solutions/articles/150000032248-ingest%C3%A3o-de-dados-via-api
+  - type: GettingStarted
+    url: >-
+      https://ajuda.otocrm.com.br/support/solutions/articles/150000031734-cadastro-r%C3%A1pido-via-api
+  - type: Console
+    url: https://data-api.otocrm.com.br/docs
+  - type: Authentication
+    url: authentication/crm-bonus-authentication.yml
+  - type: Conventions
+    url: conventions/crm-bonus-conventions.yml
+  - type: Idempotency
+    url: conventions/crm-bonus-conventions.yml
+  - type: ErrorCatalog
+    url: errors/crm-bonus-problem-types.yml
+  - type: DataModel
+    url: data-model/crm-bonus-data-model.yml
+  - type: RateLimits
+    url: rate-limits/crm-bonus-rate-limits.yml
+  - type: Sandbox
+    url: sandbox/crm-bonus-sandbox.yml
+- aid: crm-bonus:crm-bonus-orders-api
+  name: CRM Bonus Orders API
+  description: The Orders API from CRM Bonus — 1 operation(s) for orders.
+  humanURL: https://data-api.otocrm.com.br/redoc
+  baseURL: https://data-api.otocrm.com.br
+  tags:
+  - Orders
+  properties:
+  - type: OpenAPI
+    url: openapi/crm-bonus-orders-api-openapi.yml
+  - type: APIReference
+    url: https://data-api.otocrm.com.br/redoc
+  - type: Documentation
+    url: >-
+      https://ajuda.otocrm.com.br/support/solutions/articles/150000032248-ingest%C3%A3o-de-dados-via-api
+  - type: GettingStarted
+    url: >-
+      https://ajuda.otocrm.com.br/support/solutions/articles/150000031734-cadastro-r%C3%A1pido-via-api
+  - type: Console
+    url: https://data-api.otocrm.com.br/docs
+  - type: Authentication
+    url: authentication/crm-bonus-authentication.yml
+  - type: Conventions
+    url: conventions/crm-bonus-conventions.yml
+  - type: Idempotency
+    url: conventions/crm-bonus-conventions.yml
+  - type: ErrorCatalog
+    url: errors/crm-bonus-problem-types.yml
+  - type: DataModel
+    url: data-model/crm-bonus-data-model.yml
+  - type: RateLimits
+    url: rate-limits/crm-bonus-rate-limits.yml
+  - type: Sandbox
+    url: sandbox/crm-bonus-sandbox.yml
+- aid: crm-bonus:crm-bonus-products-api
+  name: CRM Bonus Products API
+  description: The Products API from CRM Bonus — 1 operation(s) for products.
+  humanURL: https://data-api.otocrm.com.br/redoc
+  baseURL: https://data-api.otocrm.com.br
+  tags:
+  - Products
+  properties:
+  - type: OpenAPI
+    url: openapi/crm-bonus-products-api-openapi.yml
+  - type: APIReference
+    url: https://data-api.otocrm.com.br/redoc
+  - type: Documentation
+    url: >-
+      https://ajuda.otocrm.com.br/support/solutions/articles/150000032248-ingest%C3%A3o-de-dados-via-api
+  - type: GettingStarted
+    url: >-
+      https://ajuda.otocrm.com.br/support/solutions/articles/150000031734-cadastro-r%C3%A1pido-via-api
+  - type: Console
+    url: https://data-api.otocrm.com.br/docs
+  - type: Authentication
+    url: authentication/crm-bonus-authentication.yml
+  - type: Conventions
+    url: conventions/crm-bonus-conventions.yml
+  - type: Idempotency
+    url: conventions/crm-bonus-conventions.yml
+  - type: ErrorCatalog
+    url: errors/crm-bonus-problem-types.yml
+  - type: DataModel
+    url: data-model/crm-bonus-data-model.yml
+  - type: RateLimits
+    url: rate-limits/crm-bonus-rate-limits.yml
+  - type: Sandbox
+    url: sandbox/crm-bonus-sandbox.yml
+- aid: crm-bonus:crm-bonus-sellers-api
+  name: CRM Bonus Sellers API
+  description: The Sellers API from CRM Bonus — 1 operation(s) for sellers.
+  humanURL: https://data-api.otocrm.com.br/redoc
+  baseURL: https://data-api.otocrm.com.br
+  tags:
+  - Sellers
+  properties:
+  - type: OpenAPI
+    url: openapi/crm-bonus-sellers-api-openapi.yml
+  - type: APIReference
+    url: https://data-api.otocrm.com.br/redoc
+  - type: Documentation
+    url: >-
+      https://ajuda.otocrm.com.br/support/solutions/articles/150000032248-ingest%C3%A3o-de-dados-via-api
+  - type: GettingStarted
+    url: >-
+      https://ajuda.otocrm.com.br/support/solutions/articles/150000031734-cadastro-r%C3%A1pido-via-api
+  - type: Console
+    url: https://data-api.otocrm.com.br/docs
+  - type: Authentication
+    url: authentication/crm-bonus-authentication.yml
+  - type: Conventions
+    url: conventions/crm-bonus-conventions.yml
+  - type: Idempotency
+    url: conventions/crm-bonus-conventions.yml
+  - type: ErrorCatalog
+    url: errors/crm-bonus-problem-types.yml
+  - type: DataModel
+    url: data-model/crm-bonus-data-model.yml
+  - type: RateLimits
+    url: rate-limits/crm-bonus-rate-limits.yml
+  - type: Sandbox
+    url: sandbox/crm-bonus-sandbox.yml
+- aid: crm-bonus:crm-bonus-stores-api
+  name: CRM Bonus Stores API
+  description: The Stores API from CRM Bonus — 1 operation(s) for stores.
+  humanURL: https://data-api.otocrm.com.br/redoc
+  baseURL: https://data-api.otocrm.com.br
+  tags:
+  - Stores
+  properties:
+  - type: OpenAPI
+    url: openapi/crm-bonus-stores-api-openapi.yml
+  - type: APIReference
+    url: https://data-api.otocrm.com.br/redoc
+  - type: Documentation
+    url: >-
+      https://ajuda.otocrm.com.br/support/solutions/articles/150000032248-ingest%C3%A3o-de-dados-via-api
+  - type: GettingStarted
+    url: >-
+      https://ajuda.otocrm.com.br/support/solutions/articles/150000031734-cadastro-r%C3%A1pido-via-api
+  - type: Console
+    url: https://data-api.otocrm.com.br/docs
+  - type: Authentication
+    url: authentication/crm-bonus-authentication.yml
+  - type: Conventions
+    url: conventions/crm-bonus-conventions.yml
+  - type: Idempotency
+    url: conventions/crm-bonus-conventions.yml
+  - type: ErrorCatalog
+    url: errors/crm-bonus-problem-types.yml
+  - type: DataModel
+    url: data-model/crm-bonus-data-model.yml
+  - type: RateLimits
+    url: rate-limits/crm-bonus-rate-limits.yml
+  - type: Sandbox
+    url: sandbox/crm-bonus-sandbox.yml
+- aid: crm-bonus:crm-bonus-tag-hits-api
+  name: CRM Bonus Tag Hits API
+  description: The Tag Hits API from CRM Bonus — 1 operation(s) for tag hits.
+  humanURL: https://data-api.otocrm.com.br/redoc
+  baseURL: https://data-api.otocrm.com.br
+  tags:
+  - Tag Hits
+  properties:
+  - type: OpenAPI
+    url: openapi/crm-bonus-tag-hits-api-openapi.yml
+  - type: APIReference
+    url: https://data-api.otocrm.com.br/redoc
+  - type: Documentation
+    url: >-
+      https://ajuda.otocrm.com.br/support/solutions/articles/150000032248-ingest%C3%A3o-de-dados-via-api
+  - type: GettingStarted
+    url: >-
+      https://ajuda.otocrm.com.br/support/solutions/articles/150000031734-cadastro-r%C3%A1pido-via-api
+  - type: Console
+    url: https://data-api.otocrm.com.br/docs
+  - type: Authentication
+    url: authentication/crm-bonus-authentication.yml
+  - type: Conventions
+    url: conventions/crm-bonus-conventions.yml
+  - type: Idempotency
+    url: conventions/crm-bonus-conventions.yml
+  - type: ErrorCatalog
+    url: errors/crm-bonus-problem-types.yml
+  - type: DataModel
+    url: data-model/crm-bonus-data-model.yml
+  - type: RateLimits
+    url: rate-limits/crm-bonus-rate-limits.yml
+  - type: Sandbox
+    url: sandbox/crm-bonus-sandbox.yml
+- aid: crm-bonus:crm-bonus-tag-ids-api
+  name: CRM Bonus Tag Ids API
+  description: The Tag Ids API from CRM Bonus — 1 operation(s) for tag ids.
+  humanURL: https://data-api.otocrm.com.br/redoc
+  baseURL: https://data-api.otocrm.com.br
+  tags:
+  - Tag Ids
+  properties:
+  - type: OpenAPI
+    url: openapi/crm-bonus-tag-ids-api-openapi.yml
+  - type: APIReference
+    url: https://data-api.otocrm.com.br/redoc
+  - type: Documentation
+    url: >-
+      https://ajuda.otocrm.com.br/support/solutions/articles/150000032248-ingest%C3%A3o-de-dados-via-api
+  - type: GettingStarted
+    url: >-
+      https://ajuda.otocrm.com.br/support/solutions/articles/150000031734-cadastro-r%C3%A1pido-via-api
+  - type: Console
+    url: https://data-api.otocrm.com.br/docs
+  - type: Authentication
+    url: authentication/crm-bonus-authentication.yml
+  - type: Conventions
+    url: conventions/crm-bonus-conventions.yml
+  - type: Idempotency
+    url: conventions/crm-bonus-conventions.yml
+  - type: ErrorCatalog
+    url: errors/crm-bonus-problem-types.yml
+  - type: DataModel
+    url: data-model/crm-bonus-data-model.yml
+  - type: RateLimits
+    url: rate-limits/crm-bonus-rate-limits.yml
+  - type: Sandbox
+    url: sandbox/crm-bonus-sandbox.yml
+- aid: crm-bonus:crm-bonus-tag-interactions-api
+  name: CRM Bonus Tag Interactions API
+  description: The Tag Interactions API from CRM Bonus — 1 operation(s) for tag interactions.
+  humanURL: https://data-api.otocrm.com.br/redoc
+  baseURL: https://data-api.otocrm.com.br
+  tags:
+  - Tag Interactions
+  properties:
+  - type: OpenAPI
+    url: openapi/crm-bonus-tag-interactions-api-openapi.yml
+  - type: APIReference
+    url: https://data-api.otocrm.com.br/redoc
+  - type: Documentation
+    url: >-
+      https://ajuda.otocrm.com.br/support/solutions/articles/150000032248-ingest%C3%A3o-de-dados-via-api
+  - type: GettingStarted
+    url: >-
+      https://ajuda.otocrm.com.br/support/solutions/articles/150000031734-cadastro-r%C3%A1pido-via-api
+  - type: Console
+    url: https://data-api.otocrm.com.br/docs
+  - type: Authentication
+    url: authentication/crm-bonus-authentication.yml
+  - type: Conventions
+    url: conventions/crm-bonus-conventions.yml
+  - type: Idempotency
+    url: conventions/crm-bonus-conventions.yml
+  - type: ErrorCatalog
+    url: errors/crm-bonus-problem-types.yml
+  - type: DataModel
+    url: data-model/crm-bonus-data-model.yml
+  - type: RateLimits
+    url: rate-limits/crm-bonus-rate-limits.yml
+  - type: Sandbox
+    url: sandbox/crm-bonus-sandbox.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
