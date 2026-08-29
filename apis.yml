@@ -524,6 +524,9 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: CapabilityMap
+  url: capabilities/crm-bonus-capability-edges.yml
+  name: CRM Bonus Business Capability Map
 - type: AgenticAccess
   url: agentic-access/crm-bonus-agentic-access.yml
 - type: DomainSecurity
