@@ -82,6 +82,8 @@ apis:
   humanURL: https://data-api.otocrm.com.br/redoc
   baseURL: https://data-api.otocrm.com.br
   tags:
+  - Authentication
+  tags_raw:
   - Auth
   properties:
   - type: OpenAPI
@@ -218,6 +220,8 @@ apis:
   humanURL: https://data-api.otocrm.com.br/redoc
   baseURL: https://data-api.otocrm.com.br
   tags:
+  - NPS
+  tags_raw:
   - Nps
   properties:
   - type: OpenAPI
@@ -286,6 +290,8 @@ apis:
   humanURL: https://data-api.otocrm.com.br/redoc
   baseURL: https://data-api.otocrm.com.br
   tags:
+  - Order
+  tags_raw:
   - Orders
   properties:
   - type: OpenAPI
@@ -320,6 +326,8 @@ apis:
   humanURL: https://data-api.otocrm.com.br/redoc
   baseURL: https://data-api.otocrm.com.br
   tags:
+  - Product
+  tags_raw:
   - Products
   properties:
   - type: OpenAPI
