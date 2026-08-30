@@ -1,0 +1,201 @@
+openapi: 3.2.0
+info:
+  title: Oto Data Tag Ids API
+  description: 'A Data API do Oto permite que você faça cargas de dados
+
+    de forma segura e confiável, utilizando padrões REST e corpos das mensagens em
+
+    formato JSON.
+
+
+    Os registros são inseridos na modalidade _upsert_, isto é, caso um registro
+
+    com a mesma chave primária exista na base de dados, ele será integralmente
+
+    substituído pelo registro enviado. Caso contrário, um novo registro será
+
+    criado na base de dados.
+
+
+    # Limites
+
+
+    Dois limites são aplicados em todos os endpoints desta API: requisições por
+
+    minuto e quantidade máxima de registros por requisição.
+
+
+    ## Limite de requisições
+
+
+    Para garantir a estabilidade e segurança da plataforma, esta API aceita um
+
+    número máximo de **200** requisições por minuto por IP de origem. As
+
+    requisições que excederem este limite terão suas respostas atrasadas para que
+
+    se mantenha o ritmo estipulado, até que eventualmente podem ser barradas com a
+
+    resposta `HTTP/1.1 429 Too many requests`.
+
+
+    ## Limite de registros por requisição
+
+
+    São aceitos até **10.000** registros por requisição. Caso a propriedade `data`
+
+    contenha um número superior de entradas, a requisição será recusada com a
+
+    resposta `HTTP/1.1 413 Payload Too Large`.'
+  version: 1.3.5
+  x-logo:
+    url: https://pmweblabs.s3.amazonaws.com/assets/oto-logo.png
+    href: https://suporte.otocrm.com.br/
+    altText: Oto. Quem conhece, vende.
+servers:
+- url: https://data-api.otocrm.com.br
+  description: Production
+- url: https://data-api-hmg.otocrm.com.br
+  description: Test
+- url: http://localhost:8000
+  description: Test
+tags:
+- name: Tag Ids
+paths:
+  /v1/tag_ids:
+    post:
+      summary: Post Tags Ids
+      description: Atualiza identificação do usuário
+      operationId: post_tags_ids_v1_tag_ids_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TagsIdsPostRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+      tags:
+      - Tag Ids
+components:
+  schemas:
+    TagsIdsPostRequest:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/TagsMatch'
+          type: array
+          title: Data
+      type: object
+      required:
+      - data
+      title: TagsIdsPostRequest
+    TagsMatch:
+      properties:
+        event_ts:
+          type: string
+          format: date-time
+          title: Event Ts
+          description: Data e hora do evento
+        user_id:
+          type: integer
+          minimum: 1.0
+          title: User Id
+          description: Identificador único do usuário
+        mkt_cloud_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Mkt Cloud Id
+          description: Identificador do usuário na marketing cloud
+        customer_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Customer Id
+          description: Customer ID
+        customer_id_sha256:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Customer Id Sha256
+          description: Hash SHA-256 do customer ID
+        email_sha256:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Email Sha256
+          description: Hash SHA-256 do e-mail do cliente normalizado
+        email_md5:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Email Md5
+          description: Hash MD5 do e-mail do cliente normalizado
+      type: object
+      required:
+      - event_ts
+      - user_id
+      title: TagsMatch
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    SuccessResponse:
+      properties:
+        success:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Success
+        requestId:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Requestid
+      type: object
+      title: SuccessResponse
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      scheme: bearer
+      description: "Você deverá enviar sua chave privada\nno cabeçalho HTTP `Authorization`, com o padrão `Bearer <token>`. Exemplo:\n\n```\nGET / HTTP/1.1\nHost: data-api.otocrm.com.br\nAuthorization: Bearer abcdef123456\n```\n    "

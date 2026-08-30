@@ -1,0 +1,248 @@
+openapi: 3.2.0
+info:
+  title: Oto Data Products API
+  description: 'A Data API do Oto permite que você faça cargas de dados
+
+    de forma segura e confiável, utilizando padrões REST e corpos das mensagens em
+
+    formato JSON.
+
+
+    Os registros são inseridos na modalidade _upsert_, isto é, caso um registro
+
+    com a mesma chave primária exista na base de dados, ele será integralmente
+
+    substituído pelo registro enviado. Caso contrário, um novo registro será
+
+    criado na base de dados.
+
+
+    # Limites
+
+
+    Dois limites são aplicados em todos os endpoints desta API: requisições por
+
+    minuto e quantidade máxima de registros por requisição.
+
+
+    ## Limite de requisições
+
+
+    Para garantir a estabilidade e segurança da plataforma, esta API aceita um
+
+    número máximo de **200** requisições por minuto por IP de origem. As
+
+    requisições que excederem este limite terão suas respostas atrasadas para que
+
+    se mantenha o ritmo estipulado, até que eventualmente podem ser barradas com a
+
+    resposta `HTTP/1.1 429 Too many requests`.
+
+
+    ## Limite de registros por requisição
+
+
+    São aceitos até **10.000** registros por requisição. Caso a propriedade `data`
+
+    contenha um número superior de entradas, a requisição será recusada com a
+
+    resposta `HTTP/1.1 413 Payload Too Large`.'
+  version: 1.3.5
+  x-logo:
+    url: https://pmweblabs.s3.amazonaws.com/assets/oto-logo.png
+    href: https://suporte.otocrm.com.br/
+    altText: Oto. Quem conhece, vende.
+servers:
+- url: https://data-api.otocrm.com.br
+  description: Production
+- url: https://data-api-hmg.otocrm.com.br
+  description: Test
+- url: http://localhost:8000
+  description: Test
+tags:
+- name: Products
+paths:
+  /v1/products:
+    post:
+      summary: Post Products
+      description: 'Criar ou editar itens do catálogo de produtos. Os registros são
+
+        deduplicados pela coluna `sku`.'
+      operationId: post_products_v1_products_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductsPostRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+      tags:
+      - Products
+components:
+  schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ProductsPostRequest:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Product'
+          type: array
+          title: Data
+      type: object
+      required:
+      - data
+      title: ProductsPostRequest
+    SuccessResponse:
+      properties:
+        success:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Success
+        requestId:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Requestid
+      type: object
+      title: SuccessResponse
+    Product:
+      properties:
+        sku:
+          type: string
+          title: Sku
+          description: Código de unidade de estocagem (SKU)
+        id:
+          type: string
+          title: Id
+          description: Agrupador do produto
+        ecommerce_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Ecommerce Id
+          description: Código do produto no E-commerce
+        name:
+          type: string
+          title: Name
+          description: Nome do produto
+        size:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Size
+          description: Tamanho do produto
+        category:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Category
+          description: Categoria do produto
+        subcategory:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Subcategory
+          description: Subcategoria do produto
+        gender:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Gender
+          description: Gênero do produto
+        line:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Line
+          description: Linha / coleção do produto
+        color:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Color
+          description: Cor do produto
+        brand:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Brand
+          description: Marca do produto
+        barcode:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Barcode
+          description: Código de barras
+        image:
+          anyOf:
+          - type: string
+            maxLength: 2083
+            minLength: 1
+            format: uri
+          - type: 'null'
+          title: Image
+          description: URL da imagem do produto
+        url:
+          anyOf:
+          - type: string
+            maxLength: 2083
+            minLength: 1
+            format: uri
+          - type: 'null'
+          title: Url
+          description: URL do produto no e-commerce
+      type: object
+      required:
+      - sku
+      - id
+      - name
+      title: Product
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      scheme: bearer
+      description: "Você deverá enviar sua chave privada\nno cabeçalho HTTP `Authorization`, com o padrão `Bearer <token>`. Exemplo:\n\n```\nGET / HTTP/1.1\nHost: data-api.otocrm.com.br\nAuthorization: Bearer abcdef123456\n```\n    "

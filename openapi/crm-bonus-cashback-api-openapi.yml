@@ -1,0 +1,215 @@
+openapi: 3.2.0
+info:
+  title: Oto Data Cashback API
+  description: 'A Data API do Oto permite que você faça cargas de dados
+
+    de forma segura e confiável, utilizando padrões REST e corpos das mensagens em
+
+    formato JSON.
+
+
+    Os registros são inseridos na modalidade _upsert_, isto é, caso um registro
+
+    com a mesma chave primária exista na base de dados, ele será integralmente
+
+    substituído pelo registro enviado. Caso contrário, um novo registro será
+
+    criado na base de dados.
+
+
+    # Limites
+
+
+    Dois limites são aplicados em todos os endpoints desta API: requisições por
+
+    minuto e quantidade máxima de registros por requisição.
+
+
+    ## Limite de requisições
+
+
+    Para garantir a estabilidade e segurança da plataforma, esta API aceita um
+
+    número máximo de **200** requisições por minuto por IP de origem. As
+
+    requisições que excederem este limite terão suas respostas atrasadas para que
+
+    se mantenha o ritmo estipulado, até que eventualmente podem ser barradas com a
+
+    resposta `HTTP/1.1 429 Too many requests`.
+
+
+    ## Limite de registros por requisição
+
+
+    São aceitos até **10.000** registros por requisição. Caso a propriedade `data`
+
+    contenha um número superior de entradas, a requisição será recusada com a
+
+    resposta `HTTP/1.1 413 Payload Too Large`.'
+  version: 1.3.5
+  x-logo:
+    url: https://pmweblabs.s3.amazonaws.com/assets/oto-logo.png
+    href: https://suporte.otocrm.com.br/
+    altText: Oto. Quem conhece, vende.
+servers:
+- url: https://data-api.otocrm.com.br
+  description: Production
+- url: https://data-api-hmg.otocrm.com.br
+  description: Test
+- url: http://localhost:8000
+  description: Test
+tags:
+- name: Cashback
+paths:
+  /v1/cashback:
+    post:
+      summary: Post Cashback
+      description: 'Criar ou editar registros de cashback. Os dados deverão ser agregados pelas
+
+        colunas `order_date`, `order_store` e `order_id`, ou seja, apenas uma linha
+
+        (registro) de cashback deve ser emitida por pedido. Recomenda-se enviar todos
+
+        os registros (créditos) disponíveis até o momento da exportação, para que os
+
+        créditos já utilizados sejam desconsiderados. Observe que os créditos serão
+
+        considerados válidos até a data e hora limite especificados no campo
+
+        `valid_until`, a partir de quando serão automaticamente considerados expirados.'
+      operationId: post_cashback_v1_cashback_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CashbackPostRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+      tags:
+      - Cashback
+components:
+  schemas:
+    Cashback:
+      properties:
+        customer_id:
+          type: string
+          title: Customer Id
+          description: Identificador único do cliente
+        order_date:
+          type: string
+          format: date
+          title: Order Date
+          description: Data da compra (yyyy-mm-dd)
+        order_id:
+          type: string
+          title: Order Id
+          description: Código do pedido
+        order_store:
+          type: string
+          title: Order Store
+          description: Código da loja da compra
+        seller_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Seller Id
+          description: Código (matrícula) do vendedor da compra
+        credit:
+          type: number
+          title: Credit
+          description: Valor total acumulado
+        canceled:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Canceled
+          description: Desconsidera o registro (crédito) se verdadeiro
+        valid_until:
+          type: string
+          format: date-time
+          title: Valid Until
+          description: "Data e hora de validade (yyyy-mm-dd HH:MM:SS).\n    \nImediatamente após a data e horário especificados o crédito será considerado expirado."
+      type: object
+      required:
+      - customer_id
+      - order_date
+      - order_id
+      - order_store
+      - credit
+      - valid_until
+      title: Cashback
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    CashbackPostRequest:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Cashback'
+          type: array
+          title: Data
+      type: object
+      required:
+      - data
+      title: CashbackPostRequest
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    SuccessResponse:
+      properties:
+        success:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Success
+        requestId:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Requestid
+      type: object
+      title: SuccessResponse
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      scheme: bearer
+      description: "Você deverá enviar sua chave privada\nno cabeçalho HTTP `Authorization`, com o padrão `Bearer <token>`. Exemplo:\n\n```\nGET / HTTP/1.1\nHost: data-api.otocrm.com.br\nAuthorization: Bearer abcdef123456\n```\n    "
