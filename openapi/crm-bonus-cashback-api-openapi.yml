@@ -62,26 +62,6 @@ paths:
       - Cashback
 components:
   schemas:
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    CashbackPostRequest:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/Cashback'
-          type: array
-          title: Data
-      type: object
-      required:
-      - data
-      title: CashbackPostRequest
     ValidationError:
       properties:
         loc:
@@ -103,21 +83,15 @@ components:
       - msg
       - type
       title: ValidationError
-    SuccessResponse:
+    HTTPValidationError:
       properties:
-        success:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Success
-        requestId:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Requestid
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
       type: object
-      title: SuccessResponse
+      title: HTTPValidationError
     Cashback:
       properties:
         customer_id:
@@ -167,6 +141,32 @@ components:
       - credit
       - valid_until
       title: Cashback
+    SuccessResponse:
+      properties:
+        success:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Success
+        requestId:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Requestid
+      type: object
+      title: SuccessResponse
+    CashbackPostRequest:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Cashback'
+          type: array
+          title: Data
+      type: object
+      required:
+      - data
+      title: CashbackPostRequest
   securitySchemes:
     HTTPBearer:
       type: http

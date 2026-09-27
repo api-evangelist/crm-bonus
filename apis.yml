@@ -62,6 +62,7 @@ tags:
 - Customer Data
 - Data Ingestion
 - Point-of-Sale
+- Loyalty & Incentives
 tags_raw:
 - Company
 - Retail
@@ -75,6 +76,7 @@ tags_raw:
 - Customer Data
 - Data Ingestion
 - Point of Sale
+- Loyalty & Incentives
 apis:
 - aid: crm-bonus:crm-bonus-auth-api
   name: CRM Bonus Auth API

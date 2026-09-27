@@ -61,6 +61,27 @@ paths:
       - Order Items
 components:
   schemas:
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
     HTTPValidationError:
       properties:
         detail:
@@ -70,6 +91,17 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
+    OrderItemsPostRequest:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/OrderItem'
+          type: array
+          title: Data
+      type: object
+      required:
+      - data
+      title: OrderItemsPostRequest
     OrderItem:
       properties:
         date:
@@ -132,38 +164,6 @@ components:
       - quantity
       - price
       title: OrderItem
-    OrderItemsPostRequest:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/OrderItem'
-          type: array
-          title: Data
-      type: object
-      required:
-      - data
-      title: OrderItemsPostRequest
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
     SuccessResponse:
       properties:
         success:

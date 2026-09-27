@@ -54,6 +54,27 @@ paths:
       - Blocked
 components:
   schemas:
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
     HTTPValidationError:
       properties:
         detail:
@@ -63,17 +84,21 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
-    ExcludeListPostRequest:
+    SuccessResponse:
       properties:
-        data:
-          items:
-            $ref: '#/components/schemas/ExcludeList'
-          type: array
-          title: Data
+        success:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Success
+        requestId:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Requestid
       type: object
-      required:
-      - data
-      title: ExcludeListPostRequest
+      title: SuccessResponse
     ExcludeList:
       properties:
         document_number:
@@ -96,42 +121,17 @@ components:
       required:
       - customer_id
       title: ExcludeList
-    ValidationError:
+    ExcludeListPostRequest:
       properties:
-        loc:
+        data:
           items:
-            anyOf:
-            - type: string
-            - type: integer
+            $ref: '#/components/schemas/ExcludeList'
           type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
+          title: Data
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    SuccessResponse:
-      properties:
-        success:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Success
-        requestId:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Requestid
-      type: object
-      title: SuccessResponse
+      - data
+      title: ExcludeListPostRequest
   securitySchemes:
     HTTPBearer:
       type: http

@@ -50,26 +50,6 @@ paths:
       - Sellers
 components:
   schemas:
-    SellersPostRequest:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/Seller'
-          type: array
-          title: Data
-      type: object
-      required:
-      - data
-      title: SellersPostRequest
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     ValidationError:
       properties:
         loc:
@@ -91,6 +71,41 @@ components:
       - msg
       - type
       title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    SuccessResponse:
+      properties:
+        success:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Success
+        requestId:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Requestid
+      type: object
+      title: SuccessResponse
+    SellersPostRequest:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Seller'
+          type: array
+          title: Data
+      type: object
+      required:
+      - data
+      title: SellersPostRequest
     Seller:
       properties:
         id:
@@ -125,21 +140,6 @@ components:
       - id
       - name
       title: Seller
-    SuccessResponse:
-      properties:
-        success:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Success
-        requestId:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Requestid
-      type: object
-      title: SuccessResponse
   securitySchemes:
     HTTPBearer:
       type: http

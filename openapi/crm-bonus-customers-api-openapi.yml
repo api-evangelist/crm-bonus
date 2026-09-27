@@ -56,21 +56,6 @@ paths:
       - Customers
 components:
   schemas:
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    TypePerson:
-      type: string
-      enum:
-      - P
-      - J
-      title: TypePerson
     ValidationError:
       properties:
         loc:
@@ -92,17 +77,22 @@ components:
       - msg
       - type
       title: ValidationError
-    CustomersPostRequest:
+    Gender:
+      type: string
+      enum:
+      - M
+      - F
+      - O
+      title: Gender
+    HTTPValidationError:
       properties:
-        data:
+        detail:
           items:
-            $ref: '#/components/schemas/Customer'
+            $ref: '#/components/schemas/ValidationError'
           type: array
-          title: Data
+          title: Detail
       type: object
-      required:
-      - data
-      title: CustomersPostRequest
+      title: HTTPValidationError
     SuccessResponse:
       properties:
         success:
@@ -118,13 +108,12 @@ components:
           title: Requestid
       type: object
       title: SuccessResponse
-    Gender:
+    TypePerson:
       type: string
       enum:
-      - M
-      - F
-      - O
-      title: Gender
+      - P
+      - J
+      title: TypePerson
     Customer:
       properties:
         customer_id:
@@ -603,6 +592,17 @@ components:
       - customer_id
       - create_date
       title: Customer
+    CustomersPostRequest:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Customer'
+          type: array
+          title: Data
+      type: object
+      required:
+      - data
+      title: CustomersPostRequest
   securitySchemes:
     HTTPBearer:
       type: http

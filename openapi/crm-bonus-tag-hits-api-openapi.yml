@@ -50,26 +50,6 @@ paths:
       - Tag Hits
 components:
   schemas:
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    TagsHitsPostRequest:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/TagsHit'
-          type: array
-          title: Data
-      type: object
-      required:
-      - data
-      title: TagsHitsPostRequest
     ValidationError:
       properties:
         loc:
@@ -91,21 +71,15 @@ components:
       - msg
       - type
       title: ValidationError
-    SuccessResponse:
+    HTTPValidationError:
       properties:
-        success:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Success
-        requestId:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Requestid
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
       type: object
-      title: SuccessResponse
+      title: HTTPValidationError
     TagsHit:
       properties:
         event_ts:
@@ -165,6 +139,32 @@ components:
       - user_id
       - session_id
       title: TagsHit
+    SuccessResponse:
+      properties:
+        success:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Success
+        requestId:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Requestid
+      type: object
+      title: SuccessResponse
+    TagsHitsPostRequest:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/TagsHit'
+          type: array
+          title: Data
+      type: object
+      required:
+      - data
+      title: TagsHitsPostRequest
   securitySchemes:
     HTTPBearer:
       type: http

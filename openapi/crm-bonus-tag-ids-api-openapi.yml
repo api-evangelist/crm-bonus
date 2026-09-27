@@ -50,6 +50,27 @@ paths:
       - Tag Ids
 components:
   schemas:
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
     HTTPValidationError:
       properties:
         detail:
@@ -59,6 +80,32 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
+    SuccessResponse:
+      properties:
+        success:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Success
+        requestId:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Requestid
+      type: object
+      title: SuccessResponse
+    TagsIdsPostRequest:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/TagsMatch'
+          type: array
+          title: Data
+      type: object
+      required:
+      - data
+      title: TagsIdsPostRequest
     TagsMatch:
       properties:
         event_ts:
@@ -106,53 +153,6 @@ components:
       - event_ts
       - user_id
       title: TagsMatch
-    TagsIdsPostRequest:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/TagsMatch'
-          type: array
-          title: Data
-      type: object
-      required:
-      - data
-      title: TagsIdsPostRequest
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    SuccessResponse:
-      properties:
-        success:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Success
-        requestId:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Requestid
-      type: object
-      title: SuccessResponse
   securitySchemes:
     HTTPBearer:
       type: http
