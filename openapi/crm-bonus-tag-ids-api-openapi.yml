@@ -50,36 +50,17 @@ paths:
       - Tag Ids
 components:
   schemas:
-    ValidationError:
+    TagsIdsPostRequest:
       properties:
-        loc:
+        data:
           items:
-            anyOf:
-            - type: string
-            - type: integer
+            $ref: '#/components/schemas/TagsMatch'
           type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
+          title: Data
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
+      - data
+      title: TagsIdsPostRequest
     SuccessResponse:
       properties:
         success:
@@ -95,17 +76,6 @@ components:
           title: Requestid
       type: object
       title: SuccessResponse
-    TagsIdsPostRequest:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/TagsMatch'
-          type: array
-          title: Data
-      type: object
-      required:
-      - data
-      title: TagsIdsPostRequest
     TagsMatch:
       properties:
         event_ts:
@@ -153,6 +123,36 @@ components:
       - event_ts
       - user_id
       title: TagsMatch
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
   securitySchemes:
     HTTPBearer:
       type: http

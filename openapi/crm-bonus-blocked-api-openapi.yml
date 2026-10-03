@@ -54,6 +54,54 @@ paths:
       - Blocked
 components:
   schemas:
+    ExcludeList:
+      properties:
+        document_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Document Number
+          description: Documento de identificação
+        customer_id:
+          type: string
+          title: Customer Id
+          description: Identificador único do cliente
+        mkt_cloud_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Mkt Cloud Id
+          description: Identificador do usuário na marketing cloud
+      type: object
+      required:
+      - customer_id
+      title: ExcludeList
+    SuccessResponse:
+      properties:
+        success:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Success
+        requestId:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Requestid
+      type: object
+      title: SuccessResponse
+    ExcludeListPostRequest:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/ExcludeList'
+          type: array
+          title: Data
+      type: object
+      required:
+      - data
+      title: ExcludeListPostRequest
     ValidationError:
       properties:
         loc:
@@ -84,54 +132,6 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
-    SuccessResponse:
-      properties:
-        success:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Success
-        requestId:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Requestid
-      type: object
-      title: SuccessResponse
-    ExcludeList:
-      properties:
-        document_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Document Number
-          description: Documento de identificação
-        customer_id:
-          type: string
-          title: Customer Id
-          description: Identificador único do cliente
-        mkt_cloud_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Mkt Cloud Id
-          description: Identificador do usuário na marketing cloud
-      type: object
-      required:
-      - customer_id
-      title: ExcludeList
-    ExcludeListPostRequest:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/ExcludeList'
-          type: array
-          title: Data
-      type: object
-      required:
-      - data
-      title: ExcludeListPostRequest
   securitySchemes:
     HTTPBearer:
       type: http

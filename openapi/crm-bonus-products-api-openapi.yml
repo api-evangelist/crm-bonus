@@ -52,6 +52,32 @@ paths:
       - Products
 components:
   schemas:
+    SuccessResponse:
+      properties:
+        success:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Success
+        requestId:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Requestid
+      type: object
+      title: SuccessResponse
+    ProductsPostRequest:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Product'
+          type: array
+          title: Data
+      type: object
+      required:
+      - data
+      title: ProductsPostRequest
     ValidationError:
       properties:
         loc:
@@ -73,30 +99,6 @@ components:
       - msg
       - type
       title: ValidationError
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    SuccessResponse:
-      properties:
-        success:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Success
-        requestId:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Requestid
-      type: object
-      title: SuccessResponse
     Product:
       properties:
         sku:
@@ -189,17 +191,15 @@ components:
       - id
       - name
       title: Product
-    ProductsPostRequest:
+    HTTPValidationError:
       properties:
-        data:
+        detail:
           items:
-            $ref: '#/components/schemas/Product'
+            $ref: '#/components/schemas/ValidationError'
           type: array
-          title: Data
+          title: Detail
       type: object
-      required:
-      - data
-      title: ProductsPostRequest
+      title: HTTPValidationError
   securitySchemes:
     HTTPBearer:
       type: http
