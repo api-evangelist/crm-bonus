@@ -50,6 +50,47 @@ paths:
       - Tag Hits
 components:
   schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    TagsHitsPostRequest:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/TagsHit'
+          type: array
+          title: Data
+      type: object
+      required:
+      - data
+      title: TagsHitsPostRequest
     TagsHit:
       properties:
         event_ts:
@@ -109,47 +150,6 @@ components:
       - user_id
       - session_id
       title: TagsHit
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    TagsHitsPostRequest:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/TagsHit'
-          type: array
-          title: Data
-      type: object
-      required:
-      - data
-      title: TagsHitsPostRequest
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
     SuccessResponse:
       properties:
         success:

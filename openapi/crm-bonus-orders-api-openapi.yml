@@ -52,27 +52,59 @@ paths:
       - Orders
 components:
   schemas:
+    OrdersPostRequest:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Order'
+          type: array
+          title: Data
+      type: object
+      required:
+      - data
+      title: OrdersPostRequest
     StoreType:
       type: string
       enum:
       - E
       - L
       title: StoreType
-    SuccessResponse:
+    PaymentType:
+      type: string
+      enum:
+      - V
+      - P
+      title: PaymentType
+    HTTPValidationError:
       properties:
-        success:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Success
-        requestId:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Requestid
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
       type: object
-      title: SuccessResponse
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
     Order:
       properties:
         customer_id:
@@ -212,53 +244,21 @@ components:
       - store
       - total
       title: Order
-    PaymentType:
-      type: string
-      enum:
-      - V
-      - P
-      title: PaymentType
-    ValidationError:
+    SuccessResponse:
       properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
+        success:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Success
+        requestId:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Requestid
       type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    OrdersPostRequest:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/Order'
-          type: array
-          title: Data
-      type: object
-      required:
-      - data
-      title: OrdersPostRequest
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
+      title: SuccessResponse
   securitySchemes:
     HTTPBearer:
       type: http

@@ -64,17 +64,36 @@ components:
       - E
       - L
       title: StoreType
-    NpsPostRequest:
+    HTTPValidationError:
       properties:
-        data:
+        detail:
           items:
-            $ref: '#/components/schemas/NetPromoterScore'
+            $ref: '#/components/schemas/ValidationError'
           type: array
-          title: Data
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
       type: object
       required:
-      - data
-      title: NpsPostRequest
+      - loc
+      - msg
+      - type
+      title: ValidationError
     NetPromoterScore:
       properties:
         id:
@@ -239,36 +258,17 @@ components:
           title: Requestid
       type: object
       title: SuccessResponse
-    ValidationError:
+    NpsPostRequest:
       properties:
-        loc:
+        data:
           items:
-            anyOf:
-            - type: string
-            - type: integer
+            $ref: '#/components/schemas/NetPromoterScore'
           type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
+          title: Data
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
+      - data
+      title: NpsPostRequest
   securitySchemes:
     HTTPBearer:
       type: http

@@ -76,32 +76,15 @@ components:
       required:
       - customer_id
       title: ExcludeList
-    SuccessResponse:
+    HTTPValidationError:
       properties:
-        success:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Success
-        requestId:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Requestid
-      type: object
-      title: SuccessResponse
-    ExcludeListPostRequest:
-      properties:
-        data:
+        detail:
           items:
-            $ref: '#/components/schemas/ExcludeList'
+            $ref: '#/components/schemas/ValidationError'
           type: array
-          title: Data
+          title: Detail
       type: object
-      required:
-      - data
-      title: ExcludeListPostRequest
+      title: HTTPValidationError
     ValidationError:
       properties:
         loc:
@@ -123,15 +106,32 @@ components:
       - msg
       - type
       title: ValidationError
-    HTTPValidationError:
+    ExcludeListPostRequest:
       properties:
-        detail:
+        data:
           items:
-            $ref: '#/components/schemas/ValidationError'
+            $ref: '#/components/schemas/ExcludeList'
           type: array
-          title: Detail
+          title: Data
       type: object
-      title: HTTPValidationError
+      required:
+      - data
+      title: ExcludeListPostRequest
+    SuccessResponse:
+      properties:
+        success:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Success
+        requestId:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Requestid
+      type: object
+      title: SuccessResponse
   securitySchemes:
     HTTPBearer:
       type: http

@@ -61,32 +61,15 @@ paths:
       - Order Items
 components:
   schemas:
-    SuccessResponse:
+    HTTPValidationError:
       properties:
-        success:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Success
-        requestId:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Requestid
-      type: object
-      title: SuccessResponse
-    OrderItemsPostRequest:
-      properties:
-        data:
+        detail:
           items:
-            $ref: '#/components/schemas/OrderItem'
+            $ref: '#/components/schemas/ValidationError'
           type: array
-          title: Data
+          title: Detail
       type: object
-      required:
-      - data
-      title: OrderItemsPostRequest
+      title: HTTPValidationError
     OrderItem:
       properties:
         date:
@@ -170,15 +153,32 @@ components:
       - msg
       - type
       title: ValidationError
-    HTTPValidationError:
+    OrderItemsPostRequest:
       properties:
-        detail:
+        data:
           items:
-            $ref: '#/components/schemas/ValidationError'
+            $ref: '#/components/schemas/OrderItem'
           type: array
-          title: Detail
+          title: Data
       type: object
-      title: HTTPValidationError
+      required:
+      - data
+      title: OrderItemsPostRequest
+    SuccessResponse:
+      properties:
+        success:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Success
+        requestId:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Requestid
+      type: object
+      title: SuccessResponse
   securitySchemes:
     HTTPBearer:
       type: http

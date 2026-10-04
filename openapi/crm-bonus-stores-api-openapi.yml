@@ -50,6 +50,12 @@ paths:
       - Stores
 components:
   schemas:
+    StoreType:
+      type: string
+      enum:
+      - E
+      - L
+      title: StoreType
     StoresPostRequest:
       properties:
         data:
@@ -61,6 +67,51 @@ components:
       required:
       - data
       title: StoresPostRequest
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    SuccessResponse:
+      properties:
+        success:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Success
+        requestId:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Requestid
+      type: object
+      title: SuccessResponse
     Store:
       properties:
         id:
@@ -208,57 +259,6 @@ components:
       - id
       - name
       title: Store
-    StoreType:
-      type: string
-      enum:
-      - E
-      - L
-      title: StoreType
-    SuccessResponse:
-      properties:
-        success:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Success
-        requestId:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Requestid
-      type: object
-      title: SuccessResponse
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
   securitySchemes:
     HTTPBearer:
       type: http

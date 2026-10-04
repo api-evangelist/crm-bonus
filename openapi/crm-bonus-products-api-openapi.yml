@@ -52,21 +52,15 @@ paths:
       - Products
 components:
   schemas:
-    SuccessResponse:
+    HTTPValidationError:
       properties:
-        success:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Success
-        requestId:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Requestid
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
       type: object
-      title: SuccessResponse
+      title: HTTPValidationError
     ProductsPostRequest:
       properties:
         data:
@@ -191,15 +185,21 @@ components:
       - id
       - name
       title: Product
-    HTTPValidationError:
+    SuccessResponse:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
+        success:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Success
+        requestId:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Requestid
       type: object
-      title: HTTPValidationError
+      title: SuccessResponse
   securitySchemes:
     HTTPBearer:
       type: http
