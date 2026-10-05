@@ -1,0 +1,12 @@
+{
+ "url": "https://data-api.otocrm.com.br/openapi.json",
+ "requested_url": "https://data-api.otocrm.com.br/openapi.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 45593,
+ "sha256": "a88a83c4345c0c6f1a97864ea8c91ae5733e1c9d8f7d54006a58b80ae1979f43",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
