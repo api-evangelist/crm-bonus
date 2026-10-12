@@ -1,0 +1,16 @@
+generated: '2026-10-12'
+method: none
+source:
+- https://zapier.com/apps/crm-bonus/integrations
+- https://n8n.io/integrations/crm-bonus/
+- https://composio.dev/toolkits/crm-bonus
+- https://monid.ai/tools/crm-bonus
+checked:
+- https://composio.dev/toolkits/crm-bonus
+- https://monid.ai/tools/crm-bonus
+- https://n8n.io/integrations/crm-bonus/
+- https://zapier.com/apps/crm-bonus/integrations
+summary: null
+marketplace_apps: []
+edges: []
+templates: []
