@@ -1,16 +1,32 @@
 generated: '2026-10-12'
-method: none
+method: searched
 source:
 - https://zapier.com/apps/crm-bonus/integrations
 - https://n8n.io/integrations/crm-bonus/
 - https://composio.dev/toolkits/crm-bonus
 - https://monid.ai/tools/crm-bonus
 checked:
+- https://azuremarketplace.microsoft.com/
 - https://composio.dev/toolkits/crm-bonus
 - https://monid.ai/tools/crm-bonus
 - https://n8n.io/integrations/crm-bonus/
 - https://zapier.com/apps/crm-bonus/integrations
 summary: null
 marketplace_apps: []
-edges: []
+edges:
+- partner_name: Microsoft Azure Marketplace
+  partner: microsoft-azure
+  partner_match: aggregator
+  type: marketplace
+  marketplace: azure-marketplace
+  channel: distribution
+  relationship: platform-app
+  direction: provider-built
+  evidence: https://azuremarketplace.microsoft.com/en-us/marketplace/apps?search=CRMBONUS
+  listing_count: 1
+  apps:
+  - Vale Bonus
+  seller_name: CRMBONUS
+  detected_by: sweep-cloud-marketplaces.py
+  detected: '2026-10-13'
 templates: []
