@@ -50,15 +50,6 @@ paths:
       - Tag Hits
 components:
   schemas:
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     ValidationError:
       properties:
         loc:
@@ -80,17 +71,30 @@ components:
       - msg
       - type
       title: ValidationError
-    TagsHitsPostRequest:
+    SuccessResponse:
       properties:
-        data:
-          items:
-            $ref: '#/components/schemas/TagsHit'
-          type: array
-          title: Data
+        success:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Success
+        requestId:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Requestid
       type: object
-      required:
-      - data
-      title: TagsHitsPostRequest
+      title: SuccessResponse
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     TagsHit:
       properties:
         event_ts:
@@ -150,21 +154,17 @@ components:
       - user_id
       - session_id
       title: TagsHit
-    SuccessResponse:
+    TagsHitsPostRequest:
       properties:
-        success:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Success
-        requestId:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Requestid
+        data:
+          items:
+            $ref: '#/components/schemas/TagsHit'
+          type: array
+          title: Data
       type: object
-      title: SuccessResponse
+      required:
+      - data
+      title: TagsHitsPostRequest
   securitySchemes:
     HTTPBearer:
       type: http

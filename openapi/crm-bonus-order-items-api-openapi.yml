@@ -61,15 +61,6 @@ paths:
       - Order Items
 components:
   schemas:
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     OrderItem:
       properties:
         date:
@@ -153,17 +144,6 @@ components:
       - msg
       - type
       title: ValidationError
-    OrderItemsPostRequest:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/OrderItem'
-          type: array
-          title: Data
-      type: object
-      required:
-      - data
-      title: OrderItemsPostRequest
     SuccessResponse:
       properties:
         success:
@@ -179,6 +159,26 @@ components:
           title: Requestid
       type: object
       title: SuccessResponse
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    OrderItemsPostRequest:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/OrderItem'
+          type: array
+          title: Data
+      type: object
+      required:
+      - data
+      title: OrderItemsPostRequest
   securitySchemes:
     HTTPBearer:
       type: http

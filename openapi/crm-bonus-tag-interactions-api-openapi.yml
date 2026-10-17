@@ -50,36 +50,6 @@ paths:
       - Tag Interactions
 components:
   schemas:
-    TagType:
-      type: string
-      enum:
-      - N
-      - D
-      - C
-      - K
-      - P
-      - T
-      title: TagType
-    TagsInteractionsPostRequest:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/TagsInteraction'
-          type: array
-          title: Data
-      type: object
-      required:
-      - data
-      title: TagsInteractionsPostRequest
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     ValidationError:
       properties:
         loc:
@@ -161,6 +131,36 @@ components:
           title: Requestid
       type: object
       title: SuccessResponse
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    TagsInteractionsPostRequest:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/TagsInteraction'
+          type: array
+          title: Data
+      type: object
+      required:
+      - data
+      title: TagsInteractionsPostRequest
+    TagType:
+      type: string
+      enum:
+      - N
+      - D
+      - C
+      - K
+      - P
+      - T
+      title: TagType
   securitySchemes:
     HTTPBearer:
       type: http

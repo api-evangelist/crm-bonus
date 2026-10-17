@@ -76,15 +76,17 @@ components:
       required:
       - customer_id
       title: ExcludeList
-    HTTPValidationError:
+    ExcludeListPostRequest:
       properties:
-        detail:
+        data:
           items:
-            $ref: '#/components/schemas/ValidationError'
+            $ref: '#/components/schemas/ExcludeList'
           type: array
-          title: Detail
+          title: Data
       type: object
-      title: HTTPValidationError
+      required:
+      - data
+      title: ExcludeListPostRequest
     ValidationError:
       properties:
         loc:
@@ -106,17 +108,6 @@ components:
       - msg
       - type
       title: ValidationError
-    ExcludeListPostRequest:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/ExcludeList'
-          type: array
-          title: Data
-      type: object
-      required:
-      - data
-      title: ExcludeListPostRequest
     SuccessResponse:
       properties:
         success:
@@ -132,6 +123,15 @@ components:
           title: Requestid
       type: object
       title: SuccessResponse
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
   securitySchemes:
     HTTPBearer:
       type: http

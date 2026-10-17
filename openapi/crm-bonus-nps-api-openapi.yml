@@ -58,42 +58,23 @@ paths:
       - nps
 components:
   schemas:
+    NpsPostRequest:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/NetPromoterScore'
+          type: array
+          title: Data
+      type: object
+      required:
+      - data
+      title: NpsPostRequest
     StoreType:
       type: string
       enum:
       - E
       - L
       title: StoreType
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
     NetPromoterScore:
       properties:
         id:
@@ -243,6 +224,27 @@ components:
       - order_id
       - order_store
       title: NetPromoterScore
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
     SuccessResponse:
       properties:
         success:
@@ -258,17 +260,15 @@ components:
           title: Requestid
       type: object
       title: SuccessResponse
-    NpsPostRequest:
+    HTTPValidationError:
       properties:
-        data:
+        detail:
           items:
-            $ref: '#/components/schemas/NetPromoterScore'
+            $ref: '#/components/schemas/ValidationError'
           type: array
-          title: Data
+          title: Detail
       type: object
-      required:
-      - data
-      title: NpsPostRequest
+      title: HTTPValidationError
   securitySchemes:
     HTTPBearer:
       type: http

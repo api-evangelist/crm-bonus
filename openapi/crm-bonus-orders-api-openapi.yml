@@ -52,17 +52,6 @@ paths:
       - Orders
 components:
   schemas:
-    OrdersPostRequest:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/Order'
-          type: array
-          title: Data
-      type: object
-      required:
-      - data
-      title: OrdersPostRequest
     StoreType:
       type: string
       enum:
@@ -75,36 +64,6 @@ components:
       - V
       - P
       title: PaymentType
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
     Order:
       properties:
         customer_id:
@@ -244,6 +203,38 @@ components:
       - store
       - total
       title: Order
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    OrdersPostRequest:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Order'
+          type: array
+          title: Data
+      type: object
+      required:
+      - data
+      title: OrdersPostRequest
     SuccessResponse:
       properties:
         success:
@@ -259,6 +250,15 @@ components:
           title: Requestid
       type: object
       title: SuccessResponse
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
   securitySchemes:
     HTTPBearer:
       type: http

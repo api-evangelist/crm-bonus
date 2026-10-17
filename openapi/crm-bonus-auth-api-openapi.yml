@@ -114,6 +114,19 @@ paths:
       - Auth
 components:
   schemas:
+    TokenResponse:
+      properties:
+        access_token:
+          type: string
+          title: Access Token
+        expires_in:
+          type: integer
+          title: Expires In
+      type: object
+      required:
+      - access_token
+      - expires_in
+      title: TokenResponse
     HTTPValidationError:
       properties:
         detail:
@@ -123,6 +136,19 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
+    LoginRequest:
+      properties:
+        username:
+          type: string
+          title: Username
+        password:
+          type: string
+          title: Password
+      type: object
+      required:
+      - username
+      - password
+      title: LoginRequest
     ValidationError:
       properties:
         loc:
@@ -144,32 +170,6 @@ components:
       - msg
       - type
       title: ValidationError
-    LoginRequest:
-      properties:
-        username:
-          type: string
-          title: Username
-        password:
-          type: string
-          title: Password
-      type: object
-      required:
-      - username
-      - password
-      title: LoginRequest
-    TokenResponse:
-      properties:
-        access_token:
-          type: string
-          title: Access Token
-        expires_in:
-          type: integer
-          title: Expires In
-      type: object
-      required:
-      - access_token
-      - expires_in
-      title: TokenResponse
   securitySchemes:
     HTTPBearer:
       type: http

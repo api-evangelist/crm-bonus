@@ -50,49 +50,6 @@ paths:
       - Sellers
 components:
   schemas:
-    Seller:
-      properties:
-        id:
-          type: string
-          title: Id
-          description: Código (matrícula) do vendedor de preferência
-        name:
-          type: string
-          title: Name
-          description: Nome completo do vendedor
-        name_oto:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name Oto
-          description: Nome do vendedor (visível no Oto)
-        store:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Store
-          description: Código da loja do vendedor (chave estrangeira). São caracteres inválidos - pipe, vírgula e ponto e vírgula
-        disabled:
-          anyOf:
-          - type: string
-            format: date
-          - type: 'null'
-          title: Disabled
-          description: Data que o vendedor foi desligado (yyyy-mm-dd)
-      type: object
-      required:
-      - id
-      - name
-      title: Seller
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     ValidationError:
       properties:
         loc:
@@ -129,6 +86,49 @@ components:
           title: Requestid
       type: object
       title: SuccessResponse
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    Seller:
+      properties:
+        id:
+          type: string
+          title: Id
+          description: Código (matrícula) do vendedor de preferência
+        name:
+          type: string
+          title: Name
+          description: Nome completo do vendedor
+        name_oto:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name Oto
+          description: Nome do vendedor (visível no Oto)
+        store:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Store
+          description: Código da loja do vendedor (chave estrangeira). São caracteres inválidos - pipe, vírgula e ponto e vírgula
+        disabled:
+          anyOf:
+          - type: string
+            format: date
+          - type: 'null'
+          title: Disabled
+          description: Data que o vendedor foi desligado (yyyy-mm-dd)
+      type: object
+      required:
+      - id
+      - name
+      title: Seller
     SellersPostRequest:
       properties:
         data:
