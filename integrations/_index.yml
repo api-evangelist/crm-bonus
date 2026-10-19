@@ -15,3 +15,34 @@
   relationship: distribution-channel
   status: not-a-workflow
   arazzo: null
+- slug: crm-bonus-npm-registry
+  label: npm registry
+  partner: npm
+  partner_name: npm registry
+  category: official SDK (JavaScript/TypeScript)
+  type: register
+  channel: package-registry
+  evidence: https://www.npmjs.com/package/@crm-bonus/crmchat-components
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: npm registry (public registry JSON)
+    spec_file: null
+    language: JavaScript/TypeScript
+    packages:
+    - name: '@crm-bonus/crmchat-components'
+      version: 1.12.16
+      released: '2025-11-07'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@crm-bonus/crmchat-components
+      repo_leg: github-org:crmbonus-oficial
+      publisher_leg: org:crm-bonus
+      matched_by: github-org
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  status: not-a-workflow
+  arazzo: null
