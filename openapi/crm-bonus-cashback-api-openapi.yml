@@ -172,3 +172,9 @@ components:
       type: http
       scheme: bearer
       description: "Você deverá enviar sua chave privada\nno cabeçalho HTTP `Authorization`, com o padrão `Bearer <token>`. Exemplo:\n\n```\nGET / HTTP/1.1\nHost: data-api.otocrm.com.br\nAuthorization: Bearer abcdef123456\n```\n    "
+x-provenance:
+  method: harvested
+  publisher: CRM Bonus
+  source: https://data-api.otocrm.com.br/openapi.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
